@@ -1,11 +1,11 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 
-function HomeScreen(): JSX.Element {
+function ProfileScreen(): JSX.Element {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        <Text>HomeScreen</Text>
+        <Text>ProfileScreen</Text>
       </View>
     </SafeAreaView>
   );
@@ -18,4 +18,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default ProfileScreen;
