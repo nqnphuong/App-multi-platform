@@ -31,6 +31,7 @@ export const COLORS = {
 };
 export const SIZES = {
   // global sizes
+  widthDefault: 320,
   base: 8,
   font: 14,
   radius: 12,
@@ -40,7 +41,7 @@ export const SIZES = {
   largeTitle: 40,
   h1: 30,
   h2: 22,
-  h3: 16,
+  h3: 17,
   h4: 14,
   body1: 30,
   body2: 22,

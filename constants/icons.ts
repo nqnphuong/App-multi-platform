@@ -5,6 +5,9 @@ const Heart = require('../assets/icons/Heart.png');
 const Google = require('../assets/icons/Google.png');
 const Apple = require('../assets/icons/Apple.png');
 const Facebook = require('../assets/icons/Facebook.png');
+const Logo = require('../assets/icons/Logo.png');
+const User = require('../assets/icons/User.png');
+const Password = require('../assets/icons/Password.png');
 
 export default {
   Home,
@@ -14,4 +17,7 @@ export default {
   Google,
   Apple,
   Facebook,
+  Logo,
+  User,
+  Password,
 };
