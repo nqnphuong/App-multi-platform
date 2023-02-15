@@ -1,13 +1,11 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 
 function AddScreen(): JSX.Element {
   return (
-    <SafeAreaView style={styles.container}>
-      <View>
-        <Text>AddScreen</Text>
-      </View>
-    </SafeAreaView>
+    <View style={styles.container}>
+      <Text>AddScreen</Text>
+    </View>
   );
 }
 
