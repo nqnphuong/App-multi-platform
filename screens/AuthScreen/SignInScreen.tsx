@@ -47,7 +47,7 @@ function SignInScreen({navigation}): JSX.Element {
             <Text style={{color: COLORS.black, ...FONTS.h3}}>
               Log in to make your memories
             </Text>
-          </View>
+          </View> 
           <View style={{width: SIZES.widthDefault, display: 'flex', gap: 10}}>
             <Input icon={icons.User} placeholder="Email or phone number" />
             <Input icon={icons.Password} placeholder="Password" />

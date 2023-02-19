@@ -12,7 +12,7 @@ const App: React.FC = () => {
     <NavigationContainer>
       <SafeAreaView style={styles.container}>
         <Stack.Navigator
-          initialRouteName="AuthScreen"
+          initialRouteName="AuthScreen  "
           screenOptions={{
             headerShown: false,
           }}>
