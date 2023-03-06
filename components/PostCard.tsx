@@ -15,7 +15,7 @@ const PostCard: React.FC<PostCardProps> = ({focused, icon}) => {
         <TouchableOpacity style={styles.rowCenter}>
           <Image
             source={{
-              uri: 'https://scontent.fdad1-1.fna.fbcdn.net/v/t39.30808-1/321092757_540269217983089_4822069218944065839_n.jpg?stp=dst-jpg_s320x320&_nc_cat=109&ccb=1-7&_nc_sid=7206a8&_nc_ohc=E_ibo8iAvw8AX8bWzNv&_nc_ht=scontent.fdad1-1.fna&oh=00_AfCOSvgtFB_sPubhm1Sc12KzGmEoJvyUIvm2z1xv84pCpQ&oe=63F6929D',
+              uri: 'https://scontent.fdad1-1.fna.fbcdn.net/v/t39.30808-6/321092757_540269217983089_4822069218944065839_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=yPG2yeV6TUMAX_pt-x6&_nc_ht=scontent.fdad1-1.fna&oh=00_AfAOI-B_PG24WPS0DAkF7ZMF3fqUCKAC73_wQ3GIP1d62A&oe=6409C5DB',
             }}
             style={{
               width: 40,
@@ -74,7 +74,7 @@ const PostCard: React.FC<PostCardProps> = ({focused, icon}) => {
       </View>
       <Image
         source={{
-          uri: 'https://external.fdad2-1.fna.fbcdn.net/emg1/v/t13/757758668292149398?url=https%3A%2F%2Fi.ytimg.com%2Fvi%2FCnZxamAbSnw%2Fmaxresdefault.jpg&fb_obo=1&utld=ytimg.com&stp=c0.5000x0.5000f_dst-jpg_flffffff_p500x261_q75&ccb=13-1&oh=06_AbE80h1nVg_7A4EVYEMB8GYF7aBqZiuGauS42dsxiK2now&oe=63F39ABE&_nc_sid=a349d5',
+          uri: 'https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-Viet-Nam.jpg',
         }}
         style={{
           width: SIZES.width,

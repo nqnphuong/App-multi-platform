@@ -23,25 +23,25 @@ function HomeScreen(): JSX.Element {
     {
       newId: '1',
       userAvarta:
-        'https://bloganchoi.com/wp-content/uploads/2022/02/avatar-trang-y-nghia.jpeg',
+        'https://scontent.fdad1-1.fna.fbcdn.net/v/t39.30808-6/321092757_540269217983089_4822069218944065839_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=yPG2yeV6TUMAX_pt-x6&_nc_ht=scontent.fdad1-1.fna&oh=00_AfAOI-B_PG24WPS0DAkF7ZMF3fqUCKAC73_wQ3GIP1d62A&oe=6409C5DB',
       newsBackground:
-        'https://scontent.fdad2-1.fna.fbcdn.net/v/t15.5256-10/320348440_493936742948513_5552517706944606248_n.jpg?stp=dst-jpg_p235x165&_nc_cat=107&ccb=1-7&_nc_sid=ad6a45&_nc_ohc=OQ053nsa9jgAX_vwWeQ&_nc_ht=scontent.fdad2-1.fna&oh=00_AfA5IuFjHXA1VEyYidUlxtZ5YfYZ_92HR_CBfRLofdu_mw&oe=63F57F17',
+        'https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-de-thuong.jpg',
       userName: 'Hoa Huỳnh',
     },
     {
       newId: '2',
       userAvarta:
-        'https://bloganchoi.com/wp-content/uploads/2022/02/avatar-trang-y-nghia.jpeg',
+        'https://scontent.fdad1-1.fna.fbcdn.net/v/t39.30808-6/321092757_540269217983089_4822069218944065839_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=yPG2yeV6TUMAX_pt-x6&_nc_ht=scontent.fdad1-1.fna&oh=00_AfAOI-B_PG24WPS0DAkF7ZMF3fqUCKAC73_wQ3GIP1d62A&oe=6409C5DB',
       newsBackground:
-        'https://scontent.fdad2-1.fna.fbcdn.net/v/t15.5256-10/320348440_493936742948513_5552517706944606248_n.jpg?stp=dst-jpg_p235x165&_nc_cat=107&ccb=1-7&_nc_sid=ad6a45&_nc_ohc=OQ053nsa9jgAX_vwWeQ&_nc_ht=scontent.fdad2-1.fna&oh=00_AfA5IuFjHXA1VEyYidUlxtZ5YfYZ_92HR_CBfRLofdu_mw&oe=63F57F17',
+        'https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-de-thuong.jpg',
       userName: 'Hoa Huỳnh',
     },
     {
       newId: '3',
       userAvarta:
-        'https://bloganchoi.com/wp-content/uploads/2022/02/avatar-trang-y-nghia.jpeg',
+        'https://scontent.fdad1-1.fna.fbcdn.net/v/t39.30808-6/321092757_540269217983089_4822069218944065839_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=yPG2yeV6TUMAX_pt-x6&_nc_ht=scontent.fdad1-1.fna&oh=00_AfAOI-B_PG24WPS0DAkF7ZMF3fqUCKAC73_wQ3GIP1d62A&oe=6409C5DB',
       newsBackground:
-        'https://scontent.fdad2-1.fna.fbcdn.net/v/t15.5256-10/320348440_493936742948513_5552517706944606248_n.jpg?stp=dst-jpg_p235x165&_nc_cat=107&ccb=1-7&_nc_sid=ad6a45&_nc_ohc=OQ053nsa9jgAX_vwWeQ&_nc_ht=scontent.fdad2-1.fna&oh=00_AfA5IuFjHXA1VEyYidUlxtZ5YfYZ_92HR_CBfRLofdu_mw&oe=63F57F17',
+        'https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-de-thuong.jpg',
       userName: 'Hoa Huỳnh',
     },
   ]);
