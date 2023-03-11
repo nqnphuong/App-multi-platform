@@ -15,6 +15,9 @@ const More = require('../assets/icons/More.png');
 const Earth = require('../assets/icons/Earth.png');
 const Comment = require('../assets/icons/Comment.png');
 const Share = require('../assets/icons/Share.png');
+const Mail = require('../assets/icons/Mail.png');
+const Phone = require('../assets/icons/Phone.png');
+const Back = require('../assets/icons/Back.png');
 
 export default {
   Home,
@@ -34,4 +37,7 @@ export default {
   Earth,
   Comment,
   Share,
+  Mail,
+  Phone,
+  Back,
 };
