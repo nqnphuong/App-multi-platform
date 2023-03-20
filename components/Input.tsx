@@ -1,14 +1,19 @@
 import React from 'react';
-import {View, TextInput, StyleSheet, Image} from 'react-native';
+import {View, TextInput, StyleSheet, Image, TextInputProps} from 'react-native';
 import {COLORS, FONTS, SIZES} from '../constants/theme';
 
-interface InputProps {
+interface InputProps extends TextInputProps {
   icon: any;
   iconStyles?: any;
   placeholder: string;
 }
 
-const Input: React.FC<InputProps> = ({icon, iconStyles, placeholder}) => {
+const Input: React.FC<InputProps> = ({
+  icon,
+  iconStyles,
+  placeholder,
+  ...props
+}) => {
   return (
     <View style={style.inputContainer}>
       <Image
@@ -20,10 +25,12 @@ const Input: React.FC<InputProps> = ({icon, iconStyles, placeholder}) => {
           ...iconStyles,
         }}
       />
+
       <TextInput
         placeholder={placeholder}
         placeholderTextColor={COLORS.gray}
         style={{flex: 1, color: COLORS.black, fontSize: 17}}
+        {...props}
       />
     </View>
   );

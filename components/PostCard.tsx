@@ -15,7 +15,11 @@ const PostCard: React.FC<PostCardProps> = ({focused, icon}) => {
         <TouchableOpacity style={styles.rowCenter}>
           <Image
             source={{
+<<<<<<< HEAD
               uri: 'https://sieupet.com/sites/default/files/pictures/images/1-1473150685951-5.jpg',
+=======
+              uri: 'https://scontent.fdad1-1.fna.fbcdn.net/v/t39.30808-6/321092757_540269217983089_4822069218944065839_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=yPG2yeV6TUMAX_pt-x6&_nc_ht=scontent.fdad1-1.fna&oh=00_AfAOI-B_PG24WPS0DAkF7ZMF3fqUCKAC73_wQ3GIP1d62A&oe=6409C5DB',
+>>>>>>> 4106eda3ceb657d02350ac2c535a7a2059ef343c
             }}
             style={{
               width: 40,
@@ -74,7 +78,11 @@ const PostCard: React.FC<PostCardProps> = ({focused, icon}) => {
       </View>
       <Image
         source={{
+<<<<<<< HEAD
           uri: 'https://sieupet.com/sites/default/files/pictures/images/1-1473150685951-5.jpg',
+=======
+          uri: 'https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-Viet-Nam.jpg',
+>>>>>>> 4106eda3ceb657d02350ac2c535a7a2059ef343c
         }}
         style={{
           width: SIZES.width,
