@@ -1,5 +1,14 @@
-import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Modal,
+} from 'react-native';
+import AutoHeightImage from 'react-native-auto-height-image';
+import ImageViewer from 'react-native-image-zoom-viewer';
 import {icons} from '../constants';
 import {COLORS, SIZES} from '../constants/theme';
 
@@ -8,7 +17,83 @@ interface PostCardProps {
   icon: any;
 }
 
+interface StylesInline {
+  color: string;
+  tinColor: string;
+}
+
 const PostCard: React.FC<PostCardProps> = ({focused, icon}) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const handelModel = () => {
+    console.log('w');
+    setModalVisible(!modalVisible);
+  };
+  const renderFooter = (stylesInline?: StylesInline) => {
+    return (
+      <View style={styles.footer}>
+        <View>
+          <View
+            style={[
+              styles.rowCenter,
+              {
+                justifyContent: 'space-between',
+              },
+            ]}>
+            <TouchableOpacity style={[styles.rowCenter]}>
+              <Image
+                source={icons.Heart}
+                style={[
+                  {
+                    width: 20,
+                    height: 20,
+                    resizeMode: 'contain',
+                    tintColor: stylesInline?.tinColor,
+                  },
+                ]}
+              />
+              <Text
+                style={[
+                  {color: COLORS.black},
+                  {color: stylesInline?.color},
+                ]}>{`12 Like`}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.rowCenter]}>
+              <Image
+                source={icons.Comment}
+                style={{
+                  width: 20,
+                  height: 20,
+                  resizeMode: 'contain',
+                  tintColor: stylesInline?.tinColor,
+                }}
+              />
+              <Text
+                style={[
+                  {color: COLORS.black},
+                  {color: stylesInline?.color},
+                ]}>{`5 Comment`}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.rowCenter]}>
+              <Image
+                source={icons.Share}
+                style={{
+                  width: 20,
+                  height: 20,
+                  resizeMode: 'contain',
+                  tintColor: stylesInline?.tinColor,
+                }}
+              />
+              <Text
+                style={[{color: COLORS.black}, {color: stylesInline?.color}]}>
+                Share
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <View style={[styles.header, styles.rowCenter]}>
@@ -72,48 +157,71 @@ const PostCard: React.FC<PostCardProps> = ({focused, icon}) => {
         </Text>
         <Text style={styles.createdTime}>20 hours ago</Text>
       </View>
-      <Image
-        source={{
-          uri: 'https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-Viet-Nam.jpg',
-        }}
-        style={{
-          width: SIZES.width,
-          height: 200,
-        }}
-      />
-      <View style={styles.footer}>
-        <View>
+      <TouchableOpacity onPress={handelModel}>
+        <AutoHeightImage
+          width={SIZES.width}
+          source={{
+            uri: 'https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-Viet-Nam.jpg',
+          }}
+        />
+      </TouchableOpacity>
+      {renderFooter()}
+      <Modal animationType="slide" transparent={true} visible={modalVisible}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'space-between',
+            backgroundColor: COLORS.black,
+          }}>
+          <TouchableOpacity onPress={handelModel}>
+            <Image
+              source={icons.Back}
+              style={{
+                width: 20,
+                height: 20,
+                margin: 10,
+                tintColor: COLORS.white,
+              }}
+            />
+          </TouchableOpacity>
           <View
-            style={[
-              styles.rowCenter,
-              {
-                justifyContent: 'space-between',
-              },
-            ]}>
-            <TouchableOpacity style={[styles.rowCenter]}>
-              <Image
-                source={icons.Heart}
-                style={{width: 20, height: 20, resizeMode: 'contain'}}
-              />
-              <Text style={{color: COLORS.black}}>{`12 Like`}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.rowCenter]}>
-              <Image
-                source={icons.Comment}
-                style={{width: 20, height: 20, resizeMode: 'contain'}}
-              />
-              <Text style={{color: COLORS.black}}>{`5 Comment`}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.rowCenter]}>
-              <Image
-                source={icons.Share}
-                style={{width: 20, height: 20, resizeMode: 'contain'}}
-              />
-              <Text style={{color: COLORS.black}}>Share</Text>
-            </TouchableOpacity>
+            style={{
+              width: SIZES.width,
+              height: SIZES.height,
+              position: 'absolute',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <ImageViewer
+              imageUrls={[
+                {
+                  url: 'https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-Viet-Nam.jpg',
+                },
+              ]}
+            />
+          </View>
+          <View style={styles.textBody}>
+            <Text
+              style={{
+                color: COLORS.white,
+                marginBottom: 10,
+                fontSize: 16,
+                fontWeight: '600',
+              }}>
+              Nguyễn Quỳnh Nhật Phương
+            </Text>
+            <Text style={{color: COLORS.white, fontSize: 14}}>
+              "Cúi mặt nhìn đời, thấy mình là một trong muôn vàn người lao động,
+              Ngước lên nhìn trời, cảm ơn đời cho con mắt nhìn trời cao rộng..."
+            </Text>
+            <Text style={styles.createdTime}>20 hours ago</Text>
+            {renderFooter({
+              color: COLORS.white,
+              tinColor: COLORS.white,
+            })}
           </View>
         </View>
-      </View>
+      </Modal>
     </View>
   );
 };
