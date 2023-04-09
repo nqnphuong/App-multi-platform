@@ -1,6 +1,7 @@
+import icons from '@constants/icons';
 import React from 'react';
 import {Animated, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import {icons} from '../constants';
+
 
 interface HeaderProps {}
 
