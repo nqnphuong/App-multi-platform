@@ -1,13 +1,12 @@
-/* eslint-disable react-native/no-inline-styles */
 import {NavigationContainer} from '@react-navigation/native';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import MainScreen from './navigation/bottomTabs';
-import AuthScreen from './screens/AuthScreen';
+import MainScreen from './src/navigation/bottomTabs';
+import AuthScreen from './src/screens/AuthScreen';
 import Toast from 'react-native-toast-message';
-import SplashScreen from './screens/SplashScreen';
-import {useAuthStore} from './store';
+import SplashScreen from './src/screens/SplashScreen';
+import useAuthStore from './src/store/useAuthStore';
 
 const App: React.FC = () => {
   const Stack = createNativeStackNavigator();
