@@ -3,13 +3,30 @@ import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import MainScreen from './src/navigation/bottomTabs';
-import AuthScreen from './src/screens/AuthScreen';
 import Toast from 'react-native-toast-message';
-import SplashScreen from './src/screens/SplashScreen';
-import useAuthStore from './src/store/useAuthStore';
+import AuthScreen from '@screens/AuthScreen';
+import SplashScreen from '@screens/SplashScreen';
+import useAuthStore from '@store/useAuthStore';
+import UploadScreen from '@screens/UploadScreen';
+import ImageScreen from '@screens/ImageScreen';
+
+export type RootStackParams = {
+  Main: {
+    name: 'Main';
+  };
+  AuthScreen: {
+    name: 'AuthScreen';
+  };
+  UploadScreen: {
+    name: 'UploadScreen';
+  };
+  ImageScreen: {
+    name: 'ImageScreen';
+  };
+};
 
 const App: React.FC = () => {
-  const Stack = createNativeStackNavigator();
+  const Stack = createNativeStackNavigator<RootStackParams>();
 
   const {isAuthenticated, authLoading} = useAuthStore(state => state);
 
@@ -21,7 +38,6 @@ const App: React.FC = () => {
     <NavigationContainer>
       <SafeAreaView style={styles.container}>
         <Stack.Navigator
-          // initialRouteName="AuthScreen"
           screenOptions={{
             headerShown: false,
           }}>
@@ -32,6 +48,20 @@ const App: React.FC = () => {
               <Stack.Screen name="Main" component={MainScreen} />
             </>
           )}
+          <Stack.Screen
+            name="UploadScreen"
+            component={UploadScreen}
+            options={{
+              gestureDirection: 'vertical',
+            }}
+          />
+          <Stack.Screen
+            name="ImageScreen"
+            component={ImageScreen}
+            options={{
+              gestureDirection: 'vertical',
+            }}
+          />
         </Stack.Navigator>
       </SafeAreaView>
       <Toast />

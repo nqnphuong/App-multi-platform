@@ -4,12 +4,13 @@ import MaskedView from '@react-native-masked-view/masked-view';
 import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { icons } from 'constants';
+import {icons} from 'constants';
 import HomeScreen from '@screens/HomeScreen';
 import SearchScreen from '@screens/SearchScreen';
 import AddScreen from '@screens/AddScreen';
 import LikeScreen from '@screens/LikeScreen';
 import ProfileScreen from '@screens/ProfileScreen';
+import Avatar from '@components/Avatar';
 
 const MainScreen: React.FC = () => {
   const Tab = createBottomTabNavigator();
@@ -61,11 +62,11 @@ const MainScreen: React.FC = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="HomeScreen"
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: {height: 60},
+        tabBarStyle: {height: 50},
       }}>
       <Tab.Screen
         name="HomeScreen"
@@ -99,7 +100,28 @@ const MainScreen: React.FC = () => {
         name="ProfileScreen"
         component={ProfileScreen}
         options={{
-          tabBarIcon: ({focused}) => renderIcons(focused, icons.Home),
+          tabBarIcon: ({focused}) => (
+            <Avatar
+              styles={{
+                width: 25,
+                height: 25,
+              }}
+              stylesContainer={
+                focused
+                  ? {
+                      width: 28,
+                      height: 28,
+                    }
+                  : {
+                      width: 25,
+                      height: 25,
+                    }
+              }
+              uri={
+                'https://secure.gravatar.com/avatar/06f59e296827fce579a51549f01af8bd?s=300&d=mm&r=g'
+              }
+            />
+          ),
         }}
       />
     </Tab.Navigator>

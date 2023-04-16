@@ -15,29 +15,31 @@ import Header from '@components/Header';
 import {COLORS} from 'constants/theme';
 import {News} from 'models/News';
 import UploadPost from '@components/UploadPost';
+import PostCard from '@components/PostCard';
+import Avatar from '@components/Avatar';
 
 const HomeScreen: React.FC = () => {
   const [newsData, setnewsData] = useState<News[]>([
     {
       newId: '1',
-      userAvarta:
-        'https://scontent.fdad1-1.fna.fbcdn.net/v/t39.30808-6/321092757_540269217983089_4822069218944065839_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=yPG2yeV6TUMAX_pt-x6&_nc_ht=scontent.fdad1-1.fna&oh=00_AfAOI-B_PG24WPS0DAkF7ZMF3fqUCKAC73_wQ3GIP1d62A&oe=6409C5DB',
+      userAvatar:
+        'https://luv.vn/wp-content/uploads/2021/11/avatar-gai-xinh-41.jpg',
       newsBackground:
         'https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-de-thuong.jpg',
       userName: 'Hoa Huỳnh',
     },
     {
       newId: '2',
-      userAvarta:
-        'https://scontent.fdad1-1.fna.fbcdn.net/v/t39.30808-6/321092757_540269217983089_4822069218944065839_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=yPG2yeV6TUMAX_pt-x6&_nc_ht=scontent.fdad1-1.fna&oh=00_AfAOI-B_PG24WPS0DAkF7ZMF3fqUCKAC73_wQ3GIP1d62A&oe=6409C5DB',
+      userAvatar:
+        'https://luv.vn/wp-content/uploads/2021/11/avatar-gai-xinh-41.jpg',
       newsBackground:
         'https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-de-thuong.jpg',
       userName: 'Hoa Huỳnh',
     },
     {
       newId: '3',
-      userAvarta:
-        'https://scontent.fdad1-1.fna.fbcdn.net/v/t39.30808-6/321092757_540269217983089_4822069218944065839_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=yPG2yeV6TUMAX_pt-x6&_nc_ht=scontent.fdad1-1.fna&oh=00_AfAOI-B_PG24WPS0DAkF7ZMF3fqUCKAC73_wQ3GIP1d62A&oe=6409C5DB',
+      userAvatar:
+        'https://luv.vn/wp-content/uploads/2021/11/avatar-gai-xinh-41.jpg',
       newsBackground:
         'https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-de-thuong.jpg',
       userName: 'Hoa Huỳnh',
@@ -49,7 +51,7 @@ const HomeScreen: React.FC = () => {
       <TouchableOpacity>
         <ImageBackground
           source={{
-            uri: 'https://scontent.fdad1-2.fna.fbcdn.net/v/t39.30808-1/275230582_1173189403508740_1249611582808657292_n.jpg?stp=c0.0.240.240a_dst-jpg_p240x240&_nc_cat=106&ccb=1-7&_nc_sid=7206a8&_nc_ohc=hekW9TS5PqQAX9ww-l8&_nc_ht=scontent.fdad1-2.fna&oh=00_AfCPPjMQQZl9URJ7RbPxZn-qg8-2uEZHyA4d0nhhTrrpCw&oe=63F503D7',
+            uri: 'https://scontent.fdad1-2.fna.fbcdn.net/v/t39.30808-6/275230582_1173189403508740_1249611582808657292_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=ZP09G27NIwEAX9PCHqx&_nc_ht=scontent.fdad1-2.fna&oh=00_AfBwMHyHu_HWbiajSZid7HxJIUHffo-FdH-Ik4-Ar79xeA&oe=6441F5D5',
           }}
           style={styles.addNews}
           imageStyle={{
@@ -92,29 +94,9 @@ const HomeScreen: React.FC = () => {
           imageStyle={{
             borderRadius: 10,
           }}>
-          <LinearGradient
-            colors={['#6B65DE', '#E89DE7']}
-            start={{x: 0.1, y: 0}}
-            end={{x: 1, y: 1}}
-            style={{
-              width: 35,
-              height: 35,
-              margin: 5,
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: 20,
-            }}>
-            <Image
-              source={{
-                uri: item.userAvarta,
-              }}
-              style={{
-                width: 30,
-                height: 30,
-                borderRadius: 28,
-              }}
-            />
-          </LinearGradient>
+          <View style={{margin: 2}}>
+            <Avatar uri={item.userAvatar} />
+          </View>
           <Text
             style={{
               fontWeight: '600',
@@ -142,17 +124,16 @@ const HomeScreen: React.FC = () => {
           horizontal={true}
           renderItem={({item}) => renderNewsItem(item)}
           ListHeaderComponent={renderNewsHeader()}
+          showsHorizontalScrollIndicator={false}
         />
         <UploadPost />
         <View
           style={{
             flex: 1,
-            marginVertical: 5,
-            marginTop: 10,
             gap: 5,
           }}>
-          {/* <PostCard />
-          <PostCard /> */}
+          <PostCard />
+          <PostCard />
         </View>
       </Animated.ScrollView>
     </View>
@@ -165,7 +146,6 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    marginTop: 10,
     marginHorizontal: 12,
   },
   news: {

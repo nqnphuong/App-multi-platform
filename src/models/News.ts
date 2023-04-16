@@ -1,6 +1,6 @@
 export type News = {
   newId: string;
   userName: string;
-  userAvarta: string;
+  userAvatar: string;
   newsBackground: string;
 };
