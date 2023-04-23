@@ -8,16 +8,24 @@ import {Modal} from '@ant-design/react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../App';
 import {useNavigation} from '@react-navigation/native';
+import IPost from 'models/Posts';
+import {format} from 'timeago.js';
+import {capitalizeFirstLetter} from 'utils/Letter';
+import useUser from 'hooks/useUser';
 
 interface StylesInline {
   color: string;
   tinColor: string;
 }
 
-const PostCard: React.FC = () => {
+interface IPostCardProps {
+  post: IPost;
+}
+
+const PostCard = ({post}: IPostCardProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-
+  const user = useUser();
   const imageDetail = () => {
     navigation.navigate('ImageScreen', {
       name: 'ImageScreen',
@@ -111,7 +119,9 @@ const PostCard: React.FC = () => {
                 fontSize: 16,
                 fontWeight: '600',
               }}>
-              Nguyễn Quỳnh Nhật Phương
+              {post?.postsUserList?.length > 0
+                ? post?.postsUserList[0].name
+                : user.name}
             </Text>
             <View
               style={[
@@ -147,17 +157,17 @@ const PostCard: React.FC = () => {
         />
       </View>
       <View style={styles.textBody}>
-        <Text style={{color: COLORS.black, fontSize: 14}}>
-          "Cúi mặt nhìn đời, thấy mình là một trong muôn vàn người lao động,
-          Ngước lên nhìn trời, cảm ơn đời cho con mắt nhìn trời cao rộng..."
+        <Text style={{color: COLORS.black, fontSize: 14}}>{post.caption}</Text>
+        <Text style={styles.createdTime}>
+          {capitalizeFirstLetter(format(post.dateCreate, 'vi_VI'))}
+          {/* 20 hours ago */}
         </Text>
-        <Text style={styles.createdTime}>20 hours ago</Text>
       </View>
       <TouchableOpacity onPress={imageDetail} activeOpacity={1}>
         <AutoHeightImage
           width={SIZES.width}
           source={{
-            uri: 'https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-Viet-Nam.jpg',
+            uri: post.postsImageList[0].image,
           }}
         />
       </TouchableOpacity>
