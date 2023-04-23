@@ -1,14 +1,17 @@
 import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import ImageScreen from '@screens/ImageScreen';
+import SplashScreen from '@screens/SplashScreen';
+import UploadScreen from '@screens/UploadScreen';
+import {persistor, store} from '@store/index';
+import useAuthStore from '@store/useAuthStore';
 import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import MainScreen from './src/navigation/bottomTabs';
 import Toast from 'react-native-toast-message';
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/lib/integration/react';
+import MainScreen from './src/navigation/bottomTabs';
 import AuthScreen from '@screens/AuthScreen';
-import SplashScreen from '@screens/SplashScreen';
-import useAuthStore from '@store/useAuthStore';
-import UploadScreen from '@screens/UploadScreen';
-import ImageScreen from '@screens/ImageScreen';
 
 export type RootStackParams = {
   Main: {
@@ -76,4 +79,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+const AppProvider = () => {
+  return (
+    <Provider store={store}>
+      <PersistGate loading={<SplashScreen />} persistor={persistor}>
+        <App />
+      </PersistGate>
+    </Provider>
+  );
+};
+
+export default AppProvider;

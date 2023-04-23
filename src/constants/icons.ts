@@ -19,6 +19,8 @@ const Mail = require('../assets/icons/Mail.png');
 const Phone = require('../assets/icons/Phone.png');
 const Back = require('../assets/icons/Back.png');
 const Images = require('../assets/icons/Images.png');
+const Image = require('../assets/icons/Image.png');
+const Close = require('../assets/icons/Close.png');
 
 export default {
   Home,
@@ -42,4 +44,6 @@ export default {
   Phone,
   Back,
   Images,
+  Close,
+  Image,
 };

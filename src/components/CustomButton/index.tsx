@@ -11,6 +11,8 @@ interface CustomButtonProps {
   iconColor?: string;
   iconStyle?: any;
   onPress?: () => void;
+  containerStyle?: any;
+  textStyle?: any;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
@@ -21,12 +23,15 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   iconColor,
   iconStyle,
   onPress,
+  containerStyle,
+  textStyle,
 }) => {
   if (colors.length > 1) {
     return (
       <TouchableOpacity
         style={{
           width: 320,
+          ...containerStyle,
         }}
         onPress={onPress}>
         <LinearGradient
@@ -52,6 +57,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
                 textAlign: 'center',
                 color: COLORS.white,
                 ...FONTS.h2,
+                ...textStyle,
               }}>
               {buttonText}
             </Text>

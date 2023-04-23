@@ -8,6 +8,7 @@ export const COLORS = {
   lime: '#2AD699',
   lightGreen: '#E7F9EF',
   lightGreen1: '#8EbCA0',
+  primary: '#7268DC',
 
   white: '#fff',
   white2: '#F9F9F9',

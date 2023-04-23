@@ -1,24 +1,34 @@
-import React, {useState} from 'react';
+import Avatar from '@components/Avatar';
+import Header from '@components/Header';
+import PostCard from '@components/PostCard';
+import UploadPost from '@components/UploadPost';
+import {PostAction, postSelector} from '@store/posts';
+import {icons} from 'constants/';
+import {COLORS} from 'constants/theme';
+import {useAppDispatch} from 'hooks/store';
+import {News} from 'models/News';
+import React, {useEffect, useState} from 'react';
 import {
-  StyleSheet,
-  Text,
-  View,
   Animated,
   FlatList,
-  TouchableOpacity,
   Image,
   ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {icons} from 'constants';
-import Header from '@components/Header';
-import {COLORS} from 'constants/theme';
-import {News} from 'models/News';
-import UploadPost from '@components/UploadPost';
-import PostCard from '@components/PostCard';
-import Avatar from '@components/Avatar';
+import {useSelector} from 'react-redux';
 
 const HomeScreen: React.FC = () => {
+  const {posts} = useSelector(postSelector);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(PostAction.getPosts());
+  }, []);
+
   const [newsData, setnewsData] = useState<News[]>([
     {
       newId: '1',
@@ -132,8 +142,9 @@ const HomeScreen: React.FC = () => {
             flex: 1,
             gap: 5,
           }}>
-          <PostCard />
-          <PostCard />
+          {posts.map(p => (
+            <PostCard post={p} key={p.postsId} />
+          ))}
         </View>
       </Animated.ScrollView>
     </View>
