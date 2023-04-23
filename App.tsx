@@ -5,13 +5,18 @@ import SplashScreen from '@screens/SplashScreen';
 import UploadScreen from '@screens/UploadScreen';
 import {persistor, store} from '@store/index';
 import useAuthStore from '@store/useAuthStore';
-import React from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
-import Toast from 'react-native-toast-message';
-import {Provider} from 'react-redux';
-import {PersistGate} from 'redux-persist/lib/integration/react';
+import React, {useState, useRef} from 'react';
+import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import MainScreen from './src/navigation/bottomTabs';
+import Toast from 'react-native-toast-message';
+import {PersistGate} from 'redux-persist/lib/integration/react';
 import AuthScreen from '@screens/AuthScreen';
+import ChatScreen from '@screens/ChatScreen';
+import GettingCall from '@components/GettingCall';
+import VideoScreen from '@screens/VideoScreen';
+import {MediaStream, RTCPeerConnection} from 'react-native-webrtc';
+import {getStream} from 'utils/WebRTC';
+import {Provider} from 'react-redux';
 
 export type RootStackParams = {
   Main: {
@@ -26,6 +31,12 @@ export type RootStackParams = {
   ImageScreen: {
     name: 'ImageScreen';
   };
+  ChatScreen: {
+    name: 'ChatScreen';
+  };
+  VideoScreen: {
+    name: 'VideoScreen';
+  };
 };
 
 const App: React.FC = () => {
@@ -33,8 +44,29 @@ const App: React.FC = () => {
 
   const {isAuthenticated, authLoading} = useAuthStore(state => state);
 
+  const [localStream, setlocalStream] = useState<MediaStream | null>();
+  const [remoteStream, setremoteStream] = useState<MediaStream | null>();
+  const [gettingCall, setgettingCall] = useState<boolean>(false);
+  const pc = useRef<RTCPeerConnection>();
+  const connecting = useRef<boolean>(false);
+
+  const setupWebRTC = async () => {};
+  const create = async () => {};
+  const join = async () => {};
+  const hangup = async () => {};
+
   if (authLoading) {
     return <SplashScreen />;
+  }
+
+  if (localStream && remoteStream) {
+    return (
+      <VideoScreen
+        hangUp={hangup}
+        localStreem={localStream}
+        remoteStream={remoteStream}
+      />
+    );
   }
 
   return (
@@ -65,9 +97,17 @@ const App: React.FC = () => {
               gestureDirection: 'vertical',
             }}
           />
+          <Stack.Screen
+            name="ChatScreen"
+            component={ChatScreen}
+            options={{
+              gestureDirection: 'vertical',
+            }}
+          />
         </Stack.Navigator>
       </SafeAreaView>
       <Toast />
+      {gettingCall && <GettingCall hangup={hangup} join={join} />}
     </NavigationContainer>
   );
 };
