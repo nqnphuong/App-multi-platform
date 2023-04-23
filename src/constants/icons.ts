@@ -21,6 +21,8 @@ const Back = require('../assets/icons/Back.png');
 const Images = require('../assets/icons/Images.png');
 const Image = require('../assets/icons/Image.png');
 const Close = require('../assets/icons/Close.png');
+const PhoneCall = require('../assets/icons/Phone-call.png');
+const Down = require('../assets/icons/Down.png');
 
 export default {
   Home,
@@ -46,4 +48,6 @@ export default {
   Images,
   Close,
   Image,
+  PhoneCall,
+  Down,
 };
