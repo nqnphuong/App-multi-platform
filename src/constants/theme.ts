@@ -30,6 +30,13 @@ export const COLORS = {
   transparentGray: 'rgba(77,77,77, 0.8)',
   transparentDarkGray: 'rgba(20,20,20, 0.9)',
 
+  secondary: '#0F1828',
+  secondaryWhite: '#F7F7FC',
+  tertiaryWhite: '#fafafa',
+  green: '#2CC069',
+  secondaryBlack: '#0F1828',
+  secondaryGray: '#808080',
+
   transparent: 'transparent',
 };
 export const SIZES = {

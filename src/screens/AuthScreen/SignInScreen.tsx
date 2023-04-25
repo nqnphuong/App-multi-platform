@@ -14,6 +14,7 @@ import CustomButton from 'components/CustomButton';
 import Input from 'components/Input';
 import Divider from 'components/Divider';
 import useAuthStore from 'store/useAuthStore';
+import auth from '@react-native-firebase/auth';
 
 const SignInScreen: React.FC = ({navigation}: any) => {
   const changeToMainScreen = () => {
@@ -26,10 +27,22 @@ const SignInScreen: React.FC = ({navigation}: any) => {
 
   const {login} = useAuthStore(state => state);
 
+  const handelSignIn = (values: any) => {
+    if (values.userName !== '' && values.password !== '') {
+      auth()
+        .signInWithEmailAndPassword(values.userName, values.password)
+        .then(() => {
+          login(values);
+          console.log('Login success');
+        })
+        .catch(err => console.log('Login error', err));
+    }
+  };
+
   return (
     <Formik
       onSubmit={values => {
-        login(values);
+        handelSignIn(values);
       }}
       initialValues={{
         userName: '',

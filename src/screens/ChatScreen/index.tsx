@@ -1,13 +1,28 @@
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import ChatList from './ChatList';
+import ChatContent from './ChatContent';
+
+export type RootStackParams = {
+  ChatList: {
+    name: 'ChatList';
+  };
+  ChatContent: {
+    name: 'ChatContent';
+  };
+};
 
 const ChatScreen: React.FC = () => {
+  const Stack = createNativeStackNavigator<RootStackParams>();
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View>
-        <Text>ChatScreen</Text>
-      </View>
-    </SafeAreaView>
+    <Stack.Navigator
+      initialRouteName="ChatList"
+      screenOptions={{headerShown: false}}>
+      <Stack.Screen name="ChatList" component={ChatList} />
+      <Stack.Screen name="ChatContent" component={ChatContent} />
+    </Stack.Navigator>
   );
 };
 

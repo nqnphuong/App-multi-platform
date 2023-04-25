@@ -7,12 +7,37 @@ import useAuthStore from 'store/useAuthStore';
 import CustomButton from 'components/CustomButton';
 import Input from 'components/Input';
 import Divider from 'components/Divider';
+import auth from '@react-native-firebase/auth';
 
 const SignInScreen: React.FC = ({navigation}: any) => {
   const {register} = useAuthStore(state => state);
 
   const changeToMainScreen = () => {
     navigation.navigate('Main');
+  };
+
+  const onHandleSignup = (data: any) => {
+    if (data.email !== '' && data.password !== '') {
+      auth()
+        .createUserWithEmailAndPassword(
+          data.email,
+          data.password,
+        )
+        .then(() => {
+          register(data);
+          console.log('User account created & signed in!');
+        })
+        .catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            console.log('That email address is already in use!');
+          }
+
+          if (error.code === 'auth/invalid-email') {
+            console.log('That email address is invalid!');
+          }
+          console.error(error);
+        });
+    }
   };
 
   const changeToSignInScreen = () => {
@@ -47,8 +72,7 @@ const SignInScreen: React.FC = ({navigation}: any) => {
           password: values.password,
           phone: values.phone,
         };
-
-        register(data);
+        onHandleSignup(data);
       }}
       initialValues={{
         email: '',

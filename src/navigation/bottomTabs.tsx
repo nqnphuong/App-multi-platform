@@ -4,13 +4,14 @@ import MaskedView from '@react-native-masked-view/masked-view';
 import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {icons} from 'constants';
 import HomeScreen from '@screens/HomeScreen';
 import SearchScreen from '@screens/SearchScreen';
 import AddScreen from '@screens/AddScreen';
 import LikeScreen from '@screens/LikeScreen';
 import ProfileScreen from '@screens/ProfileScreen';
 import Avatar from '@components/Avatar';
+import UploadScreen from '@screens/UploadScreen';
+import { icons } from 'constants';
 
 const MainScreen: React.FC = () => {
   const Tab = createBottomTabNavigator();
@@ -84,7 +85,7 @@ const MainScreen: React.FC = () => {
       />
       <Tab.Screen
         name="AddScreen"
-        component={AddScreen}
+        component={UploadScreen}
         options={{
           tabBarIcon: ({focused}) => renderIcons(focused, icons.Add),
         }}

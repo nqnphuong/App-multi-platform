@@ -3,7 +3,6 @@ import icons from '@constants/icons';
 import images from '@constants/images';
 import {COLORS, FONTS, SIZES} from '@constants/theme';
 import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {PostAction} from '@store/posts';
 import {useAppDispatch} from 'hooks/store';
 import useUser from 'hooks/useUser';
@@ -26,7 +25,6 @@ import {
   launchImageLibrary,
 } from 'react-native-image-picker';
 import {requestCameraPermission} from 'utils/RequestPermission';
-import {RootStackParams} from '../../../App';
 
 const RederItem = ({index, item, onDelete}: any) => {
   return (

@@ -4,6 +4,7 @@ import {COLORS} from 'constants/theme';
 import CustomButton from 'components/CustomButton';
 import useAuthStore from 'store/useAuthStore';
 
+
 const ProfileScreen: React.FC = () => {
   const {logout} = useAuthStore(state => state);
 
