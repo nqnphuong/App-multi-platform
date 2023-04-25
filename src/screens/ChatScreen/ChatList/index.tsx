@@ -1,5 +1,5 @@
 import {COLORS, FONTS, SIZES} from '@constants/theme';
-import React, {useState} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import {
   StyleSheet,
   FlatList,
@@ -13,6 +13,11 @@ import {
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import firestore from '@react-native-firebase/firestore';
+import {useFirestore} from 'services/firebase';
+import auth from '@react-native-firebase/auth';
+import LinearGradient from 'react-native-linear-gradient';
 
 const ChatList: React.FC = ({navigation}: any) => {
   const contacts = [
@@ -20,7 +25,7 @@ const ChatList: React.FC = ({navigation}: any) => {
       id: '1',
       userName: 'John Doe',
       userImg:
-        'https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg',
+        'https://vcdn-dulich.vnecdn.net/2020/09/04/1-Meo-chup-anh-dep-khi-di-bien-9310-1599219010.jpg',
       isOnline: false,
       lastSeen: '3 Days ago',
       lastMessage: 'How is it going...',
@@ -31,7 +36,7 @@ const ChatList: React.FC = ({navigation}: any) => {
       id: '2',
       userName: 'Marry Lio',
       userImg:
-        'https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg',
+        'https://vcdn-dulich.vnecdn.net/2020/09/04/1-Meo-chup-anh-dep-khi-di-bien-9310-1599219010.jpg',
       isOnline: true,
       lastSeen: 'Online',
       lastMessage: 'Good morning...',
@@ -42,7 +47,7 @@ const ChatList: React.FC = ({navigation}: any) => {
       id: '3',
       userName: 'Lucia Mu',
       userImg:
-        'https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg',
+        'https://vcdn-dulich.vnecdn.net/2020/09/04/1-Meo-chup-anh-dep-khi-di-bien-9310-1599219010.jpg',
       isOnline: false,
       lastSeen: '2 weeks ago',
       lastMessage: "What's up...",
@@ -53,7 +58,7 @@ const ChatList: React.FC = ({navigation}: any) => {
       id: '4',
       userName: 'Raki Lili',
       userImg:
-        'https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg',
+        'https://vcdn-dulich.vnecdn.net/2020/09/04/1-Meo-chup-anh-dep-khi-di-bien-9310-1599219010.jpg',
       isOnline: true,
       lastSeen: 'Online',
       lastMessage: 'Send me the link',
@@ -64,7 +69,7 @@ const ChatList: React.FC = ({navigation}: any) => {
       id: '5',
       userName: 'Raki Devine',
       userImg:
-        'https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg',
+        'https://vcdn-dulich.vnecdn.net/2020/09/04/1-Meo-chup-anh-dep-khi-di-bien-9310-1599219010.jpg',
       isOnline: false,
       lastSeen: '5 days ago',
       lastMessage: 'We are doing...',
@@ -75,7 +80,7 @@ const ChatList: React.FC = ({navigation}: any) => {
       id: '6',
       userName: 'Aris Yup',
       userImg:
-        'https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg',
+        'https://vcdn-dulich.vnecdn.net/2020/09/04/1-Meo-chup-anh-dep-khi-di-bien-9310-1599219010.jpg',
       isOnline: true,
       lastSeen: 'Online',
       lastMessage: 'How is it going...',
@@ -86,7 +91,7 @@ const ChatList: React.FC = ({navigation}: any) => {
       id: '7',
       userName: 'Aris Yup',
       userImg:
-        'https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg',
+        'https://vcdn-dulich.vnecdn.net/2020/09/04/1-Meo-chup-anh-dep-khi-di-bien-9310-1599219010.jpg',
       isOnline: true,
       lastSeen: 'Online',
       lastMessage: 'How is it going...',
@@ -97,7 +102,7 @@ const ChatList: React.FC = ({navigation}: any) => {
       id: '8',
       userName: 'Billy Di',
       userImg:
-        'https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg',
+        'https://vcdn-dulich.vnecdn.net/2020/09/04/1-Meo-chup-anh-dep-khi-di-bien-9310-1599219010.jpg',
       isOnline: true,
       lastSeen: 'Online',
       lastMessage: 'How is it going...',
@@ -108,7 +113,7 @@ const ChatList: React.FC = ({navigation}: any) => {
       id: '9',
       userName: 'Aris Biu',
       userImg:
-        'https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg',
+        'https://vcdn-dulich.vnecdn.net/2020/09/04/1-Meo-chup-anh-dep-khi-di-bien-9310-1599219010.jpg',
       isOnline: true,
       lastSeen: 'Online',
       lastMessage: 'How is it going...',
@@ -116,9 +121,37 @@ const ChatList: React.FC = ({navigation}: any) => {
       sentDate: '12/7',
     },
   ];
-
+  const [users, setUsers] = useState<any[]>([]);
   const [search, setSearch] = useState('');
   const [filteredUsers, setFilteredUsers] = useState(contacts);
+  /* 
+  const roomsCondition = React.useMemo(() => {
+    return {
+      fieldName: 'members',
+      operator: 'array-contains',
+      compareValue: auth().currentUser?.uid,
+    };
+  }, [auth().currentUser?.uid]);
+
+  const rooms = useFirestore('rooms', roomsCondition);
+ */
+
+  useLayoutEffect(() => {
+    const query = firestore().collection('users').get();
+    query.then(querySnapshot => {
+      console.log(querySnapshot.docs);
+      setUsers(
+        querySnapshot.docs.map(doc => ({
+          _id: doc.data().uid,
+          displayName: doc.data().displayName,
+          email: doc.data().email,
+          createdAt: doc.data().createdAt.toDate(),
+        })),
+      );
+    });
+    console.log(users);
+  }, []);
+
 
   const handleSearch = (text: string) => {
     setSearch(text);
@@ -140,9 +173,10 @@ const ChatList: React.FC = ({navigation}: any) => {
         {
           flexDirection: 'row',
           alignItems: 'center',
-          paddingHorizontal: 22,
-          borderBottomColor: COLORS.secondaryWhite,
+          paddingHorizontal: 20,
           borderBottomWidth: 1,
+          borderBottomColor: COLORS.secondaryWhite,
+          gap: 10,
         },
         index % 2 !== 0
           ? {
@@ -154,39 +188,42 @@ const ChatList: React.FC = ({navigation}: any) => {
         style={{
           paddingVertical: 10,
         }}>
-        {item.isOnline && item.isOnline == true && (
-          <View
+        <View>
+          {item.isOnline && item.isOnline == true && (
+            <View
+              style={{
+                height: 14,
+                width: 14,
+                borderRadius: 7,
+                backgroundColor: COLORS.green,
+                borderColor: COLORS.white,
+                borderWidth: 2,
+                position: 'absolute',
+                bottom: 0,
+                right: 2,
+                zIndex: 1000,
+              }}></View>
+          )}
+          <Image
+            source={{
+              uri: item.userImg,
+            }}
+            resizeMode="contain"
             style={{
-              height: 14,
-              width: 14,
-              borderRadius: 7,
-              backgroundColor: COLORS.green,
-              borderColor: COLORS.white,
-              borderWidth: 2,
-              position: 'absolute',
-              bottom: 14,
-              right: 2,
-              zIndex: 1000,
-            }}></View>
-        )}
-
-        <Image
-          source={{
-            uri: item.userImg,
-          }}
-          resizeMode="contain"
-          style={{
-            height: 50,
-            width: 50,
-            borderRadius: 25,
-          }}
-        />
+              height: 50,
+              width: 50,
+              borderRadius: 25,
+            }}
+          />
+        </View>
       </View>
       <View
         style={{
           flexDirection: 'column',
         }}>
-        <Text style={{...FONTS.h4, marginBottom: 4}}>{item.userName}</Text>
+        <Text style={{...FONTS.h4, marginBottom: 4, color: COLORS.black}}>
+          {item.userName}
+        </Text>
         <Text style={{fontSize: 14, color: COLORS.secondaryGray}}>
           {item.lastSeen}
         </Text>
@@ -196,16 +233,18 @@ const ChatList: React.FC = ({navigation}: any) => {
   return (
     <KeyboardAvoidingView
       style={{
-        height: SIZES.height,
+        height: SIZES.height - 50,
         width: SIZES.width,
         backgroundColor: COLORS.white,
       }}>
-      <View style={{flex: 1, padding: 15, gap: 10}}>
+      <View style={{flex: 1, gap: 10}}>
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'space-between',
             alignItems: 'center',
+            marginTop: 15,
+            marginHorizontal: 15,
+            justifyContent: 'space-between',
           }}>
           <Text style={{...FONTS.h2, color: COLORS.black}}>Chats</Text>
           <View style={{flexDirection: 'row'}}>
@@ -222,29 +261,40 @@ const ChatList: React.FC = ({navigation}: any) => {
           style={{
             flexDirection: 'row',
             alignItems: 'center',
+            marginHorizontal: 15,
           }}>
-          <View
-            style={{
-              flexDirection: 'column',
-              alignItems: 'center',
-              marginRight: 4,
-            }}></View>
           <FlatList
             horizontal={true}
             data={contacts}
             keyExtractor={item => item.id}
             showsHorizontalScrollIndicator={false}
+            ListHeaderComponent={() => (
+              <TouchableOpacity>
+                <LinearGradient
+                  colors={['#6B65DE', '#E89DE7']}
+                  start={{x: 0.1, y: 0}}
+                  end={{x: 1, y: 1}}
+                  style={{
+                    height: 50,
+                    width: 50,
+                    marginRight: 5,
+                    borderRadius: 25,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: '#e6edff',
+                  }}>
+                  <AntDesign name="plus" size={24} color={COLORS.white} />
+                </LinearGradient>
+              </TouchableOpacity>
+            )}
             renderItem={({item}) => (
               <View
                 style={{
-                  flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  marginRight: 5,
                 }}>
-                <TouchableOpacity
-                  style={{
-                    paddingVertical: 15,
-                  }}>
+                <TouchableOpacity>
                   <Image
                     source={{
                       uri: item.userImg,
@@ -267,6 +317,7 @@ const ChatList: React.FC = ({navigation}: any) => {
             flexDirection: 'row',
             alignItems: 'center',
             backgroundColor: COLORS.secondaryWhite,
+            marginHorizontal: 15,
             height: 48,
             paddingHorizontal: 12,
             borderRadius: 20,

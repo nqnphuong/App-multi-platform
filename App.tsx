@@ -11,7 +11,6 @@ import MainScreen from './src/navigation/bottomTabs';
 import Toast from 'react-native-toast-message';
 import {PersistGate} from 'redux-persist/lib/integration/react';
 import AuthScreen from '@screens/AuthScreen';
-import ChatScreen from '@screens/ChatScreen';
 import GettingCall from '@components/GettingCall';
 import VideoScreen from '@screens/VideoScreen';
 import {MediaStream, RTCPeerConnection} from 'react-native-webrtc';
@@ -30,9 +29,6 @@ export type RootStackParams = {
   };
   ImageScreen: {
     name: 'ImageScreen';
-  };
-  ChatScreen: {
-    name: 'ChatScreen';
   };
   VideoScreen: {
     name: 'VideoScreen';
@@ -93,13 +89,6 @@ const App: React.FC = () => {
           <Stack.Screen
             name="ImageScreen"
             component={ImageScreen}
-            options={{
-              gestureDirection: 'vertical',
-            }}
-          />
-          <Stack.Screen
-            name="ChatScreen"
-            component={ChatScreen}
             options={{
               gestureDirection: 'vertical',
             }}

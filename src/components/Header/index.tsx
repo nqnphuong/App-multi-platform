@@ -2,14 +2,14 @@ import React from 'react';
 import {Animated, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {icons} from 'constants';
 import {useNavigation} from '@react-navigation/native';
-import {RootStackParams} from '../../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {HomeStackParams} from 'navigation/homeStack';
 
 const Header: React.FC = () => {
   const _header_height = 50;
 
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+    useNavigation<NativeStackNavigationProp<HomeStackParams>>();
 
   return (
     <Animated.View
@@ -39,8 +39,8 @@ const Header: React.FC = () => {
       />
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate('ChatScreen', {
-            name: 'ChatScreen',
+          navigation.navigate('ChatList', {
+            name: 'ChatList',
           })
         }>
         <Image

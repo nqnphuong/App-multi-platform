@@ -8,6 +8,7 @@ import CustomButton from 'components/CustomButton';
 import Input from 'components/Input';
 import Divider from 'components/Divider';
 import auth from '@react-native-firebase/auth';
+import {addDocument, generateKeywords} from 'services/firebase';
 
 const SignInScreen: React.FC = ({navigation}: any) => {
   const {register} = useAuthStore(state => state);
@@ -19,11 +20,15 @@ const SignInScreen: React.FC = ({navigation}: any) => {
   const onHandleSignup = (data: any) => {
     if (data.email !== '' && data.password !== '') {
       auth()
-        .createUserWithEmailAndPassword(
-          data.email,
-          data.password,
-        )
+        .createUserWithEmailAndPassword(data.email, data.password)
         .then(() => {
+          const fullName = `${data.firstName} ${data.lastName}`;
+          addDocument('users', {
+            displayName: fullName,
+            email: data.email,
+            phone: data.phone,
+            keywords: generateKeywords(fullName),
+          });
           register(data);
           console.log('User account created & signed in!');
         })

@@ -11,7 +11,8 @@ import LikeScreen from '@screens/LikeScreen';
 import ProfileScreen from '@screens/ProfileScreen';
 import Avatar from '@components/Avatar';
 import UploadScreen from '@screens/UploadScreen';
-import { icons } from 'constants';
+import {icons} from 'constants';
+import HomeStack from './homeStack';
 
 const MainScreen: React.FC = () => {
   const Tab = createBottomTabNavigator();
@@ -63,15 +64,15 @@ const MainScreen: React.FC = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName="HomeScreen"
+      initialRouteName="Home"
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {height: 50},
       }}>
       <Tab.Screen
-        name="HomeScreen"
-        component={HomeScreen}
+        name="Home"
+        component={HomeStack}
         options={{
           tabBarIcon: ({focused}) => renderIcons(focused, icons.Home),
         }}
