@@ -3,8 +3,8 @@ import Header from '@components/Header';
 import PostCard from '@components/PostCard';
 import UploadPost from '@components/UploadPost';
 import {PostAction, postSelector} from '@store/posts';
-import {icons} from 'constants/';
-import {COLORS} from 'constants/theme';
+import {icons, images} from 'constants/';
+import {COLORS, FONTS} from 'constants/theme';
 import {useAppDispatch} from 'hooks/store';
 import {News} from 'models/News';
 import React, {useEffect, useState} from 'react';
@@ -121,6 +121,8 @@ const HomeScreen: React.FC = () => {
     );
   };
 
+  console.log(posts);
+
   return (
     <View style={styles.container}>
       <Header />
@@ -142,9 +144,28 @@ const HomeScreen: React.FC = () => {
             flex: 1,
             gap: 5,
           }}>
-          {posts.map(p => (
-            <PostCard post={p} key={p.postsId} />
-          ))}
+          {posts.length > 0 ? (
+            posts.map(p => <PostCard post={p} key={p.postsId} />)
+          ) : (
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Image
+                source={images.AuthImage}
+                style={{
+                  width: 300,
+                  height: 300,
+                  resizeMode: 'contain',
+                }}
+              />
+              <Text style={{
+                ...FONTS.h2,
+              }}>No posts</Text>
+            </View>
+          )}
         </View>
       </Animated.ScrollView>
     </View>
