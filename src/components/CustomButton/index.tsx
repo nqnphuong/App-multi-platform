@@ -30,7 +30,6 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     return (
       <TouchableOpacity
         style={{
-          width: 320,
           ...containerStyle,
         }}
         onPress={onPress}>

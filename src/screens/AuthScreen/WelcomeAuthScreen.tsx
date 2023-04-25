@@ -52,6 +52,7 @@ const WelcomeAuthScreen: React.FC = ({navigation}: any) => {
               display: 'flex',
               flexDirection: 'row',
               justifyContent: 'center',
+              width: 320,
               gap: 5,
               ...styles.buttonContainerStyles,
             }}

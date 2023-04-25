@@ -188,6 +188,7 @@ const SignInScreen: React.FC = ({navigation}: any) => {
                   gap: 5,
                   ...styles.buttonContainerStyles,
                   borderRadius: 10,
+                  width: 320,
                 }}
                 buttonText="Sign Up"
               />
