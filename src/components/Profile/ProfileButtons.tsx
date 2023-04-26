@@ -6,7 +6,7 @@ import {RootStackParams} from '../../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 import Feather from 'react-native-vector-icons/Feather';
-import {SIZES} from '@constants/theme';
+import {COLORS, SIZES} from '@constants/theme';
 
 interface Props {
   id: number;
@@ -63,6 +63,7 @@ const ProfileButtons: React.FC<Props> = ({
                   fontSize: 14,
                   letterSpacing: 1,
                   opacity: 0.8,
+                  color: COLORS.black,
                 }}>
                 Edit Profile
               </Text>
