@@ -13,9 +13,11 @@ import {
 } from 'redux-persist';
 import {MMKV} from 'react-native-mmkv';
 import posts from './posts';
+import user from './user';
 
 const reducers = combineReducers({
   posts: posts,
+  user: user,
 });
 
 const storage = new MMKV();
