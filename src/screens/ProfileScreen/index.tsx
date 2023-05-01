@@ -59,16 +59,17 @@ const ProfileScreen: React.FC = () => {
         <ProfileBody
           name={user.name}
           accountName={user.email}
-          profileImage="https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-de-thuong.jpg"
+          profileImage={user.avatar}
+          backgroundImage={user.background}
           followers={user.numberOfFollower}
           following={user.numberOfFollowing}
           post={user.numberOfPosts}
         />
         <ProfileButtons
           id={0}
-          name="Mr Peobody"
-          accountName="mr_peobody"
-          profileImage="https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-de-thuong.jpg"
+          name={user.name}
+          accountName={user.email}
+          profileImage={user.avatar}
         />
       </View>
       <View
