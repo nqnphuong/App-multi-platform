@@ -21,8 +21,10 @@ const ProfileButtons: React.FC<Props> = ({
   accountName,
   profileImage,
 }) => {
+  
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+
   const [follow, setFollow] = useState<any>(null);
   return (
     <>
@@ -33,15 +35,9 @@ const ProfileButtons: React.FC<Props> = ({
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-evenly',
-            paddingVertical: 5,
           }}>
           <TouchableOpacity
             onPress={() =>
-              /*    navigation.push('EditProfile', {
-                name: name,
-                accountName: accountName,
-                profileImage: profileImage,
-              }) */
               console.log('Hello')
             }
             style={{
@@ -49,21 +45,18 @@ const ProfileButtons: React.FC<Props> = ({
             }}>
             <View
               style={{
-                width: SIZES.width - 20,
+                width: SIZES.width - 40,
                 height: 35,
                 borderRadius: 5,
-                borderColor: '#DEDEDE',
-                borderWidth: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
+                backgroundColor: '#7268DC',
               }}>
               <Text
                 style={{
-                  fontWeight: 'bold',
-                  fontSize: 14,
+                  fontSize: 15,
                   letterSpacing: 1,
-                  opacity: 0.8,
-                  color: COLORS.black,
+                  color: COLORS.white,
                 }}>
                 Edit Profile
               </Text>
