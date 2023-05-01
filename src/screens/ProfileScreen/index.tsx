@@ -1,17 +1,25 @@
-import React from 'react';
-import {SafeAreaView, StyleSheet, View, ScrollView, Text} from 'react-native';
-import {COLORS} from 'constants/theme';
-import CustomButton from 'components/CustomButton';
-import useAuthStore from 'store/useAuthStore';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, View, ScrollView, Text} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import BottomTabView from '@components/Profile/BottomTabView';
 import ProfileButtons from '@components/Profile/ProfileButtons';
 import ProfileBody from '@components/Profile/ProfileBody';
+import {useAppDispatch} from 'hooks/store';
+import {UserAction, userSelector} from '@store/user';
+import AsyncStorage from '@react-native-community/async-storage';
+import {useSelector} from 'react-redux';
 const ProfileScreen: React.FC = () => {
-  const {logout} = useAuthStore(state => state);
-
   let circuls = [];
   let numberofcircels = 10;
+
+  const {user} = useSelector(userSelector);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    AsyncStorage.getItem('user').then(async (value: any) => {
+      if (value) await dispatch(UserAction.getUser(JSON.parse(value).userId));
+    });
+  }, []);
 
   for (let index = 0; index < numberofcircels; index++) {
     circuls.push(
@@ -49,12 +57,12 @@ const ProfileScreen: React.FC = () => {
     <View style={{width: '100%', height: '100%', backgroundColor: 'white'}}>
       <View style={{width: '100%', padding: 10}}>
         <ProfileBody
-          name="Mr Peobody"
-          accountName="mr_peobody"
+          name={user.name}
+          accountName={user.email}
           profileImage="https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-de-thuong.jpg"
-          followers="3.6M"
-          following="35"
-          post="458"
+          followers={user.numberOfFollower}
+          following={user.numberOfFollowing}
+          post={user.numberOfPosts}
         />
         <ProfileButtons
           id={0}
@@ -66,25 +74,7 @@ const ProfileScreen: React.FC = () => {
       <View
         style={{
           marginHorizontal: 10,
-        }}>
-     {/*    <CustomButton
-          onPress={logout}
-          iconColor={COLORS.white}
-          colors={['#6B65DE', '#E89DE7']}
-          buttonContainerStyles={{
-            height: 10,
-            width: '100%',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            paddingVertical: 12,
-            borderRadius: 10,
-          }}
-          textStyle={{
-            fontSize:10
-          }}
-          buttonText="Logout"
-        /> */}
-      </View>
+        }}></View>
       <View>
         <Text
           style={{

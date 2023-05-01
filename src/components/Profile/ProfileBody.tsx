@@ -1,13 +1,19 @@
+import CustomButton from '@components/CustomButton';
+import {COLORS} from '@constants/theme';
+import useAuthStore from '@store/useAuthStore';
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
+import Entypo from 'react-native-vector-icons/Entypo';
+import MaskedView from '@react-native-masked-view/masked-view';
+import LinearGradient from 'react-native-linear-gradient';
 interface Props {
   name: string;
   accountName: string;
   profileImage: string;
-  followers: string;
-  following: string;
-  post: string;
+  followers: number;
+  following: number;
+  post: number;
 }
 
 const ProfileBody: React.FC<Props> = ({
@@ -18,6 +24,7 @@ const ProfileBody: React.FC<Props> = ({
   followers,
   following,
 }) => {
+  const {logout} = useAuthStore(state => state);
   return (
     <View>
       {accountName ? (
@@ -50,20 +57,16 @@ const ProfileBody: React.FC<Props> = ({
             />
           </View>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Feather
-              name="plus-square"
-              style={{
-                fontSize: 25,
-                color: 'black',
-                paddingHorizontal: 15,
-              }}
-            />
-            <Feather
-              name="menu"
-              style={{
-                fontSize: 25,
-              }}
-            />
+            <TouchableOpacity onPress={logout}>
+              <Entypo
+                name="log-out"
+                style={{
+                  fontSize: 20,
+                  opacity: 0.5,
+                  color: 'black',
+                }}
+              />
+            </TouchableOpacity>
           </View>
         </View>
       ) : null}
@@ -78,17 +81,19 @@ const ProfileBody: React.FC<Props> = ({
           style={{
             alignItems: 'center',
           }}>
-          <Image
-            source={{
-              uri: profileImage,
-            }}
-            style={{
-              resizeMode: 'cover',
-              width: 80,
-              height: 80,
-              borderRadius: 100,
-            }}
-          />
+          <TouchableOpacity>
+            <Image
+              source={{
+                uri: profileImage,
+              }}
+              style={{
+                resizeMode: 'cover',
+                width: 80,
+                height: 80,
+                borderRadius: 100,
+              }}
+            />
+          </TouchableOpacity>
           <Text
             style={{
               paddingVertical: 5,
@@ -98,15 +103,21 @@ const ProfileBody: React.FC<Props> = ({
           </Text>
         </View>
         <View style={{alignItems: 'center'}}>
-          <Text style={{fontWeight: 'bold', fontSize: 18}}>{post}</Text>
+          <Text style={{fontWeight: 'bold', fontSize: 18, color: COLORS.black}}>
+            {post}
+          </Text>
           <Text>Posts</Text>
         </View>
         <View style={{alignItems: 'center'}}>
-          <Text style={{fontWeight: 'bold', fontSize: 18}}>{followers}</Text>
+          <Text style={{fontWeight: 'bold', fontSize: 18, color: COLORS.black}}>
+            {followers}
+          </Text>
           <Text>Followers</Text>
         </View>
         <View style={{alignItems: 'center'}}>
-          <Text style={{fontWeight: 'bold', fontSize: 18}}>{following}</Text>
+          <Text style={{fontWeight: 'bold', fontSize: 18, color: COLORS.black}}>
+            {following}
+          </Text>
           <Text>Following</Text>
         </View>
       </View>
