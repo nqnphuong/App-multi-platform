@@ -1,7 +1,5 @@
 import images from '@constants/images';
-import {useNavigation} from '@react-navigation/native';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
-import {useSelector} from 'react-redux';
 import tw from 'twrnc';
 
 interface Props {
@@ -17,10 +15,6 @@ const Comments: React.FC<Props> = ({
   handleVisibleDeleteModal,
   refRBSheet,
 }: any) => {
-  const navigation = useNavigation();
-  const date = new Date(Date.parse(item.dateCreate));
-  /*   const {userId} = useSelector(state => state.authReducer); */
-
   const handleLongPress = () => {
     if (setIdCommentSelected) {
       setIdCommentSelected(item.postsCommentId);
@@ -32,10 +26,6 @@ const Comments: React.FC<Props> = ({
     if (refRBSheet) {
       refRBSheet.current.close();
     }
-    /*     navigation.navigate('ProfileStack', {
-      myUserId: userId,
-      userId: item.userId,
-    }); */
   };
 
   return (

@@ -99,11 +99,10 @@ const createPost = createAsyncThunk(
 );
 const commentPost = createAsyncThunk(
   'post/commentPost',
-  async (payload: FormData) => {
+  async (payload: {comment: string; userId: string; tusId: string}) => {
     try {
       console.log(payload)
       const res = await PostApi.commentPostApi(payload);
-      console.log(res);
       return res.data.data;
     } catch (error: any) {
       throw new Error(error);

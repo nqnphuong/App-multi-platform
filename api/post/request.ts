@@ -15,20 +15,19 @@ const PostApi = {
     });
   },
   getPostUserApi(id: number) {
-    return axiosInstance.get(`posts/user/${id}`);
+    return axiosInstance.get(`/posts/user/${id}`);
   },
   findPostsByIdApi(id: string) {
-    return axiosInstance.get(`posts/${id}`);
+    return axiosInstance.get(`/posts/${id}`);
   },
   getListCommentOfPostApi(id: string) {
-    return axiosInstance.get(`posts/listComment/${id}`);
+    return axiosInstance.get(`/posts/listComment/${id}`);
   },
-  commentPostApi(data: FormData) {
-    return axiosInstance.post(`posts/comment`, data, {
-      headers: {
-        'Content-Type': `multipart/form-data`,
-      },
-    });
+  commentPostApi(data: any) {
+    const res = axiosInstance.post(`/posts/comment`, data);
+    console.log('ok');
+    console.log(res);
+    return res;
   },
 };
 

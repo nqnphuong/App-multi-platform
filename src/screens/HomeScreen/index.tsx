@@ -120,7 +120,7 @@ const HomeScreen: React.FC = () => {
       </TouchableOpacity>
     );
   };
-  
+
   return (
     <View style={styles.container}>
       <Header />
@@ -159,9 +159,12 @@ const HomeScreen: React.FC = () => {
                   resizeMode: 'contain',
                 }}
               />
-              <Text style={{
-                ...FONTS.h2,
-              }}>No posts</Text>
+              <Text
+                style={{
+                  ...FONTS.h2,
+                }}>
+                No posts
+              </Text>
             </View>
           )}
         </View>

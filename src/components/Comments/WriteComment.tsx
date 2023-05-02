@@ -19,19 +19,16 @@ const WriteComment: React.FC<Props> = ({postId}) => {
 
   const user = useUser();
 
-  const [formdata, setFormdata] = useState({
-    comment: '',
-    tusId: postId,
-    userId: user.userId,
-  });
-
   const handleComment = () => {
     if (isComment) {
-      const form = new FormData();
-      form.append('comment', isComment);
-      form.append('tusId', formdata.tusId);
-      form.append('userId', formdata.userId);
-      dispatch(PostAction.commentPost(form));
+      dispatch(
+        PostAction.commentPost({
+          comment: isComment,
+          tusId: postId,
+          userId: user.userId,
+        }),
+      );
+      dispatch(PostAction.getListCommentOfPost(postId));
       setComment('');
     }
   };
