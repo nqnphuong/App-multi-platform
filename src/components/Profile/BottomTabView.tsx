@@ -1,27 +1,27 @@
-import React from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import React, {useLayoutEffect} from 'react';
+import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-const BottomTabView: React.FC = () => {
+import {useSelector} from 'react-redux';
+import {PostAction, postSelector} from '@store/posts';
+import {useAppDispatch} from 'hooks/store';
+import IPost from 'models/Posts';
+import {COLORS} from '@constants/theme';
+
+interface Props {}
+
+const BottomTabView: React.FC<Props> = () => {
   const Tab = createMaterialTopTabNavigator();
 
-  let squares: any[] = [];
-  let numberOfSquare = 7;
+  const {myPosts} = useSelector(postSelector);
+  const dispatch = useAppDispatch();
 
-  for (let index = 0; index < numberOfSquare; index++) {
-    squares.push(
-      <View key={index}>
-        <View
-          style={{
-            width: 130,
-            height: 150,
-            marginVertical: 0.5,
-            backgroundColor: 'black',
-            opacity: 0.1,
-          }}></View>
-      </View>,
-    );
-  }
+  useLayoutEffect(() => {
+    const getMyPost = async () => {
+      dispatch(PostAction.getPostUserId());
+    };
+    getMyPost();
+  }, []);
 
   const Posts = () => {
     return (
@@ -30,6 +30,7 @@ const BottomTabView: React.FC = () => {
         style={{
           width: '100%',
           height: '100%',
+          backgroundColor: COLORS.white,
         }}>
         <View
           style={{
@@ -41,7 +42,20 @@ const BottomTabView: React.FC = () => {
             paddingVertical: 5,
             justifyContent: 'space-between',
           }}>
-          {squares}
+          {myPosts.map((post: IPost) => (
+            <View key={post.postsId}>
+              <Image
+                source={{
+                  uri: post.postsImageList[0].image,
+                }}
+                style={{
+                  width: 130,
+                  height: 150,
+                  resizeMode: 'cover',
+                }}
+              />
+            </View>
+          ))}
         </View>
       </ScrollView>
     );
@@ -63,32 +77,7 @@ const BottomTabView: React.FC = () => {
             flexDirection: 'row',
             paddingVertical: 5,
             justifyContent: 'space-between',
-          }}>
-          {squares}
-        </View>
-      </ScrollView>
-    );
-  };
-  const Tags = () => {
-    return (
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={{
-          width: '100%',
-          height: '100%',
-        }}>
-        <View
-          style={{
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'white',
-            flexWrap: 'wrap',
-            flexDirection: 'row',
-            paddingVertical: 5,
-            justifyContent: 'space-between',
-          }}>
-          {squares}
-        </View>
+          }}></View>
       </ScrollView>
     );
   };
@@ -118,7 +107,6 @@ const BottomTabView: React.FC = () => {
       })}>
       <Tab.Screen name="Posts" component={Posts} />
       <Tab.Screen name="Video" component={Video} />
-      <Tab.Screen name="Tags" component={Tags} />
     </Tab.Navigator>
   );
 };

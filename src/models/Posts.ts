@@ -3,7 +3,7 @@ interface IPost {
   caption: string;
   type: string;
   totalFeel: number;
-
+  totalComment?: number;
   dateCreate: string;
   feel: boolean;
   postsUserList: [
@@ -19,7 +19,7 @@ interface IPost {
   postsFeelList: any[];
   postsImageList: [
     {
-      postsImageId: number;
+      postsImageId: string;
       image: string;
       dateCreate: string;
     },

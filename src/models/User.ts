@@ -1,5 +1,5 @@
 interface IUser {
-  userId: number;
+  userId: string;
   firstName: string;
   lastName: string;
   avatar: string;
@@ -20,6 +20,7 @@ interface IUser {
   postsList: string;
   songList: string;
   listSongInfoList: string;
+  postsUserList: string;
 }
 
 export default IUser;

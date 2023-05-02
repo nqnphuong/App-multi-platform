@@ -13,11 +13,6 @@ import {format} from 'timeago.js';
 import {capitalizeFirstLetter} from 'utils/Letter';
 import useUser from 'hooks/useUser';
 
-interface StylesInline {
-  color: string;
-  tinColor: string;
-}
-
 interface IPostCardProps {
   post: IPost;
 }
@@ -29,10 +24,11 @@ const PostCard = ({post}: IPostCardProps) => {
   const imageDetail = () => {
     navigation.navigate('ImageScreen', {
       name: 'ImageScreen',
+      postsId: post.postsId,
     });
   };
 
-  const renderFooter = (stylesInline?: StylesInline) => {
+  const renderFooter = () => {
     return (
       <View style={styles.footer}>
         <View>
@@ -51,15 +47,13 @@ const PostCard = ({post}: IPostCardProps) => {
                     width: 20,
                     height: 20,
                     resizeMode: 'contain',
-                    tintColor: stylesInline?.tinColor,
                   },
                 ]}
               />
               <Text
                 style={[
                   {color: COLORS.black},
-                  {color: stylesInline?.color},
-                ]}>{`12 Like`}</Text>
+                ]}>{`${post.totalFeel} Like`}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.rowCenter]}>
               <Image
@@ -68,14 +62,12 @@ const PostCard = ({post}: IPostCardProps) => {
                   width: 20,
                   height: 20,
                   resizeMode: 'contain',
-                  tintColor: stylesInline?.tinColor,
                 }}
               />
               <Text
                 style={[
                   {color: COLORS.black},
-                  {color: stylesInline?.color},
-                ]}>{`5 Comment`}</Text>
+                ]}>{`${post.totalComment} Comment`}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.rowCenter]}>
               <Image
@@ -84,13 +76,9 @@ const PostCard = ({post}: IPostCardProps) => {
                   width: 20,
                   height: 20,
                   resizeMode: 'contain',
-                  tintColor: stylesInline?.tinColor,
                 }}
               />
-              <Text
-                style={[{color: COLORS.black}, {color: stylesInline?.color}]}>
-                Share
-              </Text>
+              <Text style={[{color: COLORS.black}]}>Share</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -135,7 +123,7 @@ const PostCard = ({post}: IPostCardProps) => {
                   color: COLORS.black,
                   fontSize: 12,
                 }}>
-                Public
+                {post.dateCreate}
               </Text>
               <Image
                 source={icons.Earth}
@@ -158,10 +146,6 @@ const PostCard = ({post}: IPostCardProps) => {
       </View>
       <View style={styles.textBody}>
         <Text style={{color: COLORS.black, fontSize: 14}}>{post.caption}</Text>
-        <Text style={styles.createdTime}>
-          {capitalizeFirstLetter(format(post.dateCreate, 'vi_VI'))}
-          {/* 20 hours ago */}
-        </Text>
       </View>
       <TouchableOpacity onPress={imageDetail} activeOpacity={1}>
         <AutoHeightImage

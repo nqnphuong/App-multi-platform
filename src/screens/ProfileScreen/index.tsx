@@ -1,25 +1,34 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, ScrollView, Text} from 'react-native';
+import React, {useLayoutEffect} from 'react';
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import BottomTabView from '@components/Profile/BottomTabView';
 import ProfileButtons from '@components/Profile/ProfileButtons';
 import ProfileBody from '@components/Profile/ProfileBody';
 import {useAppDispatch} from 'hooks/store';
 import {UserAction, userSelector} from '@store/user';
-import AsyncStorage from '@react-native-community/async-storage';
 import {useSelector} from 'react-redux';
+import {News} from 'models/News';
+import Avatar from '@components/Avatar';
+import {COLORS} from '@constants/theme';
+import useUser from 'hooks/useUser';
 const ProfileScreen: React.FC = () => {
   let circuls = [];
   let numberofcircels = 10;
 
-  const {user} = useSelector(userSelector);
+  const {userId} = useUser();
   const dispatch = useAppDispatch();
+  const {user} = useSelector(userSelector);
 
-  useEffect(() => {
-    AsyncStorage.getItem('user').then(async (value: any) => {
-      if (value) await dispatch(UserAction.getUser(JSON.parse(value).userId));
-    });
-  }, []);
+  useLayoutEffect(() => {
+    dispatch(UserAction.getUser(userId));
+  }, [user]);
 
   for (let index = 0; index < numberofcircels; index++) {
     circuls.push(
@@ -52,6 +61,34 @@ const ProfileScreen: React.FC = () => {
       </View>,
     );
   }
+
+  const renderNewsItem = (item: News) => {
+    return (
+      <TouchableOpacity>
+        <ImageBackground
+          style={styles.newsPost}
+          source={{
+            uri: item.newsBackground,
+          }}
+          imageStyle={{
+            borderRadius: 10,
+          }}>
+          <View style={{margin: 2}}>
+            <Avatar uri={item.userAvatar} />
+          </View>
+          <Text
+            style={{
+              fontWeight: '600',
+              fontSize: 17,
+              margin: 5,
+              color: COLORS.white,
+            }}>
+            {item.userName}
+          </Text>
+        </ImageBackground>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={{width: '100%', height: '100%', backgroundColor: 'white'}}>
@@ -104,6 +141,12 @@ const styles = StyleSheet.create({
   container: {
     margin: 0,
     padding: 0,
+  },
+  newsPost: {
+    width: 100,
+    height: 160,
+    marginRight: 5,
+    justifyContent: 'space-between',
   },
 });
 

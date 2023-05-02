@@ -7,7 +7,7 @@ import {icons, images} from 'constants/';
 import {COLORS, FONTS} from 'constants/theme';
 import {useAppDispatch} from 'hooks/store';
 import {News} from 'models/News';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import {
   Animated,
   FlatList,
@@ -120,9 +120,7 @@ const HomeScreen: React.FC = () => {
       </TouchableOpacity>
     );
   };
-
-  console.log(posts);
-
+  
   return (
     <View style={styles.container}>
       <Header />

@@ -3,11 +3,42 @@ import IPost from 'models/Posts';
 import PostApi from '../../../api/post/request';
 
 export interface IPostState {
+  post: IPost;
+  listCommentOfPost: any[];
   posts: IPost[];
+  myPosts: IPost[];
 }
 
 const initialState: IPostState = {
+  post: {
+    caption: '',
+    feel: false,
+    dateCreate: '',
+    postsCommentList: [],
+    postsFeelList: [],
+    postsId: 0,
+    postsImageList: [
+      {
+        dateCreate: '',
+        image: '',
+        postsImageId: '',
+      },
+    ],
+    postsUserList: [
+      {
+        dateCreate: '',
+        image: '',
+        name: '',
+        postsUserId: 0,
+        userId: 0,
+      },
+    ],
+    totalFeel: 0,
+    type: '',
+  },
+  listCommentOfPost: [],
   posts: [],
+  myPosts: [],
 };
 
 const slice = createSlice({
@@ -20,6 +51,18 @@ const slice = createSlice({
     });
     builder.addCase(createPost.fulfilled, (state, {payload}) => {
       state.posts = [payload, ...state.posts];
+    });
+    builder.addCase(getPostUserId.fulfilled, (state, {payload}) => {
+      state.myPosts = payload;
+    });
+    builder.addCase(findPostsById.fulfilled, (state, {payload}) => {
+      state.post = payload;
+    });
+    builder.addCase(getListCommentOfPost.fulfilled, (state, {payload}) => {
+      state.listCommentOfPost = payload;
+    });
+    builder.addCase(commentPost.fulfilled, (state, {payload}) => {
+      state.listCommentOfPost = [payload, ...state.listCommentOfPost];
     });
   },
 });
@@ -46,14 +89,55 @@ const getMyPosts = createAsyncThunk('post/getMyPosts', async () => {
 const createPost = createAsyncThunk(
   'post/createPosts',
   async (payload: FormData) => {
-    // return console.log(JSON.stringify(payload));
     try {
-      // console.log(axiosInstance.defaults.headers.common);
       const res = await PostApi.createPost(payload);
-
       return res.data.data;
     } catch (error: any) {
-      console.log(error);
+      throw new Error(error);
+    }
+  },
+);
+const commentPost = createAsyncThunk(
+  'post/commentPost',
+  async (payload: FormData) => {
+    try {
+      console.log(payload)
+      const res = await PostApi.commentPostApi(payload);
+      console.log(res);
+      return res.data.data;
+    } catch (error: any) {
+      throw new Error(error);
+    }
+  },
+);
+const getPostUserId = createAsyncThunk('post/getPostUserId', async () => {
+  try {
+    const res = await PostApi.getMyPosts();
+    return res.data.data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+});
+
+const findPostsById = createAsyncThunk(
+  'post/findPostsById',
+  async (id: string) => {
+    try {
+      const res = await PostApi.findPostsByIdApi(id);
+      return res.data.data;
+    } catch (error: any) {
+      throw new Error(error);
+    }
+  },
+);
+
+const getListCommentOfPost = createAsyncThunk(
+  'post/getListCommentOfPost',
+  async (id: string) => {
+    try {
+      const res = await PostApi.getListCommentOfPostApi(id);
+      return res.data.data;
+    } catch (error: any) {
       throw new Error(error);
     }
   },
@@ -62,7 +146,11 @@ const createPost = createAsyncThunk(
 export const PostAction = {
   getPosts,
   getMyPosts,
+  getPostUserId,
   createPost,
+  findPostsById,
+  commentPost,
+  getListCommentOfPost,
 };
 
 export const postSelector = (state: {posts: IPostState}) => {

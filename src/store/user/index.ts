@@ -8,7 +8,7 @@ export interface IUserState {
 
 const initialState: IUserState = {
   user: {
-    userId: 0,
+    userId: '',
     firstName: '',
     lastName: '',
     avatar: '',
@@ -29,6 +29,7 @@ const initialState: IUserState = {
     postsList: '',
     songList: '',
     listSongInfoList: '',
+    postsUserList: '',
   },
 };
 
