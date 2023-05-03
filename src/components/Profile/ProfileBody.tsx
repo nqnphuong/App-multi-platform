@@ -15,6 +15,10 @@ import Feather from 'react-native-vector-icons/Feather';
 import Entypo from 'react-native-vector-icons/Entypo';
 import images from '@constants/images';
 import icons from '@constants/icons';
+import UserApi from '../../../api/user/request';
+import useUser from 'hooks/useUser';
+import {useAppDispatch} from 'hooks/store';
+import {UserAction} from '@store/user';
 
 interface Props {
   name: string;
@@ -36,14 +40,25 @@ const ProfileBody: React.FC<Props> = ({
   backgroundImage,
 }) => {
   const {logout} = useAuthStore(state => state);
+  const currentUser = useUser();
+  const dispatch = useAppDispatch();
 
   const imageGallery = () => {
     ImagePicker.openPicker({
-      width: 300,
+      width: 400,
       height: 400,
       cropping: true,
-    }).then(image => {
-      console.log(image);
+    }).then((image: any) => {
+      const form = new FormData();
+      form.append('file', {
+        uri: image.path,
+        name: image.path.replace(/^.*[\\\/]/, ''),
+        type: image.mime,
+      });
+      form.append('userId', currentUser.userId);
+      UserApi.updateAvatarApi(form).then(() => {
+        dispatch(UserAction.getUser(currentUser.userId));
+      });
     });
   };
 
@@ -53,7 +68,16 @@ const ProfileBody: React.FC<Props> = ({
       height: 400,
       cropping: true,
     }).then(image => {
-      console.log(image);
+      const form = new FormData();
+      form.append('file', {
+        uri: image.path,
+        name: image.path.replace(/^.*[\\\/]/, ''),
+        type: image.mime,
+      });
+      form.append('userId', currentUser.userId);
+      UserApi.updateAvatarApi(form).then(() => {
+        dispatch(UserAction.getUser(currentUser.userId));
+      });
     });
   };
 

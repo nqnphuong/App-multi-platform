@@ -55,6 +55,8 @@ const UploadScreen: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
 
+  console.log(files)
+
   const [formdata, setFormdata] = useState({
     caption: '',
     type: '',

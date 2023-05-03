@@ -1,5 +1,5 @@
 interface IPost {
-  postsId: number;
+  postsId: string;
   caption: string;
   type: string;
   totalFeel: number;

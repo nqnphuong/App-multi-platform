@@ -1,31 +1,54 @@
-import React, {useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import AutoHeightImage from 'react-native-auto-height-image';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {icons} from 'constants';
+import {images} from 'constants';
 import {COLORS, SIZES} from 'constants/theme';
 import {Modal} from '@ant-design/react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../App';
 import {useNavigation} from '@react-navigation/native';
 import IPost from 'models/Posts';
-import {format} from 'timeago.js';
-import {capitalizeFirstLetter} from 'utils/Letter';
-import useUser from 'hooks/useUser';
+import {useAppSelector} from 'hooks/store';
+import {userSelector} from '@store/user';
+import Share from 'react-native-share';
 
 interface IPostCardProps {
   post: IPost;
+  setpostsId: (id: string) => void;
 }
 
-const PostCard = ({post}: IPostCardProps) => {
+const PostCard = ({post, setpostsId}: IPostCardProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const user = useUser();
+  const {user} = useAppSelector(userSelector);
   const imageDetail = () => {
     navigation.navigate('ImageScreen', {
       name: 'ImageScreen',
       postsId: post.postsId,
     });
+  };
+
+  const handelOnClickComment = () => {
+    setpostsId(post.postsId);
+  };
+
+  const sharePost = async () => {
+    const options = {
+      message:
+        'Deserunt ea sint magna dolor incididunt sit culpa id laborum cupidatat commodo do sint.',
+      url: 'https://sgcodes.co.in',
+      email: 'codes.sg@gmail.com',
+      subject: 'Eiusmod esse veniam esse.',
+      recipient: '919988998899',
+    };
+    try {
+      const res = await Share.open(options);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const renderFooter = () => {
@@ -55,7 +78,9 @@ const PostCard = ({post}: IPostCardProps) => {
                   {color: COLORS.black},
                 ]}>{`${post.totalFeel} Like`}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.rowCenter]}>
+            <TouchableOpacity
+              style={[styles.rowCenter]}
+              onPress={handelOnClickComment}>
               <Image
                 source={icons.Comment}
                 style={{
@@ -69,7 +94,7 @@ const PostCard = ({post}: IPostCardProps) => {
                   {color: COLORS.black},
                 ]}>{`${post.totalComment} Comment`}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.rowCenter]}>
+            <TouchableOpacity style={[styles.rowCenter]} onPress={sharePost}>
               <Image
                 source={icons.Share}
                 style={{
@@ -91,9 +116,13 @@ const PostCard = ({post}: IPostCardProps) => {
       <View style={[styles.header, styles.rowCenter]}>
         <TouchableOpacity style={styles.rowCenter}>
           <Image
-            source={{
-              uri: 'https://luv.vn/wp-content/uploads/2021/11/avatar-gai-xinh-59.jpg',
-            }}
+            source={
+              user.avatar
+                ? {
+                    uri: user.avatar,
+                  }
+                : images.avatar
+            }
             style={{
               width: 40,
               height: 40,

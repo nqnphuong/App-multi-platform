@@ -28,6 +28,7 @@ import ImageItem from '@components/ImageItem';
 import images from '@constants/images';
 import Comments from '@components/Comments/Comments';
 import WriteComment from '@components/Comments/WriteComment';
+import PostApi from '../../../api/post/request';
 
 const ImageScreen: React.FC = ({route}: any) => {
   const {postsId} = route.params;
@@ -43,7 +44,6 @@ const ImageScreen: React.FC = ({route}: any) => {
   const {post, listCommentOfPost} = useSelector(postSelector);
 
   const [isHeart, setHeart] = useState(post.feel);
-  const [isTotalFeel, setTotalFeel] = useState(post.totalFeel);
 
   const scrollX = useRef(new Animated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -61,16 +61,12 @@ const ImageScreen: React.FC = ({route}: any) => {
   }).current;
   const viewConfig = useRef({viewAreaCoveragePercentThreshold: 50}).current;
 
-  const handleReact = () => {
+  const handleReact = async () => {
     setHeart(!isHeart);
-    /*     dispatch(
-      reactPost({
-        token,
-        tusId: post.postsId,
-        userId,
-      }),
-    ); */
-    isHeart ? setTotalFeel(isTotalFeel - 1) : setTotalFeel(isTotalFeel + 1);
+    await PostApi.reactPostApi(post.postsId).then(() => {
+      dispatch(PostAction.findPostsById(post.postsId));
+      dispatch(PostAction.getPosts());
+    });
   };
 
   return (
@@ -151,7 +147,7 @@ const ImageScreen: React.FC = ({route}: any) => {
                       size={24}
                     />
                     <Text style={tw`font-semibold text-gray-800 mr-3`}>
-                      {isTotalFeel ? isTotalFeel : 0}
+                      {post.totalFeel ? post.totalFeel : 0}
                     </Text>
                   </TouchableOpacity>
 
@@ -168,16 +164,27 @@ const ImageScreen: React.FC = ({route}: any) => {
               </View>
             </View>
             <View>
-              <Text style={tw` my-3  pl-3`}>{post.caption}</Text>
-
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
+                <Text
+                  style={{
+                    maxWidth: '75%',
+                  }}>
+                  {post.caption}
+                </Text>
+                <Text style={tw`text-gray-500 `}>
+                  {post.totalComment} comments
+                </Text>
+              </View>
               <View style={tw`w-full flex justify-center items-center`}>
                 <View
                   style={tw`bg-gray-200 rounded-full w-2/5 h-[1] items-center mt-4 mb-1`}
                 />
               </View>
-              <Text style={tw`text-center text-gray-500 mb-4`}>
-                {post.totalComment} comments
-              </Text>
               {listCommentOfPost ? (
                 listCommentOfPost.map(item => {
                   return (

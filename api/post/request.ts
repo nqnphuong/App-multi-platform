@@ -25,8 +25,10 @@ const PostApi = {
   },
   commentPostApi(data: any) {
     const res = axiosInstance.post(`/posts/comment`, data);
-    console.log('ok');
-    console.log(res);
+    return res;
+  },
+  reactPostApi(id: string) {
+    const res = axiosInstance.get(`/posts/like/${id}`);
     return res;
   },
 };

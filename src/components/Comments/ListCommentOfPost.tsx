@@ -9,7 +9,7 @@ const ListCommentOfPost = ({refRBSheet}: any) => {
 
   return (
     <FlatList
-      contentContainerStyle={tw`h-full flex flex-col pt-3 px-4 w-full`}
+      contentContainerStyle={tw`h-full flex flex-col pt-3 px-5 w-full`}
       data={listCommentOfPost}
       renderItem={({item}) => {
         return <Comments item={item} refRBSheet={refRBSheet} />;

@@ -16,7 +16,7 @@ const initialState: IPostState = {
     dateCreate: '',
     postsCommentList: [],
     postsFeelList: [],
-    postsId: 0,
+    postsId: '',
     postsImageList: [
       {
         dateCreate: '',
@@ -61,9 +61,6 @@ const slice = createSlice({
     builder.addCase(getListCommentOfPost.fulfilled, (state, {payload}) => {
       state.listCommentOfPost = payload;
     });
-    builder.addCase(commentPost.fulfilled, (state, {payload}) => {
-      state.listCommentOfPost = [payload, ...state.listCommentOfPost];
-    });
   },
 });
 
@@ -101,7 +98,6 @@ const commentPost = createAsyncThunk(
   'post/commentPost',
   async (payload: {comment: string; userId: string; tusId: string}) => {
     try {
-      console.log(payload)
       const res = await PostApi.commentPostApi(payload);
       return res.data.data;
     } catch (error: any) {

@@ -3,11 +3,20 @@ import Header from '@components/Header';
 import PostCard from '@components/PostCard';
 import UploadPost from '@components/UploadPost';
 import {PostAction, postSelector} from '@store/posts';
+import {UserAction} from '@store/user';
 import {icons, images} from 'constants/';
 import {COLORS, FONTS} from 'constants/theme';
 import {useAppDispatch} from 'hooks/store';
+import useUser from 'hooks/useUser';
 import {News} from 'models/News';
-import React, {useEffect, useLayoutEffect, useState} from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   Animated,
   FlatList,
@@ -20,14 +29,22 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSelector} from 'react-redux';
+import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
+import CommentBottomSheet from '@components/Comments/CommentBottomSheet';
 
 const HomeScreen: React.FC = () => {
   const {posts} = useSelector(postSelector);
   const dispatch = useAppDispatch();
 
+  const user = useUser();
+
   useEffect(() => {
     dispatch(PostAction.getPosts());
   }, []);
+
+  useEffect(() => {
+    dispatch(UserAction.getUser(user.userId));
+  }, [user]);
 
   const [newsData, setnewsData] = useState<News[]>([
     {
@@ -121,55 +138,80 @@ const HomeScreen: React.FC = () => {
     );
   };
 
+  const bottomSheetRef = useRef<BottomSheet>(null);
+  const snapPoints = ['50%', '50%'];
+  const [isOpen, setIsOpen] = useState(true);
+  const [postsId, setpostsId] = useState<string>('');
+
+  const handleSnapPress = useCallback((index: number)=>{
+    bottomSheetRef.current?.snapToIndex(index)
+    setIsOpen(true)
+  }, [])
+
   return (
-    <View style={styles.container}>
-      <Header />
-      <Animated.ScrollView
-        style={styles.scrollView}
-        showsVerticalScrollIndicator={false}>
-        <FlatList
-          data={newsData}
-          keyExtractor={item => item.newId}
-          bounces={true}
-          horizontal={true}
-          renderItem={({item}) => renderNewsItem(item)}
-          ListHeaderComponent={renderNewsHeader()}
-          showsHorizontalScrollIndicator={false}
-        />
-        <UploadPost />
-        <View
-          style={{
-            flex: 1,
-            gap: 5,
-          }}>
-          {posts.length > 0 ? (
-            posts.map(p => <PostCard post={p} key={p.postsId} />)
-          ) : (
-            <View
-              style={{
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Image
-                source={images.AuthImage}
+    <>
+      <View style={styles.container}>
+        <Header />
+        <Animated.ScrollView
+          style={styles.scrollView}
+          showsVerticalScrollIndicator={false}>
+          <FlatList
+            data={newsData}
+            keyExtractor={item => item.newId}
+            bounces={true}
+            horizontal={true}
+            renderItem={({item}) => renderNewsItem(item)}
+            ListHeaderComponent={renderNewsHeader()}
+            showsHorizontalScrollIndicator={false}
+          />
+          <UploadPost />
+          <View
+            style={{
+              flex: 1,
+              gap: 5,
+            }}>
+            {posts.length > 0 ? (
+              posts.map(p => (
+                <PostCard post={p} key={p.postsId} setpostsId={setpostsId} />
+              ))
+            ) : (
+              <View
                 style={{
-                  width: 300,
-                  height: 300,
-                  resizeMode: 'contain',
-                }}
-              />
-              <Text
-                style={{
-                  ...FONTS.h2,
+                  flex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}>
-                No posts
-              </Text>
-            </View>
-          )}
-        </View>
-      </Animated.ScrollView>
-    </View>
+                <Image
+                  source={images.AuthImage}
+                  style={{
+                    width: 300,
+                    height: 300,
+                    resizeMode: 'contain',
+                  }}
+                />
+                <Text
+                  style={{
+                    ...FONTS.h2,
+                  }}>
+                  No posts
+                </Text>
+              </View>
+            )}
+          </View>
+        </Animated.ScrollView>
+      </View>
+      {postsId && (
+        <BottomSheet
+          ref={bottomSheetRef}
+          snapPoints={snapPoints}
+          enablePanDownToClose={true}
+          onClose={() => setIsOpen(false)}>
+          <BottomSheetView>
+            <CommentBottomSheet postsId={postsId} />
+          </BottomSheetView>
+        </BottomSheet>
+      )}
+    </>
   );
 };
 

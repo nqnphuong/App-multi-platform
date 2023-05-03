@@ -29,7 +29,7 @@ export type RootStackParams = {
   };
   ImageScreen: {
     name: 'ImageScreen';
-    postsId: number;
+    postsId: string;
   };
   VideoScreen: {
     name: 'VideoScreen';

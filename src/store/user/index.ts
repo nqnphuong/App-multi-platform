@@ -53,8 +53,21 @@ const getUser = createAsyncThunk('post/getUser', async (id: string) => {
   }
 });
 
+const updateAvatar = createAsyncThunk(
+  'post/updateAvatar',
+  async (data: FormData) => {
+    try {
+      const res = await UserApi.updateAvatarApi(data);
+      return res.data;
+    } catch (error: any) {
+      throw new Error(error);
+    }
+  },
+);
+
 export const UserAction = {
   getUser,
+  updateAvatar,
 };
 
 export const userSelector = (state: {user: IUserState}) => {
