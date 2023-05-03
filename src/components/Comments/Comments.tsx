@@ -1,4 +1,5 @@
 import images from '@constants/images';
+import {COLORS} from '@constants/theme';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 
@@ -28,6 +29,8 @@ const Comments: React.FC<Props> = ({
     }
   };
 
+  console.log(item);
+
   return (
     <TouchableOpacity
       style={tw`w-full flex flex-row my-1 mx-1 items-center`}
@@ -38,8 +41,19 @@ const Comments: React.FC<Props> = ({
           style={tw`w-10 h-10 rounded-full mr-2 bg-gray-200`}
         />
       </TouchableOpacity>
-      <View style={tw`w-full`}>
-        <View style={tw`flex flex-row items-center`}>
+      <View
+        style={{
+          gap: 10,
+          paddingVertical: 3,
+          paddingHorizontal: 10,
+          borderRadius: 10,
+          borderTopLeftRadius: 0,
+          backgroundColor: COLORS.lightGray,
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between'
+        }}>
+        <View style={tw`flex flex-col`}>
           <Text
             style={{
               fontWeight: 'bold',
@@ -48,9 +62,9 @@ const Comments: React.FC<Props> = ({
             }}>
             {item.name}
           </Text>
-          <Text style={tw`text-gray-500 text-xs`}> </Text>
+          <Text style={tw`text-gray-500 text-xs`}>{item.comment}</Text>
         </View>
-        <Text style={tw`ml-1`}>{item.comment}</Text>
+        <Text style={tw`ml-1`}>{item.dateCreate}</Text>
       </View>
     </TouchableOpacity>
   );
