@@ -87,20 +87,20 @@ const BottomTabView: React.FC<Props> = () => {
       screenOptions={({route}) => ({
         tabBarShowLabel: false,
         tabBarIndicatorStyle: {
-          backgroundColor: 'black',
+          backgroundColor: '#6B65DE',
           height: 1.5,
         },
         tabBarIcon: ({focused, colour}: any) => {
           let iconName: string = '';
           if (route.name === 'Posts') {
             iconName = focused ? 'ios-apps-sharp' : 'ios-apps-sharp';
-            colour = focused ? 'black' : 'gray';
+            colour = focused ? '#6B65DE' : 'gray';
           } else if (route.name === 'Video') {
             iconName = focused ? 'ios-play-circle' : 'ios-play-circle-outline';
-            colour = focused ? 'black' : 'gray';
+            colour = focused ? '#6B65DE' : 'gray';
           } else if (route.name === 'Tags') {
             iconName = focused ? 'ios-person' : 'ios-person-outline';
-            colour = focused ? 'black' : 'gray';
+            colour = focused ? '#6B65DE' : 'gray';
           }
           return <Ionicons name={iconName} color={colour} size={22} />;
         },
@@ -110,12 +110,5 @@ const BottomTabView: React.FC<Props> = () => {
     </Tab.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    margin: 0,
-    padding: 0,
-  },
-});
 
 export default BottomTabView;

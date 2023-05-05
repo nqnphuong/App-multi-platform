@@ -5,15 +5,13 @@ import UploadPost from '@components/UploadPost';
 import {PostAction, postSelector} from '@store/posts';
 import {UserAction} from '@store/user';
 import {icons, images} from 'constants/';
-import {COLORS, FONTS} from 'constants/theme';
+import {COLORS, FONTS, SIZES} from 'constants/theme';
 import {useAppDispatch} from 'hooks/store';
 import useUser from 'hooks/useUser';
 import {News} from 'models/News';
 import React, {
   useCallback,
   useEffect,
-  useLayoutEffect,
-  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -31,6 +29,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import {useSelector} from 'react-redux';
 import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 import CommentBottomSheet from '@components/Comments/CommentBottomSheet';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {BlurView} from '@react-native-community/blur';
 
 const HomeScreen: React.FC = () => {
   const {posts} = useSelector(postSelector);
@@ -139,21 +139,21 @@ const HomeScreen: React.FC = () => {
   };
 
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const snapPoints = ['50%', '50%'];
-  const [isOpen, setIsOpen] = useState(true);
+  const snapPoints = ['45%', '45%'];
+  const [isOpen, setIsOpen] = useState(false);
   const [postsId, setpostsId] = useState<string>('');
 
-  const handleSnapPress = useCallback((index: number)=>{
-    bottomSheetRef.current?.snapToIndex(index)
-    setIsOpen(true)
-  }, [])
+  const handleSnapPress = useCallback((index: number) => {
+    bottomSheetRef.current?.snapToIndex(index);
+    setIsOpen(true);
+  }, []);
 
   return (
-    <>
+    <GestureHandlerRootView style={{flex: 1}}>
       <View style={styles.container}>
         <Header />
         <Animated.ScrollView
-          style={styles.scrollView}
+          style={[styles.scrollView]}
           showsVerticalScrollIndicator={false}>
           <FlatList
             data={newsData}
@@ -172,7 +172,12 @@ const HomeScreen: React.FC = () => {
             }}>
             {posts.length > 0 ? (
               posts.map(p => (
-                <PostCard post={p} key={p.postsId} setpostsId={setpostsId} />
+                <PostCard
+                  post={p}
+                  key={p.postsId}
+                  setpostsId={setpostsId}
+                  handleSnapPress={handleSnapPress}
+                />
               ))
             ) : (
               <View
@@ -200,6 +205,17 @@ const HomeScreen: React.FC = () => {
           </View>
         </Animated.ScrollView>
       </View>
+      {isOpen && (
+        <BlurView
+          style={{
+            position: 'absolute',
+            width: SIZES.width,
+            height: SIZES.height,
+          }}
+          blurType="light"
+          blurAmount={1}
+        />
+      )}
       {postsId && (
         <BottomSheet
           ref={bottomSheetRef}
@@ -211,7 +227,7 @@ const HomeScreen: React.FC = () => {
           </BottomSheetView>
         </BottomSheet>
       )}
-    </>
+    </GestureHandlerRootView>
   );
 };
 

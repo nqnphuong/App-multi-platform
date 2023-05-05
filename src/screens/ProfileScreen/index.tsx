@@ -1,4 +1,4 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useEffect, useLayoutEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -24,11 +24,11 @@ const ProfileScreen: React.FC = () => {
 
   const {userId} = useUser();
   const dispatch = useAppDispatch();
-  const {user} = useSelector(userSelector);
+  const {userCurrent} = useSelector(userSelector);
 
-  useLayoutEffect(() => {
-    dispatch(UserAction.getUser(userId));
-  }, [user]);
+  useEffect(() => {
+    dispatch(UserAction.getUserCurrent(userId));
+  }, []);
 
   for (let index = 0; index < numberofcircels; index++) {
     circuls.push(
@@ -94,19 +94,20 @@ const ProfileScreen: React.FC = () => {
     <View style={{width: '100%', height: '100%', backgroundColor: 'white'}}>
       <View style={{width: '100%', padding: 10}}>
         <ProfileBody
-          name={user.name}
-          accountName={user.email}
-          profileImage={user.avatar}
-          backgroundImage={user.background}
-          followers={user.numberOfFollower}
-          following={user.numberOfFollowing}
-          post={user.numberOfPosts}
+          name={userCurrent.name}
+          accountName={userCurrent.email}
+          profileImage={userCurrent.avatar}
+          backgroundImage={userCurrent.background}
+          followers={userCurrent.numberOfFollower}
+          following={userCurrent.numberOfFollowing}
+          post={userCurrent.numberOfPosts}
+          isCurrentUser={true}
         />
         <ProfileButtons
           id={0}
-          name={user.name}
-          accountName={user.email}
-          profileImage={user.avatar}
+          name={userCurrent.name}
+          accountName={userCurrent.email}
+          profileImage={userCurrent.avatar}
         />
       </View>
       <View

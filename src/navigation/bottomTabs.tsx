@@ -13,6 +13,7 @@ import Avatar from '@components/Avatar';
 import UploadScreen from '@screens/UploadScreen';
 import {icons} from 'constants';
 import HomeStack from './homeStack';
+import SearchStack from './searchStack';
 
 const MainScreen: React.FC = () => {
   const Tab = createBottomTabNavigator();
@@ -78,8 +79,8 @@ const MainScreen: React.FC = () => {
         }}
       />
       <Tab.Screen
-        name="SearchScreen"
-        component={SearchScreen}
+        name="Search"
+        component={SearchStack}
         options={{
           tabBarIcon: ({focused}) => renderIcons(focused, icons.Union),
         }}

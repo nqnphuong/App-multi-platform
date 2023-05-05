@@ -11,6 +11,9 @@ const UserApi = {
       },
     });
   },
+  findUserByNameApi(name: string) {
+    return axiosInstance.get(`/user/find/name=${name}`);
+  },
 };
 
 export default UserApi;

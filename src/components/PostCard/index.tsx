@@ -17,9 +17,10 @@ import Share from 'react-native-share';
 interface IPostCardProps {
   post: IPost;
   setpostsId: (id: string) => void;
+  handleSnapPress: (key: number) => void;
 }
 
-const PostCard = ({post, setpostsId}: IPostCardProps) => {
+const PostCard = ({post, setpostsId, handleSnapPress}: IPostCardProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const {user} = useAppSelector(userSelector);
@@ -32,6 +33,7 @@ const PostCard = ({post, setpostsId}: IPostCardProps) => {
 
   const handelOnClickComment = () => {
     setpostsId(post.postsId);
+    handleSnapPress(0);
   };
 
   const sharePost = async () => {

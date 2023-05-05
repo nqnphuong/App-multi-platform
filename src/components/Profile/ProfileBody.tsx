@@ -11,7 +11,6 @@ import {
   View,
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
-import Feather from 'react-native-vector-icons/Feather';
 import Entypo from 'react-native-vector-icons/Entypo';
 import images from '@constants/images';
 import icons from '@constants/icons';
@@ -28,6 +27,7 @@ interface Props {
   following: number;
   post: number;
   backgroundImage: string;
+  isCurrentUser?: boolean;
 }
 
 const ProfileBody: React.FC<Props> = ({
@@ -37,7 +37,7 @@ const ProfileBody: React.FC<Props> = ({
   post,
   followers,
   following,
-  backgroundImage,
+  isCurrentUser,
 }) => {
   const {logout} = useAuthStore(state => state);
   const currentUser = useUser();
@@ -111,15 +111,17 @@ const ProfileBody: React.FC<Props> = ({
             </Text>
           </View>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <TouchableOpacity onPress={logout}>
-              <Entypo
-                name="log-out"
-                style={{
-                  fontSize: 20,
-                  color: 'black',
-                }}
-              />
-            </TouchableOpacity>
+            {isCurrentUser && (
+              <TouchableOpacity onPress={logout}>
+                <Entypo
+                  name="log-out"
+                  style={{
+                    fontSize: 20,
+                    color: 'black',
+                  }}
+                />
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       ) : null}
@@ -137,7 +139,7 @@ const ProfileBody: React.FC<Props> = ({
           }}>
           <View>
             <TouchableOpacity
-              onPress={imageGallery}
+              onPress={isCurrentUser ? imageGallery : undefined}
               style={{
                 width: 80,
                 height: 80,
@@ -164,15 +166,19 @@ const ProfileBody: React.FC<Props> = ({
                 }}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={imageCamera} style={styles.cameraButton}>
-              <Entypo
-                name="camera"
-                style={{
-                  fontSize: 15,
-                  color: 'black',
-                }}
-              />
-            </TouchableOpacity>
+            {isCurrentUser && (
+              <TouchableOpacity
+                onPress={imageCamera}
+                style={styles.cameraButton}>
+                <Entypo
+                  name="camera"
+                  style={{
+                    fontSize: 15,
+                    color: 'black',
+                  }}
+                />
+              </TouchableOpacity>
+            )}
           </View>
           <Text
             style={{

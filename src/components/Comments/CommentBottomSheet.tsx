@@ -63,9 +63,7 @@ const CommentBottomSheet: React.FC<Props> = ({postsId}) => {
 
   const handleReact = async () => {
     setHeart(!isHeart);
-    await PostApi.reactPostApi(post.postsId).then((res)=>{
-        console.log(res)
-    });
+    await PostApi.reactPostApi(post.postsId)
     isHeart ? setTotalFeel(isTotalFeel - 1) : setTotalFeel(isTotalFeel + 1);
   };
 

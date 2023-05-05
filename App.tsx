@@ -16,6 +16,7 @@ import VideoScreen from '@screens/VideoScreen';
 import {MediaStream, RTCPeerConnection} from 'react-native-webrtc';
 import {getStream} from 'utils/WebRTC';
 import {Provider} from 'react-redux';
+import DetailUserScreen from '@screens/DetailUserScreen';
 
 export type RootStackParams = {
   Main: {
