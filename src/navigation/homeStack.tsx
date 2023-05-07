@@ -2,8 +2,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import HomeScreen from '@screens/HomeScreen';
-import ChatList from '@screens/ChatScreen/ChatList';
-import ChatContent from '@screens/ChatScreen/ChatContent';
+import ChatList from '@screens/ChatScreen';
 import DetailUserScreen from '@screens/DetailUserScreen';
 
 export type HomeStackParams = {
@@ -27,7 +26,6 @@ const HomeStack: React.FC = () => {
       screenOptions={{headerShown: false}}>
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="ChatList" component={ChatList} />
-      <Stack.Screen name="ChatContent" component={ChatContent} />
     </Stack.Navigator>
   );
 };

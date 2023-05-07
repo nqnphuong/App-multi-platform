@@ -1,24 +1,18 @@
 import React from 'react';
-import {Animated, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {StyleSheet, TouchableOpacity, Image, View} from 'react-native';
 import {icons} from 'constants';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {HomeStackParams} from 'navigation/homeStack';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {COLORS} from '@constants/theme';
 
 const Header: React.FC = () => {
-  const _header_height = 50;
-
   const navigation =
     useNavigation<NativeStackNavigationProp<HomeStackParams>>();
 
   return (
-    <Animated.View
-      style={[
-        styles.header,
-        {
-          height: _header_height,
-        },
-      ]}>
+    <View style={styles.header}>
       <TouchableOpacity>
         <Image
           source={icons.Camera}
@@ -52,15 +46,19 @@ const Header: React.FC = () => {
           }}
         />
       </TouchableOpacity>
-    </Animated.View>
+    </View>
   );
 };
 const styles = StyleSheet.create({
   header: {
+    height: 50,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 15,
+    backgroundColor: COLORS.white,
+    borderBottomWidth: 2,
+    borderBottomColor: COLORS.lightGray,
   },
 });
 export default Header;
