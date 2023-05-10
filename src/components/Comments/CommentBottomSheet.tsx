@@ -1,20 +1,14 @@
-import React, {useCallback, useMemo} from 'react';
+import React from 'react';
 import {
   View,
   Text,
   Image,
-  StatusBar,
   ScrollView,
   TouchableOpacity,
   Animated,
-  FlatList,
-  TextInput,
   KeyboardAvoidingView,
   Platform,
-  StyleSheet,
-  SafeAreaView,
 } from 'react-native';
-import BottomSheet from '@gorhom/bottom-sheet';
 import {useLayoutEffect, useRef, useState} from 'react';
 import tw from 'twrnc';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -22,7 +16,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
 import {PostAction, postSelector} from '@store/posts';
 import {useAppDispatch} from 'hooks/store';
-import ImageItem from '@components/ImageItem';
 import images from '@constants/images';
 import Comments from '@components/Comments/Comments';
 import WriteComment from '@components/Comments/WriteComment';
