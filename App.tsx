@@ -6,7 +6,7 @@ import SplashScreen from '@screens/SplashScreen';
 import UploadScreen from '@screens/UploadScreen';
 import {persistor, store} from '@store/index';
 import useAuthStore from '@store/useAuthStore';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import MainScreen from './src/navigation/bottomTabs';
 import Toast from 'react-native-toast-message';
@@ -15,6 +15,7 @@ import AuthScreen from '@screens/AuthScreen';
 import {Provider} from 'react-redux';
 import ChatRoomScreen from '@screens/ChatRoomScreen';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import messaging from '@react-native-firebase/messaging';
 import ChatContextProvider from '@screens/ChatScreen/context/ChatContext';
 
 export type RootStackParams = {
@@ -41,6 +42,24 @@ export type RootStackParams = {
 
 const App: React.FC = () => {
   const Stack = createNativeStackNavigator<RootStackParams>();
+
+  const requestPermission = async () => {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      console.log('Authorization status:', authStatus);
+    }
+
+    const token = await messaging().getToken();
+    console.log(token);
+  };
+
+  useEffect(() => {
+    requestPermission();
+  }, []);
 
   const {isAuthenticated, authLoading} = useAuthStore(state => state);
 

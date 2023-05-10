@@ -1990,6 +1990,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-17.4.2.tgz#d46fb140c068f74cb761ce5ce893c773ac0d4c90"
   integrity sha512-FWkFcPZaw4qXfoblfk6+xfwopGyjg3Vv3sv3sbRMh7XJt4FpOsRPmK3N6LTevRvP6tt3HNd4bBGvcIm/pTKP6w==
 
+"@react-native-firebase/messaging@^17.4.3":
+  version "17.4.3"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-17.4.3.tgz#61db528867ab4742ec772a6dde1e0cb0be85b3dd"
+  integrity sha512-geZsrfU4nlWYWNz7ES0IbUNvK3j0/1wGbWj6V1ae7LJMXfuD21+dynb+VxwWhQTwlsr8IkpsIZDg1VIsL1rs6g==
+
 "@react-native-masked-view/masked-view@^0.2.9":
   version "0.2.9"
   resolved "https://registry.yarnpkg.com/@react-native-masked-view/masked-view/-/masked-view-0.2.9.tgz#723a7a076d56b8f5f3fda076eaa5b6b82988e854"
