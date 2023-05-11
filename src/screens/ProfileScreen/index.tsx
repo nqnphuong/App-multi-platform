@@ -18,6 +18,7 @@ import {News} from 'models/News';
 import Avatar from '@components/Avatar';
 import {COLORS} from '@constants/theme';
 import useUser from 'hooks/useUser';
+import {StoryAction} from '@store/stories';
 const ProfileScreen: React.FC = () => {
   let circuls = [];
   let numberofcircels = 10;
@@ -25,6 +26,13 @@ const ProfileScreen: React.FC = () => {
   const {userId} = useUser();
   const dispatch = useAppDispatch();
   const {userCurrent} = useSelector(userSelector);
+
+  const {setIsStoryViewShow, setPressedIndex} = StoryAction;
+
+  const openStories = (index: number) => {
+    dispatch(setIsStoryViewShow(true));
+    dispatch(setPressedIndex(index));
+  };
 
   useEffect(() => {
     dispatch(UserAction.getUserCurrent(userId));
@@ -48,15 +56,20 @@ const ProfileScreen: React.FC = () => {
             <Entypo name="plus" style={{fontSize: 40, color: 'black'}} />
           </View>
         ) : (
-          <View
-            style={{
-              width: 60,
-              height: 60,
-              borderRadius: 100,
-              backgroundColor: 'black',
-              opacity: 0.1,
-              marginHorizontal: 5,
-            }}></View>
+          <TouchableOpacity
+            onPress={() => {
+              openStories(index - 1);
+            }}>
+            <View
+              style={{
+                width: 60,
+                height: 60,
+                borderRadius: 100,
+                backgroundColor: 'black',
+                opacity: 0.1,
+                marginHorizontal: 5,
+              }}></View>
+          </TouchableOpacity>
         )}
       </View>,
     );

@@ -1,7 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+
 import {RootStackParams} from '../../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
@@ -21,7 +21,6 @@ const ProfileButtons: React.FC<Props> = ({
   accountName,
   profileImage,
 }) => {
-  
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
@@ -37,9 +36,7 @@ const ProfileButtons: React.FC<Props> = ({
             justifyContent: 'space-evenly',
           }}>
           <TouchableOpacity
-            onPress={() =>
-              console.log('Hello')
-            }
+            onPress={() => console.log('Hello')}
             style={{
               width: '100%',
             }}>

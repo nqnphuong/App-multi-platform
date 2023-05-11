@@ -14,6 +14,7 @@ import ProfileBody from '@components/Profile/ProfileBody';
 import {useAppDispatch} from 'hooks/store';
 import {UserAction, userSelector} from '@store/user';
 import {useSelector} from 'react-redux';
+import useUser from 'hooks/useUser';
 
 const DetailUserScreen: React.FC = ({route}: any) => {
   let circuls = [];
@@ -26,6 +27,8 @@ const DetailUserScreen: React.FC = ({route}: any) => {
   }, [route.params.userId]);
 
   const {user} = useSelector(userSelector);
+
+  const authUser = useUser();
 
   for (let index = 0; index < numberofcircels; index++) {
     circuls.push(
@@ -72,7 +75,7 @@ const DetailUserScreen: React.FC = ({route}: any) => {
           post={user.numberOfPosts}
         />
         <ProfileButtons
-          id={0}
+          id={user.userId === authUser.userId ? 0 : 1}
           name={user.name}
           accountName={user.email}
           profileImage={user.avatar}
