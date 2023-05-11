@@ -18,16 +18,11 @@ interface UploadPostProps {
   avatar?: string;
 }
 
-const UploadPost: React.FC<UploadPostProps> = ({avatar}) => {
-  const [granted, setGranted] = useState<boolean>();
+const UploadPost: React.FC<UploadPostProps> = () => {
   const [files, setfiles] = useState([]);
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-
-  const handleFileChange = (file: any) => {
-    console.log(files);
-  };
 
   useEffect(() => {
     const getCameraPermission = async () => {

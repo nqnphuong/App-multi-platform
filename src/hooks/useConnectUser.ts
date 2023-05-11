@@ -23,6 +23,7 @@ export const useConnectUser = <
     });
 
     let didUserConnectInterrupt = false;
+
     const connectUser = client
       .connectUser(userToConnect, client.devToken(userTokenOrProvider))
       .catch(e => {
