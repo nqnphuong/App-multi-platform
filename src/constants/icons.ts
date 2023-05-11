@@ -23,6 +23,8 @@ const Image = require('../assets/icons/Image.png');
 const Close = require('../assets/icons/Close.png');
 const PhoneCall = require('../assets/icons/Phone-call.png');
 const Down = require('../assets/icons/Down.png');
+const Messenger = require('../assets/icons/messenger.png');
+const CloseX = require('../assets/icons/close_x.png');
 
 export default {
   Home,
@@ -50,4 +52,6 @@ export default {
   Image,
   PhoneCall,
   Down,
+  Messenger,
+  CloseX,
 };

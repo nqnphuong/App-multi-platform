@@ -1,22 +1,22 @@
+import GettingCall from '@components/GettingCall';
+import Story from '@components/Story/Story';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import AuthScreen from '@screens/AuthScreen';
+
 import ImageScreen from '@screens/ImageScreen';
 import SplashScreen from '@screens/SplashScreen';
 import UploadScreen from '@screens/UploadScreen';
+import VideoScreen from '@screens/VideoScreen';
 import {persistor, store} from '@store/index';
 import useAuthStore from '@store/useAuthStore';
-import React, {useState, useRef} from 'react';
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import MainScreen from './src/navigation/bottomTabs';
+import MainScreen from 'navigation/bottomTabs';
+import React, {useRef, useState} from 'react';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import Toast from 'react-native-toast-message';
-import {PersistGate} from 'redux-persist/lib/integration/react';
-import AuthScreen from '@screens/AuthScreen';
-import GettingCall from '@components/GettingCall';
-import VideoScreen from '@screens/VideoScreen';
 import {MediaStream, RTCPeerConnection} from 'react-native-webrtc';
-import {getStream} from 'utils/WebRTC';
 import {Provider} from 'react-redux';
-import DetailUserScreen from '@screens/DetailUserScreen';
+import {PersistGate} from 'redux-persist/lib/integration/react';
 
 export type RootStackParams = {
   Main: {
@@ -98,6 +98,7 @@ const App: React.FC = () => {
         </Stack.Navigator>
       </SafeAreaView>
       <Toast />
+      <Story />
       {gettingCall && <GettingCall hangup={hangup} join={join} />}
     </NavigationContainer>
   );

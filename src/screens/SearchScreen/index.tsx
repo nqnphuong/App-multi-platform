@@ -6,10 +6,10 @@ import {
   SafeAreaView,
   Keyboard,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import {useEffect, useState} from 'react';
 import tw from 'twrnc';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import SearchItem from '@components/SearchItem';
 import OnSearchingSkeletion from '@components/Skeleton/OnSearchingSkeletion';
 import {useAppDispatch, useAppSelector} from 'hooks/store';
