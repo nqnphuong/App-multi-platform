@@ -70,6 +70,7 @@ const DetailUserScreen: React.FC = ({route}: any) => {
         <ProfileButtons
           id={user.userId === authUser.userId ? 0 : 1}
           name={user.name}
+          userId={Number(user.userId)}
           accountName={user.email}
           profileImage={user.avatar}
         />

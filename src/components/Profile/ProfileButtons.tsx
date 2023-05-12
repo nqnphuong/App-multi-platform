@@ -17,12 +17,14 @@ interface Props {
   name: string;
   accountName: string;
   profileImage: any;
+  userId?: number;
 }
 
 const ProfileButtons: React.FC<Props> = ({
   id,
   name,
   accountName,
+  userId,
   profileImage,
 }) => {
   const navigation =
@@ -32,15 +34,15 @@ const ProfileButtons: React.FC<Props> = ({
 
   const {followers} = useAppSelector(followsSelector);
 
-  console.log(followers);
+  // console.log(followers);
 
   const dispatch = useAppDispatch();
 
-  const isFollow = followers.findIndex(f => f.userId === id) !== -1;
+  const isFollow = followers.findIndex(f => f.userId === userId) !== -1;
 
   const handleFollow = async () => {
     try {
-      dispatch(FollowAction.sendFollow(id));
+      dispatch(FollowAction.sendFollow(userId!));
     } catch (error) {}
   };
 
