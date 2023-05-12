@@ -6,8 +6,9 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {icons, images} from 'constants';
 import useAuthStore from '@store/useAuthStore';
+import images from '@constants/images';
+import icons from '@constants/icons';
 
 const SplashScreen: React.FC = () => {
   const {loadAuth} = useAuthStore(state => state);

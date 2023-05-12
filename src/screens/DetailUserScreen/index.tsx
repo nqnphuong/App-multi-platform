@@ -1,12 +1,5 @@
 import React, {useLayoutEffect} from 'react';
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  ImageBackground,
-} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import BottomTabView from '@components/Profile/BottomTabView';
 import ProfileButtons from '@components/Profile/ProfileButtons';

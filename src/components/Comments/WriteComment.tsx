@@ -1,11 +1,8 @@
 import {Image, TextInput, View} from 'react-native';
 import tw from 'twrnc';
-import React, {useEffect, useState} from 'react';
-import {BlurView} from '@react-native-community/blur';
+import React, {useState} from 'react';
 import images from '@constants/images';
-import AsyncStorage from '@react-native-community/async-storage';
 import {PostAction} from '@store/posts';
-import useUser from 'hooks/useUser';
 import {useAppDispatch, useAppSelector} from 'hooks/store';
 import {COLORS} from '@constants/theme';
 import {userSelector} from '@store/user';

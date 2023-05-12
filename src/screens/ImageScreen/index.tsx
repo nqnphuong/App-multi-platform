@@ -7,21 +7,16 @@ import {
   TouchableOpacity,
   Animated,
   FlatList,
-  TextInput,
   KeyboardAvoidingView,
   Platform,
-  StyleSheet,
 } from 'react-native';
 import {useLayoutEffect, useRef, useState} from 'react';
 import tw from 'twrnc';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
-import {LinearGradient} from 'react-native-linear-gradient';
-import {BlurView} from '@react-native-community/blur';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {COLORS} from '@constants/theme';
 import {PostAction, postSelector} from '@store/posts';
 import {useAppDispatch} from 'hooks/store';
 import ImageItem from '@components/ImageItem';

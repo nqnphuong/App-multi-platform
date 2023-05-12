@@ -4,7 +4,6 @@ import PostCard from '@components/PostCard';
 import UploadPost from '@components/UploadPost';
 import {PostAction, postSelector} from '@store/posts';
 import {UserAction} from '@store/user';
-import {icons, images} from 'constants/';
 import {COLORS, FONTS, SIZES} from 'constants/theme';
 import {useAppDispatch} from 'hooks/store';
 import useUser from 'hooks/useUser';
@@ -25,8 +24,9 @@ import {useSelector} from 'react-redux';
 import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 import CommentBottomSheet from '@components/Comments/CommentBottomSheet';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {BlurView} from '@react-native-community/blur';
 import {StoryAction} from '@store/stories';
+import images from '@constants/images';
+import icons from '@constants/icons';
 
 const HomeScreen: React.FC = () => {
   const {posts} = useSelector(postSelector);

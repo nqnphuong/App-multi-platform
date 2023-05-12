@@ -4,7 +4,6 @@ import {
   ExtendableGenerics,
   OwnUserResponse,
   StreamChat,
-  TokenOrProvider,
   UserResponse,
 } from 'stream-chat';
 

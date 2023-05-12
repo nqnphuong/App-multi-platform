@@ -5,7 +5,7 @@ const SplashImage = require('../assets/images/Splash.png');
 const Avatar = require('../assets/images/Avatar.png');
 const Looking = require('../assets/gifs/looking.gif');
 
-export default {
+const images = {
   AuthImage,
   Background,
   SplashImage,
@@ -13,3 +13,5 @@ export default {
   profileBackground,
   Looking,
 };
+
+export default images;

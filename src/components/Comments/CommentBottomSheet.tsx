@@ -5,8 +5,6 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
 } from 'react-native';
 import {useLayoutEffect, useState} from 'react';
 import tw from 'twrnc';
@@ -19,8 +17,6 @@ import images from '@constants/images';
 import Comments from '@components/Comments/Comments';
 import WriteComment from '@components/Comments/WriteComment';
 import PostApi from '../../../api/post/request';
-import {SIZES} from '@constants/theme';
-
 interface Props {
   postsId: string;
 }

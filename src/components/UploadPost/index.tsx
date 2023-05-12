@@ -1,12 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {
-  View,
-  PermissionsAndroid,
-  Platform,
-  Text,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, Platform, Text, Image, TouchableOpacity} from 'react-native';
 import {request, PERMISSIONS} from 'react-native-permissions';
 import styles from './styles';
 import Avatar from '@components/Avatar';
@@ -19,8 +12,6 @@ interface UploadPostProps {
 }
 
 const UploadPost: React.FC<UploadPostProps> = () => {
-  const [files, setfiles] = useState([]);
-
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

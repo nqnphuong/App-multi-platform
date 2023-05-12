@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
-import {COLORS, FONTS, SIZES} from 'constants/theme';
+import {View, Text, StyleSheet} from 'react-native';
+import {COLORS, FONTS} from 'constants/theme';
 import {Modal, Provider} from '@ant-design/react-native';
 import Avatar from '@components/Avatar';
 import CustomButton from '@components/CustomButton';

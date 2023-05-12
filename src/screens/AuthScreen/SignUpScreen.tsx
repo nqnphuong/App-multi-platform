@@ -1,7 +1,6 @@
 import {Formik} from 'formik';
 import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {icons} from 'constants';
 import {COLORS, FONTS, SIZES} from 'constants/theme';
 import useAuthStore from 'store/useAuthStore';
 import CustomButton from 'components/CustomButton';
@@ -9,6 +8,7 @@ import Input from 'components/Input';
 import Divider from 'components/Divider';
 import auth from '@react-native-firebase/auth';
 import {addDocument, generateKeywords} from 'services/firebase';
+import icons from '@constants/icons';
 
 const SignInScreen: React.FC = ({navigation}: any) => {
   const {register} = useAuthStore(state => state);

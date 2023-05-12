@@ -1,10 +1,8 @@
-import CustomButton from '@components/CustomButton';
 import {COLORS, FONTS} from '@constants/theme';
 import useAuthStore from '@store/useAuthStore';
 import React from 'react';
 import {
   Image,
-  ImageBackground,
   StyleSheet,
   Text,
   TouchableOpacity,

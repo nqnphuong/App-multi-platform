@@ -10,7 +10,6 @@ import {
 import React, {useEffect, useState} from 'react';
 import {
   ChannelList,
-  useTypingContext,
   useChatContext,
 } from 'stream-chat-react-native';
 import {StreamChatGenerics} from './types';
@@ -27,7 +26,6 @@ import type {UserResponse} from 'stream-chat';
 import useUser from 'hooks/useUser';
 import _ from 'lodash';
 import OnSearchingSkeletion from '@components/Skeleton/OnSearchingSkeletion';
-import Avatar from '@components/Avatar';
 import images from '@constants/images';
 import moment from 'moment';
 

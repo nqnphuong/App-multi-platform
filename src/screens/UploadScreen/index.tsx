@@ -192,11 +192,7 @@ const UploadScreen: React.FC = () => {
       <View style={styles.postActionContainer}>
         <View style={styles.postAction}>
           <TouchableOpacity onPress={takeMedia}>
-            <Ionicons
-              name="camera-outline"
-              size={27}
-              color={COLORS.black}
-            />
+            <Ionicons name="camera-outline" size={27} color={COLORS.black} />
           </TouchableOpacity>
           <TouchableOpacity onPress={pickerMedia}>
             <Ionicons name="image-outline" size={26} color={COLORS.black} />

@@ -1,11 +1,7 @@
-import React, {useMemo, useRef, useState} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import AutoHeightImage from 'react-native-auto-height-image';
-import ImageViewer from 'react-native-image-zoom-viewer';
-import {icons} from 'constants';
-import {images} from 'constants';
 import {COLORS, SIZES} from 'constants/theme';
-import {Modal} from '@ant-design/react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../App';
 import {useNavigation} from '@react-navigation/native';
@@ -13,6 +9,8 @@ import IPost from 'models/Posts';
 import {useAppSelector} from 'hooks/store';
 import {userSelector} from '@store/user';
 import Share from 'react-native-share';
+import icons from '@constants/icons';
+import images from '@constants/images';
 
 interface IPostCardProps {
   post: IPost;
@@ -123,7 +121,7 @@ const PostCard = ({post, setpostsId, handleSnapPress}: IPostCardProps) => {
                 ? {
                     uri: user.avatar,
                   }
-                : images.avatar
+                : images.Avatar
             }
             style={{
               width: 40,

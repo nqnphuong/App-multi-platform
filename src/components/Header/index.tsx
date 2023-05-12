@@ -4,8 +4,8 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {HomeStackParams} from 'navigation/homeStack';
 import {COLORS} from '@constants/theme';
+import icons from '@constants/icons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {icons} from 'constants';
 
 const Header: React.FC = () => {
   const navigation =

@@ -26,7 +26,7 @@ const Down = require('../assets/icons/Down.png');
 const Messenger = require('../assets/icons/messenger.png');
 const CloseX = require('../assets/icons/close_x.png');
 
-export default {
+const icons = {
   Home,
   Add,
   Union,
@@ -55,3 +55,4 @@ export default {
   Messenger,
   CloseX,
 };
+export default icons;

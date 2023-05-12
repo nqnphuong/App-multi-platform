@@ -1,19 +1,114 @@
-import type { LiteralStringForUnion } from 'stream-chat';
+import type {LiteralStringForUnion} from 'stream-chat';
 
 export type AttachmentType = {};
-export type ChannelType = { demo?: string };
+export type ChannelType = {demo?: string};
 export type CommandType = LiteralStringForUnion;
 export type EventType = {};
 export type MessageType = {};
 export type ReactionType = {};
-export type UserType = { image?: string };
+export type UserType = {image?: string};
+
+import type {Channel, UserResponse} from 'stream-chat';
+import type {ThreadContextValue} from 'stream-chat-react-native';
+import type {Theme} from '@react-navigation/native';
+
+export type LocalAttachmentType = {
+  file_size?: number;
+  mime_type?: string;
+};
+export type LocalChannelType = Record<string, unknown>;
+export type LocalCommandType = string;
+export type LocalEventType = Record<string, unknown>;
+export type LocalMessageType = Record<string, unknown>;
+export type LocalReactionType = Record<string, unknown>;
+export type LocalUserType = {
+  image?: string;
+};
 
 export type StreamChatGenerics = {
-  attachmentType: AttachmentType;
-  channelType: ChannelType;
-  commandType: CommandType;
-  eventType: EventType;
-  messageType: MessageType;
-  reactionType: ReactionType;
-  userType: UserType;
+  attachmentType: LocalAttachmentType;
+  channelType: LocalChannelType;
+  commandType: LocalCommandType;
+  eventType: LocalEventType;
+  messageType: LocalMessageType;
+  reactionType: LocalReactionType;
+  userType: LocalUserType;
+};
+
+export type DrawerNavigatorParamList = {
+  HomeScreen: undefined;
+  UserSelectorScreen: undefined;
+};
+
+export type StackNavigatorParamList = {
+  ChannelFilesScreen: {
+    channel: Channel<StreamChatGenerics>;
+  };
+  ChannelImagesScreen: {
+    channel: Channel<StreamChatGenerics>;
+  };
+  ChannelListScreen: undefined;
+  ChannelPinnedMessagesScreen: {
+    channel: Channel<StreamChatGenerics>;
+  };
+  ChannelScreen: {
+    channel?: Channel<StreamChatGenerics>;
+    channelId?: string;
+    messageId?: string;
+  };
+  ChatScreen: undefined;
+  GroupChannelDetailsScreen: {
+    channel: Channel<StreamChatGenerics>;
+  };
+  NewDirectMessagingScreen: undefined;
+  NewGroupChannelAddMemberScreen: undefined;
+  NewGroupChannelAssignNameScreen: undefined;
+  OneOnOneChannelDetailScreen: {
+    channel: Channel<StreamChatGenerics>;
+  };
+  SharedGroupsScreen: {
+    user: UserResponse<StreamChatGenerics>;
+  };
+  ThreadScreen: {
+    channel: Channel<StreamChatGenerics>;
+    thread: ThreadContextValue<StreamChatGenerics>['thread'];
+  };
+};
+
+export type UserSelectorParamList = {
+  AdvancedUserSelectorScreen: undefined;
+  UserSelectorScreen: undefined;
+};
+
+export type BottomTabNavigatorParamList = {
+  ChatScreen: undefined;
+  MentionsScreen: undefined;
+};
+
+export type AppTheme = Theme & {
+  colors: {
+    background: string;
+    backgroundFadeGradient: string;
+    backgroundNavigation: string;
+    backgroundSecondary: string;
+    borderLight: string;
+    danger: string;
+    dateStampBackground: string;
+    footnote: string;
+    greyContentBackground: string;
+    iconButtonBackground: string;
+    success: string;
+    text: string;
+    textInverted: string;
+    textLight: string;
+    textSecondary: string;
+  };
+};
+
+export type LoginConfig = {
+  apiKey: string;
+  userId: string;
+  userToken: string;
+  userImage?: string;
+  userName?: string;
 };

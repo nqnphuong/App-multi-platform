@@ -8,9 +8,9 @@ import LikeScreen from '@screens/LikeScreen';
 import ProfileScreen from '@screens/ProfileScreen';
 import Avatar from '@components/Avatar';
 import UploadScreen from '@screens/UploadScreen';
-import {icons} from 'constants';
 import HomeStack from './homeStack';
 import SearchStack from './searchStack';
+import icons from '@constants/icons';
 
 const MainScreen: React.FC = () => {
   const Tab = createBottomTabNavigator();

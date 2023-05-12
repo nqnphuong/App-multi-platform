@@ -2,7 +2,6 @@ import React, {useLayoutEffect} from 'react';
 import {
   Image,
   ScrollView,
-  StyleSheet,
   View,
   TouchableOpacity,
 } from 'react-native';

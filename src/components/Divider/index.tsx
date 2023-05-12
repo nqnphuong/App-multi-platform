@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import {COLORS, FONTS} from 'constants/theme';
+import {COLORS} from 'constants/theme';
 const Divider: React.FC = () => {
   return (
     <View
