@@ -34,6 +34,7 @@ const sendFollow = createAsyncThunk(
   async (id: number, {dispatch}) => {
     try {
       const res = await FollowApi.sendFollow(id);
+
       dispatch(getFollowers());
       return res.data.data;
     } catch (error: any) {
@@ -83,6 +84,7 @@ const getRequestFollow = createAsyncThunk(
 const getFollowers = createAsyncThunk('follow/getFollowers', async () => {
   try {
     const res = await FollowApi.getFollowers();
+    console.log(res.data.data);
     return res.data.data;
   } catch (error: any) {
     throw new Error(error);

@@ -29,7 +29,7 @@ const Comments: React.FC<Props> = ({
     }
   };
 
-  console.log(item);
+  // console.log(item);
 
   return (
     <TouchableOpacity
@@ -51,7 +51,7 @@ const Comments: React.FC<Props> = ({
           backgroundColor: COLORS.lightGray,
           display: 'flex',
           flexDirection: 'row',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
         }}>
         <View style={tw`flex flex-col`}>
           <Text

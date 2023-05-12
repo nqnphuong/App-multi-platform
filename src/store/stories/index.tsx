@@ -78,7 +78,7 @@ const createStories = createAsyncThunk(
   async (payload: FormData) => {
     try {
       const res = await StoryApi.createStories(payload);
-      console.log(res.data);
+      // console.log(res.data);
       return res.data.data;
     } catch (error: any) {
       throw new Error(error);
