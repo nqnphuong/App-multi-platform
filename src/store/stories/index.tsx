@@ -2,7 +2,6 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
 import {IStoryByUser} from 'models/Story';
 import StoryApi from '../../../api/story/request';
-import images from '@constants/images';
 
 export interface IStoriesState {
   stories: IStoryByUser[];
@@ -42,23 +41,28 @@ const getStories = createAsyncThunk('stories/getStories', async () => {
     });
 
     try {
-      const transform_list = data.map((d: any) => ({
-        id: d.userId,
-        username: d.name,
-        title: d.name,
-        profile:
-          d.image ||
-          'https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg',
-        stories: d.storyInfoList.map((s: any) => ({
-          id: s.storyId,
-          url: s.link,
-          type: s.type,
-          // duration: 15,
-          isReadMore: true,
-          storyId: d.userId,
-          isSeen: false,
-        })),
-      }));
+      const transform_list = data.map((d: any) => {
+        return {
+          id: d.userId,
+          username: d.name,
+          title: d.name,
+          profile:
+            d.image ||
+            'https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg',
+          stories: d.storyInfoList.map((s: any) => {
+            return {
+              id: s.storyId,
+              url: s.link,
+              type: s.type,
+              // duration: 15,
+              isReadMore: true,
+              storyId: d.userId,
+              isSeen: false,
+              dateCreate: s.dateCreate,
+            };
+          }),
+        };
+      });
       return transform_list;
     } catch (error) {
       console.log(error);

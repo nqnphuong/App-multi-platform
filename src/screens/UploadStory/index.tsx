@@ -25,6 +25,8 @@ import {
   launchImageLibrary,
 } from 'react-native-image-picker';
 import {requestCameraPermission} from 'utils/RequestPermission';
+import LoadingIcon from '@components/LottieAnimation/LoadingIcon';
+import {Toast} from 'react-native-toast-message/lib/src/Toast';
 
 const RederItem = ({index, item, onDelete}: any) => {
   return (
@@ -66,6 +68,7 @@ const RederItem = ({index, item, onDelete}: any) => {
 
 const UploadStoryScreen: React.FC = () => {
   const [files, setFiles] = useState<ImagePickerResponse | null>(null);
+  const [loading, setLoading] = useState(false);
   const user = useUser();
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
@@ -75,22 +78,25 @@ const UploadStoryScreen: React.FC = () => {
     userId: user?.userId,
   });
 
-  const handlePostNew = () => {
+  const handlePostNew = async () => {
+    setLoading(true);
     const form = new FormData();
     form.append('type', formdata.type);
     const medias = files?.assets as Asset[];
-
-    form.append(
-      'files',
-      medias.map(m => ({
-        uri: m.uri,
-        name: m.fileName,
-        type: m.type,
-      }))[0],
-    );
+    const file = medias.map(m => ({
+      uri: m.uri,
+      name: m.fileName,
+      type: m.type,
+    }))[0];
+    form.append('files', file);
+    form.append('type', file.type);
     form.append('userId', formdata.userId);
 
-    dispatch(StoryAction.createStories(form));
+    await dispatch(StoryAction.createStories(form));
+    Toast.show({
+      text1: 'Created story !!!',
+    });
+    setLoading(false);
     navigation.navigate(
       'Main' as never,
       {
@@ -146,16 +152,20 @@ const UploadStoryScreen: React.FC = () => {
           }}>
           Create Story
         </Text>
-        <TouchableOpacity onPress={handlePostNew}>
-          <Text
-            style={{
-              ...FONTS.body2,
-              color: COLORS.primary,
-              fontSize: 18,
-            }}>
-            Post
-          </Text>
-        </TouchableOpacity>
+        {loading ? (
+          <LoadingIcon />
+        ) : (
+          <TouchableOpacity onPress={handlePostNew}>
+            <Text
+              style={{
+                ...FONTS.body2,
+                color: COLORS.primary,
+                fontSize: 18,
+              }}>
+              Post
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
 
       <View style={{...styles.devideLine, marginTop: 15}}></View>
@@ -201,23 +211,26 @@ const UploadStoryScreen: React.FC = () => {
             />
           </TouchableOpacity>
         </View>
-
-        <CustomButton
-          onPress={handlePostNew}
-          containerStyle={{
-            width: 80,
-          }}
-          colors={['#6B65DE', '#6B65DE']}
-          buttonContainerStyles={{
-            paddingVertical: 12,
-            borderRadius: 10,
-            width: 80,
-          }}
-          textStyle={{
-            ...FONTS.body3,
-          }}
-          buttonText="Post"
-        />
+        {loading ? (
+          <LoadingIcon />
+        ) : (
+          <CustomButton
+            onPress={handlePostNew}
+            containerStyle={{
+              width: 80,
+            }}
+            colors={['#6B65DE', '#6B65DE']}
+            buttonContainerStyles={{
+              paddingVertical: 12,
+              borderRadius: 10,
+              width: 80,
+            }}
+            textStyle={{
+              ...FONTS.body3,
+            }}
+            buttonText="Post"
+          />
+        )}
       </View>
     </SafeAreaView>
   );

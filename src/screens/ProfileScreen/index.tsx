@@ -6,22 +6,25 @@ import {
   Text,
   TouchableOpacity,
   ImageBackground,
+  Image,
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import BottomTabView from '@components/Profile/BottomTabView';
 import ProfileButtons from '@components/Profile/ProfileButtons';
 import ProfileBody from '@components/Profile/ProfileBody';
-import {useAppDispatch} from 'hooks/store';
+import {useAppDispatch, useAppSelector} from 'hooks/store';
 import {userSelector} from '@store/user';
 import {useSelector} from 'react-redux';
 import {News} from 'models/News';
 import Avatar from '@components/Avatar';
 import {COLORS} from '@constants/theme';
-import {StoryAction} from '@store/stories';
+import {StoryAction, storiesSelector} from '@store/stories';
 import {useNavigation} from '@react-navigation/native';
 const ProfileScreen: React.FC = () => {
   let circuls = [];
   let numberofcircels = 10;
+
+  const {stories} = useAppSelector(storiesSelector);
 
   const dispatch = useAppDispatch();
 
@@ -35,7 +38,7 @@ const ProfileScreen: React.FC = () => {
     dispatch(setPressedIndex(index));
   };
 
-  for (let index = 0; index < numberofcircels; index++) {
+  for (let index = 0; index < stories.length + 1; index++) {
     circuls.push(
       <View key={index}>
         {index === 0 ? (
@@ -66,9 +69,20 @@ const ProfileScreen: React.FC = () => {
                 height: 60,
                 borderRadius: 100,
                 backgroundColor: 'black',
-                opacity: 0.1,
+                opacity: 1,
                 marginHorizontal: 5,
-              }}></View>
+                overflow: 'hidden',
+              }}>
+              <Image
+                source={{
+                  uri: stories[index - 1].profile,
+                }}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                }}
+              />
+            </View>
           </TouchableOpacity>
         )}
       </View>,

@@ -2,13 +2,17 @@ import icons from '@constants/icons';
 import {COLORS, FONTS} from '@constants/theme';
 import {StoryAction, storiesSelector} from '@store/stories';
 import {useAppDispatch, useAppSelector} from 'hooks/store';
-import React, {useState} from 'react';
+import moment from 'moment';
+import React, {useRef, useState} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {MultiStoryContainer} from 'react-native-story-view';
+import {dateStringToFromNow} from 'utils/dateUtils';
 
 const Footer = ({userStories, story, progressIndex}: any) => <View></View>;
 
-const Header = ({userStories, onClose}: any) => {
+const Header = ({userStories, onClose, position}: any) => {
+  const dateString = userStories.stories[position].dateCreate;
+
   return (
     <View
       style={{
@@ -46,7 +50,7 @@ const Header = ({userStories, onClose}: any) => {
             color: COLORS.white,
             marginLeft: 15,
           }}>
-          2 hours
+          {`${dateStringToFromNow(dateString)}`}
         </Text>
         <Image
           source={icons.Earth}
@@ -94,13 +98,21 @@ const Header = ({userStories, onClose}: any) => {
 const Story = () => {
   const {isStoryViewVisible, pressedIndex, stories} =
     useAppSelector(storiesSelector);
-  // console.log(stories);
+  // const storyIndex = useRef<number | undefined>();
+  const [position, setPosition] = useState(0);
+
   const {setIsStoryViewShow} = StoryAction;
   const dispatch = useAppDispatch();
   return (
     <>
       {isStoryViewVisible && (
         <MultiStoryContainer
+          onUserStoryIndexChange={i => {
+            // storyIndex.current = i;
+          }}
+          onChangePosition={i => {
+            setPosition(i);
+          }}
           visible={isStoryViewVisible}
           onComplete={() => dispatch(setIsStoryViewShow(false))}
           stories={stories}
@@ -125,6 +137,8 @@ const Story = () => {
           renderHeaderComponent={props => (
             <Header
               {...props}
+              position={position}
+              // storyIndex={storyIndex.current}
               onClose={() => dispatch(setIsStoryViewShow(false))}
             />
           )}

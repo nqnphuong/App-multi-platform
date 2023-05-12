@@ -1,32 +1,29 @@
-import GettingCall from '@components/GettingCall';
 import Story from '@components/Story/Story';
-import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AuthScreen from '@screens/AuthScreen';
+import 'react-native-gesture-handler';
 
 import ImageScreen from '@screens/ImageScreen';
 import SplashScreen from '@screens/SplashScreen';
 import UploadScreen from '@screens/UploadScreen';
-import VideoScreen from '@screens/VideoScreen';
 import {persistor, store} from '@store/index';
 import useAuthStore from '@store/useAuthStore';
 import MainScreen from 'navigation/bottomTabs';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import Toast from 'react-native-toast-message';
-import {MediaStream, RTCPeerConnection} from 'react-native-webrtc';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/lib/integration/react';
 
-import ChatRoomScreen from '@screens/ChatRoomScreen';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import messaging from '@react-native-firebase/messaging';
+import ChatRoomScreen from '@screens/ChatRoomScreen';
 import ChatContextProvider from '@screens/ChatScreen/context/ChatContext';
 import UploadStoryScreen from '@screens/UploadStory';
-import useUser from 'hooks/useUser';
-import {useAppDispatch} from 'hooks/store';
 import {UserAction} from '@store/user';
+import {useAppDispatch} from 'hooks/store';
+import useUser from 'hooks/useUser';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 export type RootStackParams = {
   Main: {

@@ -26,6 +26,7 @@ import {
 } from 'react-native-image-picker';
 import {requestCameraPermission} from 'utils/RequestPermission';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import LoadingIcon from '@components/LottieAnimation/LoadingIcon';
 
 const RederItem = ({index, item, onDelete}: any) => {
   return (
@@ -55,6 +56,7 @@ const UploadScreen: React.FC = () => {
   const user = useUser();
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
 
   const [formdata, setFormdata] = useState({
     caption: '',
@@ -62,7 +64,8 @@ const UploadScreen: React.FC = () => {
     userId: user.userId,
   });
 
-  const handlePostNew = () => {
+  const handlePostNew = async () => {
+    setLoading(true);
     const form = new FormData();
     form.append('caption', formdata.caption);
     form.append('type', formdata.type);
@@ -78,7 +81,8 @@ const UploadScreen: React.FC = () => {
     );
     form.append('userId', formdata.userId);
 
-    dispatch(PostAction.createPost(form));
+    await dispatch(PostAction.createPost(form));
+    setLoading(true);
     navigation.navigate(
       'Main' as never,
       {
@@ -143,16 +147,20 @@ const UploadScreen: React.FC = () => {
             }}>
             Create Post
           </Text>
-          <TouchableOpacity onPress={handlePostNew}>
-            <Text
-              style={{
-                ...FONTS.body2,
-                color: COLORS.primary,
-                fontSize: 18,
-              }}>
-              Post
-            </Text>
-          </TouchableOpacity>
+          {loading ? (
+            <LoadingIcon />
+          ) : (
+            <TouchableOpacity onPress={handlePostNew}>
+              <Text
+                style={{
+                  ...FONTS.body2,
+                  color: COLORS.primary,
+                  fontSize: 18,
+                }}>
+                Post
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
         {/* post container  */}
         <View style={styles.postContainer}>
@@ -198,22 +206,26 @@ const UploadScreen: React.FC = () => {
             <Ionicons name="image-outline" size={26} color={COLORS.black} />
           </TouchableOpacity>
         </View>
-        <CustomButton
-          onPress={handlePostNew}
-          containerStyle={{
-            width: 80,
-          }}
-          colors={['#6B65DE', '#6B65DE']}
-          buttonContainerStyles={{
-            paddingVertical: 12,
-            borderRadius: 10,
-            width: 80,
-          }}
-          textStyle={{
-            ...FONTS.body3,
-          }}
-          buttonText="Post"
-        />
+        {loading ? (
+          <LoadingIcon />
+        ) : (
+          <CustomButton
+            onPress={handlePostNew}
+            containerStyle={{
+              width: 80,
+            }}
+            colors={['#6B65DE', '#6B65DE']}
+            buttonContainerStyles={{
+              paddingVertical: 12,
+              borderRadius: 10,
+              width: 80,
+            }}
+            textStyle={{
+              ...FONTS.body3,
+            }}
+            buttonText="Post"
+          />
+        )}
       </View>
     </SafeAreaView>
   );
