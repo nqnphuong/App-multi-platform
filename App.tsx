@@ -73,11 +73,11 @@ const App: React.FC = () => {
 
   const {isAuthenticated, authLoading} = useAuthStore(state => state);
 
-  const {userId} = useUser();
+  const user = useUser();
   const dispatch = useAppDispatch();
 
   if (isAuthenticated) {
-    dispatch(UserAction.getUserCurrent(userId));
+    dispatch(UserAction.getUserCurrent(user?.userId));
   }
 
   if (authLoading) {
