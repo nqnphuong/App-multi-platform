@@ -9,12 +9,7 @@ import {COLORS, FONTS, SIZES} from 'constants/theme';
 import {useAppDispatch} from 'hooks/store';
 import useUser from 'hooks/useUser';
 import {News} from 'models/News';
-import React, {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   Animated,
   FlatList,
@@ -139,7 +134,7 @@ const HomeScreen: React.FC = () => {
   };
 
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const snapPoints = ['45%', '45%'];
+  const snapPoints = ['100%', '100%'];
   const [isOpen, setIsOpen] = useState(false);
   const [postsId, setpostsId] = useState<string>('');
 
@@ -154,6 +149,7 @@ const HomeScreen: React.FC = () => {
         <Header />
         <Animated.ScrollView
           style={[styles.scrollView]}
+          scrollEnabled={!isOpen}
           showsVerticalScrollIndicator={false}>
           <FlatList
             data={newsData}
@@ -205,17 +201,6 @@ const HomeScreen: React.FC = () => {
           </View>
         </Animated.ScrollView>
       </View>
-      {isOpen && (
-        <BlurView
-          style={{
-            position: 'absolute',
-            width: SIZES.width,
-            height: SIZES.height,
-          }}
-          blurType="light"
-          blurAmount={1}
-        />
-      )}
       {postsId && (
         <BottomSheet
           ref={bottomSheetRef}

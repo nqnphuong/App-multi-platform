@@ -16,6 +16,7 @@ import {useAppDispatch, useAppSelector} from 'hooks/store';
 import {UserAction, userSelector} from '@store/user';
 import FindingAnimation from '@components/LottieAnimation/FindAnimation';
 import icons from '@constants/icons';
+import {SIZES} from '@constants/theme';
 
 const SearchScreen: React.FC = () => {
   const {listResult, listHistorySearch, findUserLoading} =
@@ -58,7 +59,10 @@ const SearchScreen: React.FC = () => {
           {findUserLoading ? (
             <OnSearchingSkeletion />
           ) : listResult?.length ? (
-            <View>
+            <View
+              style={{
+                height: SIZES.height - 60,
+              }}>
               <Text style={tw`text-base font-light tracking-[.2] mt-3 mb-2`}>
                 Results
               </Text>

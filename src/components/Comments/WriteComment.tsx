@@ -36,7 +36,7 @@ const WriteComment: React.FC<Props> = ({postId}) => {
   };
 
   return (
-    <View style={tw`py-2 px-3 flex flex-row items-center h-12 gap-2 my-2`}>
+    <View style={tw`px-3 flex flex-row items-center gap-2 my-2`}>
       <View
         style={{
           width: 40,

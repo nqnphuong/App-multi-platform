@@ -1,5 +1,11 @@
 import React, {useLayoutEffect} from 'react';
-import {Image, ScrollView, StyleSheet, View} from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
@@ -7,6 +13,9 @@ import {PostAction, postSelector} from '@store/posts';
 import {useAppDispatch} from 'hooks/store';
 import IPost from 'models/Posts';
 import {COLORS} from '@constants/theme';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParams} from '../../../App';
 
 interface Props {}
 
@@ -15,6 +24,16 @@ const BottomTabView: React.FC<Props> = () => {
 
   const {myPosts} = useSelector(postSelector);
   const dispatch = useAppDispatch();
+
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+
+  const imageDetail = (postId: string) => {
+    navigation.navigate('ImageScreen', {
+      name: 'ImageScreen',
+      postsId: postId,
+    });
+  };
 
   useLayoutEffect(() => {
     const getMyPost = async () => {
@@ -44,16 +63,18 @@ const BottomTabView: React.FC<Props> = () => {
           }}>
           {myPosts.map((post: IPost) => (
             <View key={post.postsId}>
-              <Image
-                source={{
-                  uri: post.postsImageList[0].image,
-                }}
-                style={{
-                  width: 130,
-                  height: 150,
-                  resizeMode: 'cover',
-                }}
-              />
+              <TouchableOpacity onPress={() => imageDetail(post.postsId)}>
+                <Image
+                  source={{
+                    uri: post.postsImageList[0].image,
+                  }}
+                  style={{
+                    width: 130,
+                    height: 150,
+                    resizeMode: 'cover',
+                  }}
+                />
+              </TouchableOpacity>
             </View>
           ))}
         </View>
