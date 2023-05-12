@@ -12,34 +12,28 @@ import BottomTabView from '@components/Profile/BottomTabView';
 import ProfileButtons from '@components/Profile/ProfileButtons';
 import ProfileBody from '@components/Profile/ProfileBody';
 import {useAppDispatch} from 'hooks/store';
-import {UserAction, userSelector} from '@store/user';
+import {userSelector} from '@store/user';
 import {useSelector} from 'react-redux';
 import {News} from 'models/News';
 import Avatar from '@components/Avatar';
 import {COLORS} from '@constants/theme';
-import useUser from 'hooks/useUser';
 import {StoryAction} from '@store/stories';
 import {useNavigation} from '@react-navigation/native';
 const ProfileScreen: React.FC = () => {
   let circuls = [];
   let numberofcircels = 10;
 
-  const {userId} = useUser();
   const dispatch = useAppDispatch();
-  const {userCurrent} = useSelector(userSelector);
 
   const navigation = useNavigation();
 
+  const {userCurrent} = useSelector(userSelector);
   const {setIsStoryViewShow, setPressedIndex} = StoryAction;
 
   const openStories = (index: number) => {
     dispatch(setIsStoryViewShow(true));
     dispatch(setPressedIndex(index));
   };
-
-  useEffect(() => {
-    dispatch(UserAction.getUserCurrent(userId));
-  }, []);
 
   for (let index = 0; index < numberofcircels; index++) {
     circuls.push(

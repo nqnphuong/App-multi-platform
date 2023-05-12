@@ -7,10 +7,11 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-import {icons, images} from 'constants';
 import {COLORS, FONTS} from 'constants/theme';
 import CustomButton from '@components/CustomButton';
 import Divider from '@components/Divider';
+import images from '@constants/images';
+import icons from '@constants/icons';
 
 const WelcomeAuthScreen: React.FC = ({navigation}: any) => {
   const changeToMainScreen = () => {

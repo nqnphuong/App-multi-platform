@@ -5,11 +5,8 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
-  Animated,
-  KeyboardAvoidingView,
-  Platform,
 } from 'react-native';
-import {useLayoutEffect, useRef, useState} from 'react';
+import {useLayoutEffect, useState} from 'react';
 import tw from 'twrnc';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -20,7 +17,6 @@ import images from '@constants/images';
 import Comments from '@components/Comments/Comments';
 import WriteComment from '@components/Comments/WriteComment';
 import PostApi from '../../../api/post/request';
-
 interface Props {
   postsId: string;
 }
@@ -38,10 +34,6 @@ const CommentBottomSheet: React.FC<Props> = ({postsId}) => {
   const [isHeart, setHeart] = useState(post.feel);
   const [isTotalFeel, setTotalFeel] = useState(post.totalFeel);
 
-  const scrollX = useRef(new Animated.Value(0)).current;
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const slidesRef = useRef(null);
-
   const [isVisibleDeleteModal, setVisibleDeleteModal] = useState(false);
   const handleVisibleDeleteModal = () => {
     setVisibleDeleteModal(!isVisibleDeleteModal);
@@ -49,20 +41,15 @@ const CommentBottomSheet: React.FC<Props> = ({postsId}) => {
 
   const [isIdCommentSelected, setIdCommentSelected] = useState(null);
 
-  const viewableItemsChanged = useRef(({viewableItems}: any) => {
-    setCurrentIndex(viewableItems[0].index);
-  }).current;
-  const viewConfig = useRef({viewAreaCoveragePercentThreshold: 50}).current;
-
   const handleReact = async () => {
     setHeart(!isHeart);
-    await PostApi.reactPostApi(post.postsId)
+    await PostApi.reactPostApi(post.postsId);
     isHeart ? setTotalFeel(isTotalFeel - 1) : setTotalFeel(isTotalFeel + 1);
   };
 
   return (
-    <View style={tw`h-[93%] w-full items-center`}>
-      <View style={tw`w-full px-5 mt-2`}>
+    <View style={tw`h-[100%] w-full items-center`}>
+      <View style={tw`w-full h-[90%] px-5 mt-2`}>
         <View style={tw`flex flex-row items-center`}>
           <View style={tw`flex flex-row items-center justify-between w-full`}>
             {post.postsUserList ? (
@@ -134,9 +121,10 @@ const CommentBottomSheet: React.FC<Props> = ({postsId}) => {
               style={tw`bg-gray-200 rounded-full w-2/5 h-[1] items-center mt-4 mb-1`}
             />
           </View>
+
           <ScrollView
             style={{
-              height: '65%',
+              height: '78%',
             }}
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}>
@@ -157,12 +145,13 @@ const CommentBottomSheet: React.FC<Props> = ({postsId}) => {
           </ScrollView>
         </View>
       </View>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={2}
-        style={tw`w-full`}>
+      <View
+        style={{
+          width: '100%',
+          height: 50,
+        }}>
         <WriteComment postId={postsId} />
-      </KeyboardAvoidingView>
+      </View>
     </View>
   );
 };

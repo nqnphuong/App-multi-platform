@@ -1,11 +1,11 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, Image, View} from 'react-native';
-import {icons} from 'constants';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {HomeStackParams} from 'navigation/homeStack';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import {COLORS} from '@constants/theme';
+import icons from '@constants/icons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Header: React.FC = () => {
   const navigation =
@@ -14,14 +14,7 @@ const Header: React.FC = () => {
   return (
     <View style={styles.header}>
       <TouchableOpacity>
-        <Image
-          source={icons.Camera}
-          style={{
-            width: 25,
-            height: 25,
-            resizeMode: 'contain',
-          }}
-        />
+        <Ionicons name="ios-camera-outline" size={24} color={COLORS.black} />
       </TouchableOpacity>
       <Image
         source={icons.Logo}
@@ -37,13 +30,10 @@ const Header: React.FC = () => {
             name: 'ChatList',
           })
         }>
-        <Image
-          source={icons.Chat}
-          style={{
-            width: 25,
-            height: 25,
-            resizeMode: 'contain',
-          }}
+        <Ionicons
+          name="ios-chatbubbles-outline"
+          size={24}
+          color={COLORS.black}
         />
       </TouchableOpacity>
     </View>

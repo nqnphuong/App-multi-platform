@@ -1,15 +1,7 @@
-import CustomButton from '@components/CustomButton';
 import {COLORS, FONTS} from '@constants/theme';
 import useAuthStore from '@store/useAuthStore';
 import React from 'react';
-import {
-  Image,
-  ImageBackground,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import Entypo from 'react-native-vector-icons/Entypo';
 import images from '@constants/images';
@@ -18,6 +10,7 @@ import UserApi from '../../../api/user/request';
 import useUser from 'hooks/useUser';
 import {useAppDispatch} from 'hooks/store';
 import {UserAction} from '@store/user';
+import {PostAction} from '@store/posts';
 
 interface Props {
   name: string;
@@ -57,7 +50,8 @@ const ProfileBody: React.FC<Props> = ({
       });
       form.append('userId', currentUser.userId);
       UserApi.updateAvatarApi(form).then(() => {
-        dispatch(UserAction.getUser(currentUser.userId));
+        dispatch(UserAction.getUserCurrent(currentUser.userId));
+        dispatch(PostAction.getPosts());
       });
     });
   };
@@ -76,7 +70,8 @@ const ProfileBody: React.FC<Props> = ({
       });
       form.append('userId', currentUser.userId);
       UserApi.updateAvatarApi(form).then(() => {
-        dispatch(UserAction.getUser(currentUser.userId));
+        dispatch(UserAction.getUserCurrent(currentUser.userId));
+        dispatch(PostAction.getPosts());
       });
     });
   };

@@ -8,13 +8,14 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-import {icons, images} from 'constants';
 import {COLORS, FONTS, SIZES} from 'constants/theme';
 import CustomButton from 'components/CustomButton';
 import Input from 'components/Input';
 import Divider from 'components/Divider';
 import useAuthStore from 'store/useAuthStore';
 import auth from '@react-native-firebase/auth';
+import images from '@constants/images';
+import icons from '@constants/icons';
 
 const SignInScreen: React.FC = ({navigation}: any) => {
   const changeToMainScreen = () => {

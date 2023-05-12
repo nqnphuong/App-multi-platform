@@ -3,8 +3,7 @@ import Header from '@components/Header';
 import PostCard from '@components/PostCard';
 import UploadPost from '@components/UploadPost';
 import {PostAction, postSelector} from '@store/posts';
-import {UserAction} from '@store/user';
-import {icons, images} from 'constants/';
+import {UserAction, userSelector} from '@store/user';
 import {COLORS, FONTS, SIZES} from 'constants/theme';
 import {useAppDispatch, useAppSelector} from 'hooks/store';
 import useUser from 'hooks/useUser';
@@ -31,6 +30,8 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../App';
 import {IStoryByUser} from 'models/Story';
+import icons from '@constants/icons';
+import images from '@constants/images';
 
 const HomeScreen: React.FC = () => {
   const navigation =
@@ -47,7 +48,7 @@ const HomeScreen: React.FC = () => {
     dispatch(setPressedIndex(index));
   };
 
-  const user = useUser();
+  const {userId} = useUser();
 
   useEffect(() => {
     dispatch(PostAction.getPosts());
@@ -55,8 +56,10 @@ const HomeScreen: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(UserAction.getUser(user.userId));
-  }, [user]);
+    dispatch(UserAction.getUser(userId));
+  }, [userId]);
+
+  const {userCurrent} = useSelector(userSelector);
 
   const renderNewsHeader = () => {
     return (
@@ -127,7 +130,7 @@ const HomeScreen: React.FC = () => {
   };
 
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const snapPoints = ['45%', '45%'];
+  const snapPoints = ['100%', '100%'];
   const [isOpen, setIsOpen] = useState(false);
   const [postsId, setpostsId] = useState<string>('');
 
@@ -142,6 +145,7 @@ const HomeScreen: React.FC = () => {
         <Header />
         <Animated.ScrollView
           style={[styles.scrollView]}
+          scrollEnabled={!isOpen}
           showsVerticalScrollIndicator={false}>
           <FlatList
             data={stories}
@@ -152,8 +156,7 @@ const HomeScreen: React.FC = () => {
             ListHeaderComponent={renderNewsHeader()}
             showsHorizontalScrollIndicator={false}
           />
-
-          <UploadPost />
+          <UploadPost avatar={userCurrent.avatar} />
           <View
             style={{
               flex: 1,
@@ -194,17 +197,6 @@ const HomeScreen: React.FC = () => {
           </View>
         </Animated.ScrollView>
       </View>
-      {isOpen && (
-        <BlurView
-          style={{
-            position: 'absolute',
-            width: SIZES.width,
-            height: SIZES.height,
-          }}
-          blurType="light"
-          blurAmount={1}
-        />
-      )}
       {postsId && (
         <BottomSheet
           ref={bottomSheetRef}

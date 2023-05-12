@@ -25,6 +25,7 @@ import {
   launchImageLibrary,
 } from 'react-native-image-picker';
 import {requestCameraPermission} from 'utils/RequestPermission';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const RederItem = ({index, item, onDelete}: any) => {
   return (
@@ -54,8 +55,6 @@ const UploadScreen: React.FC = () => {
   const user = useUser();
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
-
-  console.log(files)
 
   const [formdata, setFormdata] = useState({
     caption: '',
@@ -125,77 +124,80 @@ const UploadScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.topContainer}>
-        <Image style={styles.backIcon} source={icons.Back} />
-        <Text
-          style={{
-            ...FONTS.body2,
-            color: COLORS.black,
-          }}>
-          Create Post
-        </Text>
-        <TouchableOpacity onPress={handlePostNew}>
+    <SafeAreaView
+      style={[
+        styles.container,
+        {
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+        },
+      ]}>
+      <View>
+        <View style={styles.topContainer}>
+          <Image style={styles.backIcon} source={icons.Back} />
           <Text
             style={{
               ...FONTS.body2,
-              color: COLORS.primary,
-              fontSize: 18,
+              color: COLORS.black,
             }}>
-            Post
+            Create Post
           </Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={handlePostNew}>
+            <Text
+              style={{
+                ...FONTS.body2,
+                color: COLORS.primary,
+                fontSize: 18,
+              }}>
+              Post
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {/* post container  */}
+        <View style={styles.postContainer}>
+          <Image style={styles.avatar} source={images.Avatar} />
+          <TextInput
+            editable
+            onChangeText={text =>
+              setFormdata({
+                ...formdata,
+                caption: text,
+              })
+            }
+            value={formdata.caption}
+            multiline
+            numberOfLines={15}
+            maxLength={40}
+            textAlignVertical="top"
+            placeholder="What is your mind ?"
+            style={styles.textInput}
+          />
+        </View>
+        <View style={styles.previewContainer}>
+          <FlatList
+            data={files?.assets || []}
+            renderItem={({item, index}) => {
+              return (
+                <RederItem item={item} index={index} onDelete={deleteFile} />
+              );
+            }}
+            keyExtractor={item => item.uri?.toString()!}
+            numColumns={3}
+          />
+        </View>
       </View>
-      {/* post container  */}
-      <View style={styles.postContainer}>
-        <Image style={styles.avatar} source={images.Avatar} />
-        <TextInput
-          editable
-          onChangeText={text =>
-            setFormdata({
-              ...formdata,
-              caption: text,
-            })
-          }
-          value={formdata.caption}
-          multiline
-          numberOfLines={15}
-          maxLength={40}
-          textAlignVertical="top"
-          placeholder="What is your mind ?"
-          style={styles.textInput}
-        />
-      </View>
-      <View style={styles.previewContainer}>
-        <FlatList
-          data={files?.assets || []}
-          renderItem={({item, index}) => {
-            return (
-              <RederItem item={item} index={index} onDelete={deleteFile} />
-            );
-          }}
-          keyExtractor={item => item.uri?.toString()!}
-          numColumns={3}
-        />
-      </View>
-      <View style={styles.devideLine}></View>
       {/* post action  */}
+      <View style={styles.devideLine}></View>
       <View style={styles.postActionContainer}>
         <View style={styles.postAction}>
           <TouchableOpacity onPress={takeMedia}>
-            <Image
-              style={{...styles.postActionIcon, marginRight: 10}}
-              source={icons.Camera}
-            />
+            <Ionicons name="camera-outline" size={27} color={COLORS.black} />
           </TouchableOpacity>
           <TouchableOpacity onPress={pickerMedia}>
-            <Image
-              style={{...styles.postActionIcon, width: 28, height: 28}}
-              source={icons.Image}
-            />
+            <Ionicons name="image-outline" size={26} color={COLORS.black} />
           </TouchableOpacity>
         </View>
-
         <CustomButton
           onPress={handlePostNew}
           containerStyle={{
@@ -237,7 +239,7 @@ const styles = StyleSheet.create({
     height: 18,
   },
   postContainer: {
-    height: '30%',
+    height: '50%',
     marginTop: 30,
     backgroundColor: COLORS.white,
     shadowColor: '#ccc',
@@ -275,9 +277,9 @@ const styles = StyleSheet.create({
   },
 
   postAction: {
+    gap: 10,
     flexDirection: 'row',
     flex: 1,
-    alignItems: 'center',
   },
 
   postActionIcon: {

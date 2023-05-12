@@ -1,4 +1,4 @@
-import {View, Text, Animated, StyleSheet} from 'react-native';
+import {View, Animated} from 'react-native';
 import React, {useEffect, useRef} from 'react';
 import tw from 'twrnc';
 

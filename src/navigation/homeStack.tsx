@@ -3,7 +3,6 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import HomeScreen from '@screens/HomeScreen';
 import ChatList from '@screens/ChatScreen';
-import DetailUserScreen from '@screens/DetailUserScreen';
 
 export type HomeStackParams = {
   HomeScreen: {

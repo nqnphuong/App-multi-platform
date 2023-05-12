@@ -1,12 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {
-  View,
-  PermissionsAndroid,
-  Platform,
-  Text,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, Platform, Text, Image, TouchableOpacity} from 'react-native';
 import {request, PERMISSIONS} from 'react-native-permissions';
 import styles from './styles';
 import Avatar from '@components/Avatar';
@@ -15,12 +8,10 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../App';
 interface UploadPostProps {
-  avatar?: string;
+  avatar: string;
 }
 
-const UploadPost: React.FC<UploadPostProps> = () => {
-  const [files, setfiles] = useState([]);
-
+const UploadPost: React.FC<UploadPostProps> = ({avatar}) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
@@ -35,11 +26,7 @@ const UploadPost: React.FC<UploadPostProps> = () => {
 
   return (
     <View style={styles.container}>
-      <Avatar
-        uri={
-          'https://secure.gravatar.com/avatar/06f59e296827fce579a51549f01af8bd?s=300&d=mm&r=g'
-        }
-      />
+      <Avatar uri={avatar} />
       <TouchableOpacity
         style={styles.titleContainer}
         onPress={() =>

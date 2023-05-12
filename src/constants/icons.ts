@@ -27,7 +27,7 @@ const Messenger = require('../assets/icons/messenger.png');
 const CloseX = require('../assets/icons/close_x.png');
 const CameraOutline = require('../assets/icons/camera_outline.png');
 
-export default {
+const icons = {
   Home,
   Add,
   Union,
@@ -57,3 +57,4 @@ export default {
   CloseX,
   CameraOutline,
 };
+export default icons;

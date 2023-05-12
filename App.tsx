@@ -24,6 +24,9 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import messaging from '@react-native-firebase/messaging';
 import ChatContextProvider from '@screens/ChatScreen/context/ChatContext';
 import UploadStoryScreen from '@screens/UploadStory';
+import useUser from 'hooks/useUser';
+import {useAppDispatch} from 'hooks/store';
+import {UserAction} from '@store/user';
 
 export type RootStackParams = {
   Main: {
@@ -69,6 +72,13 @@ const App: React.FC = () => {
   }, []);
 
   const {isAuthenticated, authLoading} = useAuthStore(state => state);
+
+  const {userId} = useUser();
+  const dispatch = useAppDispatch();
+
+  if (isAuthenticated) {
+    dispatch(UserAction.getUserCurrent(userId));
+  }
 
   if (authLoading) {
     return <SplashScreen />;
