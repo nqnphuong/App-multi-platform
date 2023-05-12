@@ -3,7 +3,7 @@ import Header from '@components/Header';
 import PostCard from '@components/PostCard';
 import UploadPost from '@components/UploadPost';
 import {PostAction, postSelector} from '@store/posts';
-import {UserAction} from '@store/user';
+import {UserAction, userSelector} from '@store/user';
 import {COLORS, FONTS, SIZES} from 'constants/theme';
 import {useAppDispatch} from 'hooks/store';
 import useUser from 'hooks/useUser';
@@ -39,15 +39,17 @@ const HomeScreen: React.FC = () => {
     dispatch(setPressedIndex(index));
   };
 
-  const user = useUser();
+  const {userId} = useUser();
 
   useEffect(() => {
     dispatch(PostAction.getPosts());
   }, []);
 
   useEffect(() => {
-    dispatch(UserAction.getUser(user.userId));
-  }, [user]);
+    dispatch(UserAction.getUser(userId));
+  }, [userId]);
+
+  const {userCurrent} = useSelector(userSelector);
 
   const [newsData, setnewsData] = useState<News[]>([
     {
@@ -168,7 +170,7 @@ const HomeScreen: React.FC = () => {
             ListHeaderComponent={renderNewsHeader()}
             showsHorizontalScrollIndicator={false}
           />
-          <UploadPost />
+          <UploadPost avatar={userCurrent.avatar} />
           <View
             style={{
               flex: 1,

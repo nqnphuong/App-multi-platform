@@ -11,9 +11,13 @@ import UploadScreen from '@screens/UploadScreen';
 import HomeStack from './homeStack';
 import SearchStack from './searchStack';
 import icons from '@constants/icons';
+import {useSelector} from 'react-redux';
+import {userSelector} from '@store/user';
 
 const MainScreen: React.FC = () => {
   const Tab = createBottomTabNavigator();
+
+  const {userCurrent} = useSelector(userSelector);
 
   const renderIcons = (focused: boolean, icon: any) => {
     return (
@@ -118,7 +122,9 @@ const MainScreen: React.FC = () => {
                     }
               }
               uri={
-                'https://secure.gravatar.com/avatar/06f59e296827fce579a51549f01af8bd?s=300&d=mm&r=g'
+                userCurrent.avatar
+                  ? userCurrent.avatar
+                  : 'https://secure.gravatar.com/avatar/06f59e296827fce579a51549f01af8bd?s=300&d=mm&r=g'
               }
             />
           ),
