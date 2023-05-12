@@ -23,6 +23,7 @@ import ChatRoomScreen from '@screens/ChatRoomScreen';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import messaging from '@react-native-firebase/messaging';
 import ChatContextProvider from '@screens/ChatScreen/context/ChatContext';
+import UploadStoryScreen from '@screens/UploadStory';
 
 export type RootStackParams = {
   Main: {
@@ -91,6 +92,13 @@ const App: React.FC = () => {
             <Stack.Screen
               name="UploadScreen"
               component={UploadScreen}
+              options={{
+                gestureDirection: 'vertical',
+              }}
+            />
+            <Stack.Screen
+              name="UploadStoryScreen"
+              component={UploadStoryScreen}
               options={{
                 gestureDirection: 'vertical',
               }}

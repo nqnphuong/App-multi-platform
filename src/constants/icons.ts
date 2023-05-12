@@ -25,6 +25,7 @@ const PhoneCall = require('../assets/icons/Phone-call.png');
 const Down = require('../assets/icons/Down.png');
 const Messenger = require('../assets/icons/messenger.png');
 const CloseX = require('../assets/icons/close_x.png');
+const CameraOutline = require('../assets/icons/camera_outline.png');
 
 export default {
   Home,
@@ -54,4 +55,5 @@ export default {
   Down,
   Messenger,
   CloseX,
+  CameraOutline,
 };

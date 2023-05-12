@@ -19,6 +19,7 @@ import Avatar from '@components/Avatar';
 import {COLORS} from '@constants/theme';
 import useUser from 'hooks/useUser';
 import {StoryAction} from '@store/stories';
+import {useNavigation} from '@react-navigation/native';
 const ProfileScreen: React.FC = () => {
   let circuls = [];
   let numberofcircels = 10;
@@ -26,6 +27,8 @@ const ProfileScreen: React.FC = () => {
   const {userId} = useUser();
   const dispatch = useAppDispatch();
   const {userCurrent} = useSelector(userSelector);
+
+  const navigation = useNavigation();
 
   const {setIsStoryViewShow, setPressedIndex} = StoryAction;
 
@@ -42,19 +45,22 @@ const ProfileScreen: React.FC = () => {
     circuls.push(
       <View key={index}>
         {index === 0 ? (
-          <View
-            style={{
-              width: 60,
-              height: 60,
-              borderRadius: 100,
-              borderWidth: 1,
-              opacity: 0.7,
-              marginHorizontal: 5,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Entypo name="plus" style={{fontSize: 40, color: 'black'}} />
-          </View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('UploadStoryScreen' as never)}>
+            <View
+              style={{
+                width: 60,
+                height: 60,
+                borderRadius: 100,
+                borderWidth: 1,
+                opacity: 0.7,
+                marginHorizontal: 5,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Entypo name="plus" style={{fontSize: 40, color: 'black'}} />
+            </View>
+          </TouchableOpacity>
         ) : (
           <TouchableOpacity
             onPress={() => {

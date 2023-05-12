@@ -15,11 +15,13 @@ import {MMKV} from 'react-native-mmkv';
 import posts from './posts';
 import user from './user';
 import stories from './stories';
+import follow from './follow';
 
 const reducers = combineReducers({
   posts: posts,
   user: user,
   stories: stories,
+  follows: follow,
 });
 
 const storage = new MMKV();

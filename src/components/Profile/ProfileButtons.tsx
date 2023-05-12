@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 import {RootStackParams} from '../../../App';
@@ -7,6 +7,10 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 import Feather from 'react-native-vector-icons/Feather';
 import {COLORS, SIZES} from '@constants/theme';
+import FollowApi from '../../../api/follow/request';
+import {useAppDispatch, useAppSelector} from 'hooks/store';
+import {FollowAction, followsSelector} from '@store/follow';
+import useUser from 'hooks/useUser';
 
 interface Props {
   id: number;
@@ -25,6 +29,25 @@ const ProfileButtons: React.FC<Props> = ({
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const [follow, setFollow] = useState<any>(null);
+
+  const {followers} = useAppSelector(followsSelector);
+
+  console.log(followers);
+
+  const dispatch = useAppDispatch();
+
+  const isFollow = followers.findIndex(f => f.userId === id) !== -1;
+
+  const handleFollow = async () => {
+    try {
+      dispatch(FollowAction.sendFollow(id));
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    dispatch(FollowAction.getFollowers());
+  }, []);
+
   return (
     <>
       {id === 0 ? (
@@ -68,9 +91,7 @@ const ProfileButtons: React.FC<Props> = ({
             justifyContent: 'space-evenly',
             alignItems: 'center',
           }}>
-          <TouchableOpacity
-            onPress={() => setFollow(!follow)}
-            style={{width: '42%'}}>
+          <TouchableOpacity onPress={handleFollow} style={{width: '42%'}}>
             <View
               style={{
                 width: '100%',
@@ -83,7 +104,7 @@ const ProfileButtons: React.FC<Props> = ({
                 alignItems: 'center',
               }}>
               <Text style={{color: follow ? 'black' : 'white'}}>
-                {follow ? 'Following' : 'Follow'}
+                {isFollow ? 'Following' : 'Follow'}
               </Text>
             </View>
           </TouchableOpacity>

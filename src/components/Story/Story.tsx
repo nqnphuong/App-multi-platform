@@ -94,6 +94,7 @@ const Header = ({userStories, onClose}: any) => {
 const Story = () => {
   const {isStoryViewVisible, pressedIndex, stories} =
     useAppSelector(storiesSelector);
+  // console.log(stories);
   const {setIsStoryViewShow} = StoryAction;
   const dispatch = useAppDispatch();
   return (
@@ -111,9 +112,11 @@ const Story = () => {
             height: '100%',
             width: '100%',
           }}
-          videoProps={{
-            resizeMode: 'cover',
-          }}
+          videoProps={
+            {
+              resizeMode: 'cover',
+            } as any
+          }
           barStyle={{
             barActiveColor: COLORS.white,
             barInActiveColor: '#aaa8a2',
