@@ -26,10 +26,18 @@ import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 import CommentBottomSheet from '@components/Comments/CommentBottomSheet';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {BlurView} from '@react-native-community/blur';
+import {StoryAction} from '@store/stories';
 
 const HomeScreen: React.FC = () => {
   const {posts} = useSelector(postSelector);
   const dispatch = useAppDispatch();
+
+  const {setIsStoryViewShow, setPressedIndex} = StoryAction;
+
+  const openStories = (index: number) => {
+    dispatch(setIsStoryViewShow(true));
+    dispatch(setPressedIndex(index));
+  };
 
   const user = useUser();
 
@@ -105,9 +113,9 @@ const HomeScreen: React.FC = () => {
     );
   };
 
-  const renderNewsItem = (item: News) => {
+  const renderNewsItem = (item: News, index: number) => {
     return (
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => openStories(index)}>
         <ImageBackground
           style={styles.newsPost}
           source={{
@@ -156,7 +164,7 @@ const HomeScreen: React.FC = () => {
             keyExtractor={item => item.newId}
             bounces={true}
             horizontal={true}
-            renderItem={({item}) => renderNewsItem(item)}
+            renderItem={({item, index}) => renderNewsItem(item, index)}
             ListHeaderComponent={renderNewsHeader()}
             showsHorizontalScrollIndicator={false}
           />

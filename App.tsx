@@ -1,18 +1,24 @@
+import GettingCall from '@components/GettingCall';
+import Story from '@components/Story/Story';
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import AuthScreen from '@screens/AuthScreen';
+
 import ImageScreen from '@screens/ImageScreen';
 import SplashScreen from '@screens/SplashScreen';
 import UploadScreen from '@screens/UploadScreen';
+import VideoScreen from '@screens/VideoScreen';
 import {persistor, store} from '@store/index';
 import useAuthStore from '@store/useAuthStore';
-import React, {useEffect} from 'react';
+import MainScreen from 'navigation/bottomTabs';
+import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
-import MainScreen from './src/navigation/bottomTabs';
 import Toast from 'react-native-toast-message';
-import {PersistGate} from 'redux-persist/lib/integration/react';
-import AuthScreen from '@screens/AuthScreen';
+import {MediaStream, RTCPeerConnection} from 'react-native-webrtc';
 import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/lib/integration/react';
+
 import ChatRoomScreen from '@screens/ChatRoomScreen';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import messaging from '@react-native-firebase/messaging';
@@ -107,6 +113,7 @@ const App: React.FC = () => {
         </SafeAreaView>
       </ChatContextProvider>
       <Toast />
+      <Story />
     </NavigationContainer>
   );
 };
