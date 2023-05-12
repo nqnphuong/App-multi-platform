@@ -1,12 +1,17 @@
-import React from 'react';
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import FollowRequest from '@components/Follow/FollowRequest';
+import {FollowAction} from '@store/follow';
+import {useAppDispatch} from 'hooks/store';
+import React, {useEffect} from 'react';
+import {SafeAreaView, StyleSheet} from 'react-native';
 
 const LikeScreen: React.FC = () => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(FollowAction.getRequestFollow());
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
-      <View>
-        <Text>LikeScreen</Text>
-      </View>
+      <FollowRequest />
     </SafeAreaView>
   );
 };

@@ -1,13 +1,13 @@
+import BottomTabView from '@components/Profile/BottomTabView';
+import ProfileBody from '@components/Profile/ProfileBody';
+import ProfileButtons from '@components/Profile/ProfileButtons';
+import {UserAction, userSelector} from '@store/user';
+import {useAppDispatch} from 'hooks/store';
+import useUser from 'hooks/useUser';
 import React, {useLayoutEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
-import BottomTabView from '@components/Profile/BottomTabView';
-import ProfileButtons from '@components/Profile/ProfileButtons';
-import ProfileBody from '@components/Profile/ProfileBody';
-import {useAppDispatch} from 'hooks/store';
-import {UserAction, userSelector} from '@store/user';
 import {useSelector} from 'react-redux';
-import useUser from 'hooks/useUser';
 
 const DetailUserScreen: React.FC = ({route}: any) => {
   let circuls = [];

@@ -1,9 +1,8 @@
 import CustomButton from '@components/CustomButton';
 import icons from '@constants/icons';
-import images from '@constants/images';
-import {COLORS, FONTS, SIZES} from '@constants/theme';
+import {COLORS, FONTS} from '@constants/theme';
 import {useNavigation} from '@react-navigation/native';
-import {PostAction} from '@store/posts';
+
 import {useAppDispatch} from 'hooks/store';
 import useUser from 'hooks/useUser';
 import React, {useState} from 'react';
@@ -13,11 +12,12 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
+import Video from 'react-native-video';
 
+import {StoryAction} from '@store/stories';
 import {
   Asset,
   ImagePickerResponse,
@@ -25,25 +25,40 @@ import {
   launchImageLibrary,
 } from 'react-native-image-picker';
 import {requestCameraPermission} from 'utils/RequestPermission';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import LoadingIcon from '@components/LottieAnimation/LoadingIcon';
+import {Toast} from 'react-native-toast-message/lib/src/Toast';
 
 const RederItem = ({index, item, onDelete}: any) => {
   return (
     <View
       style={[
         styles.item,
-        index % 3 !== 3 - 1 && {
-          marginRight: 25,
-          marginBottom: 15,
-        },
+        index % 2 === 0
+          ? {
+              marginRight: '3%',
+            }
+          : {
+              marginLeft: '3%',
+            },
       ]}>
-      <Image
-        source={{
-          uri: item.uri,
-        }}
-        style={styles.itemBackground}
-      />
+      {item.type.includes('video') ? (
+        <Video
+          source={{
+            uri: item.uri,
+          }}
+          resizeMode="contain"
+          style={styles.itemBackground}
+          controls={true}
+        />
+      ) : (
+        <Image
+          source={{
+            uri: item.uri,
+          }}
+          resizeMode="contain"
+          style={styles.itemBackground}
+        />
+      )}
       <TouchableOpacity onPress={() => onDelete(item.uri?.toString()!)}>
         <Image source={icons.Close} style={styles.itemDelete} />
       </TouchableOpacity>
@@ -51,38 +66,37 @@ const RederItem = ({index, item, onDelete}: any) => {
   );
 };
 
-const UploadScreen: React.FC = () => {
+const UploadStoryScreen: React.FC = () => {
   const [files, setFiles] = useState<ImagePickerResponse | null>(null);
+  const [loading, setLoading] = useState(false);
   const user = useUser();
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
-  const [loading, setLoading] = useState(false);
 
   const [formdata, setFormdata] = useState({
-    caption: '',
-    type: '',
-    userId: user.userId,
+    type: 'story',
+    userId: user?.userId,
   });
 
   const handlePostNew = async () => {
     setLoading(true);
     const form = new FormData();
-    form.append('caption', formdata.caption);
     form.append('type', formdata.type);
-    const images = files?.assets as Asset[];
-
-    form.append(
-      'files',
-      images.map(image => ({
-        uri: image.uri,
-        name: image.fileName,
-        type: image.type,
-      }))[0],
-    );
+    const medias = files?.assets as Asset[];
+    const file = medias.map(m => ({
+      uri: m.uri,
+      name: m.fileName,
+      type: m.type,
+    }))[0];
+    form.append('files', file);
+    form.append('type', file.type);
     form.append('userId', formdata.userId);
 
-    await dispatch(PostAction.createPost(form));
-    setLoading(true);
+    await dispatch(StoryAction.createStories(form));
+    Toast.show({
+      text1: 'Created story !!!',
+    });
+    setLoading(false);
     navigation.navigate(
       'Main' as never,
       {
@@ -94,7 +108,7 @@ const UploadScreen: React.FC = () => {
   const pickerMedia = async () => {
     try {
       const result = await launchImageLibrary({
-        mediaType: 'photo',
+        mediaType: 'mixed',
         selectionLimit: 6,
       });
 
@@ -108,7 +122,7 @@ const UploadScreen: React.FC = () => {
     try {
       await requestCameraPermission();
       const result = await launchCamera({
-        mediaType: 'photo',
+        mediaType: 'mixed',
       });
 
       setFiles({
@@ -128,82 +142,73 @@ const UploadScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView
-      style={[
-        styles.container,
-        {
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-        },
-      ]}>
-      <View>
-        <View style={styles.topContainer}>
-          <Image style={styles.backIcon} source={icons.Back} />
-          <Text
-            style={{
-              ...FONTS.body2,
-              color: COLORS.black,
-            }}>
-            Create Post
-          </Text>
-          {loading ? (
-            <LoadingIcon />
-          ) : (
-            <TouchableOpacity onPress={handlePostNew}>
-              <Text
-                style={{
-                  ...FONTS.body2,
-                  color: COLORS.primary,
-                  fontSize: 18,
-                }}>
-                Post
-              </Text>
-            </TouchableOpacity>
-          )}
-        </View>
-        {/* post container  */}
-        <View style={styles.postContainer}>
-          <Image style={styles.avatar} source={images.Avatar} />
-          <TextInput
-            editable
-            onChangeText={text =>
-              setFormdata({
-                ...formdata,
-                caption: text,
-              })
-            }
-            value={formdata.caption}
-            multiline
-            numberOfLines={15}
-            maxLength={40}
-            textAlignVertical="top"
-            placeholder="What is your mind ?"
-            style={styles.textInput}
-          />
-        </View>
-        <View style={styles.previewContainer}>
-          <FlatList
-            data={files?.assets || []}
-            renderItem={({item, index}) => {
-              return (
-                <RederItem item={item} index={index} onDelete={deleteFile} />
-              );
-            }}
-            keyExtractor={item => item.uri?.toString()!}
-            numColumns={3}
-          />
-        </View>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.topContainer}>
+        <Image style={styles.backIcon} source={icons.Back} />
+        <Text
+          style={{
+            ...FONTS.body2,
+            color: COLORS.black,
+          }}>
+          Create Story
+        </Text>
+        {loading ? (
+          <LoadingIcon />
+        ) : (
+          <TouchableOpacity onPress={handlePostNew}>
+            <Text
+              style={{
+                ...FONTS.body2,
+                color: COLORS.primary,
+                fontSize: 18,
+              }}>
+              Post
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
+
+      <View style={{...styles.devideLine, marginTop: 15}}></View>
+      <View
+        style={{
+          marginTop: 20,
+        }}>
+        <Text
+          style={{
+            ...FONTS.h2,
+          }}>
+          Add images or videos to create your story .
+        </Text>
+      </View>
+      <View style={styles.previewContainer}>
+        <FlatList
+          data={files?.assets || []}
+          renderItem={({item, index}) => {
+            return (
+              <RederItem item={item} index={index} onDelete={deleteFile} />
+            );
+          }}
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => <View style={{height: 20}} />}
+          keyExtractor={item => item.uri?.toString()!}
+          numColumns={2}
+        />
+      </View>
+
       {/* post action  */}
-      <View style={styles.devideLine}></View>
       <View style={styles.postActionContainer}>
         <View style={styles.postAction}>
           <TouchableOpacity onPress={takeMedia}>
-            <Ionicons name="camera-outline" size={27} color={COLORS.black} />
+            <Image
+              style={{...styles.postActionIcon, marginRight: 10}}
+              source={icons.CameraOutline}
+            />
           </TouchableOpacity>
           <TouchableOpacity onPress={pickerMedia}>
-            <Ionicons name="image-outline" size={26} color={COLORS.black} />
+            <Image
+              style={{...styles.postActionIcon, width: 28, height: 28}}
+              source={icons.Image}
+            />
           </TouchableOpacity>
         </View>
         {loading ? (
@@ -251,7 +256,7 @@ const styles = StyleSheet.create({
     height: 18,
   },
   postContainer: {
-    height: '50%',
+    height: '30%',
     marginTop: 30,
     backgroundColor: COLORS.white,
     shadowColor: '#ccc',
@@ -274,6 +279,7 @@ const styles = StyleSheet.create({
   },
   previewContainer: {
     marginTop: 30,
+    flex: 1,
   },
 
   devideLine: {
@@ -286,12 +292,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 20,
+    marginBottom: 5,
   },
 
   postAction: {
-    gap: 10,
     flexDirection: 'row',
     flex: 1,
+    alignItems: 'center',
   },
 
   postActionIcon: {
@@ -301,8 +308,10 @@ const styles = StyleSheet.create({
   },
 
   item: {
-    height: 90,
-    width: (SIZES.width - 90) / 3,
+    height: 200,
+    aspectRatio: 1,
+    flexGrow: 1,
+    width: '47%',
     backgroundColor: '#fff',
     borderRadius: 8,
     position: 'relative',
@@ -325,4 +334,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UploadScreen;
+export default UploadStoryScreen;

@@ -6,6 +6,7 @@ interface IStory {
   isReadMore: boolean;
   storyId: number;
   isSeen: boolean;
+  dateCreate?: string;
 }
 
 interface IStoryByUser {
