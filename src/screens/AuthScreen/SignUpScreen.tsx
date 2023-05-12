@@ -29,6 +29,7 @@ const SignInScreen: React.FC = ({navigation}: any) => {
             phone: data.phone,
             keywords: generateKeywords(fullName),
           });
+          console.log(data);
           register(data);
           console.log('User account created & signed in!');
         })
