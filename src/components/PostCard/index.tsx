@@ -29,6 +29,8 @@ const PostCard = ({post, setpostsId, handleSnapPress}: IPostCardProps) => {
     });
   };
 
+  console.log(post);
+
   const handelOnClickComment = () => {
     setpostsId(post.postsId);
     handleSnapPress(0);
@@ -45,7 +47,6 @@ const PostCard = ({post, setpostsId, handleSnapPress}: IPostCardProps) => {
     };
     try {
       const res = await Share.open(options);
-      console.log(res);
     } catch (err) {
       console.log(err);
     }
@@ -117,9 +118,9 @@ const PostCard = ({post, setpostsId, handleSnapPress}: IPostCardProps) => {
         <TouchableOpacity style={styles.rowCenter}>
           <Image
             source={
-              user.avatar
+              post.postsUserList[0].image
                 ? {
-                    uri: user.avatar,
+                    uri: post.postsUserList[0].image,
                   }
                 : images.Avatar
             }

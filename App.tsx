@@ -42,6 +42,9 @@ export type RootStackParams = {
   VideoScreen: {
     name: 'VideoScreen';
   };
+  UploadStoryScreen: {
+    name: 'UploadStoryScreen';
+  };
   ChatRoomScreen: {
     name: 'ChatRoomScreen';
   };

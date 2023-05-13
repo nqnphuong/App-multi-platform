@@ -24,7 +24,6 @@ import {useSelector} from 'react-redux';
 import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 import CommentBottomSheet from '@components/Comments/CommentBottomSheet';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {BlurView} from '@react-native-community/blur';
 import {StoryAction, storiesSelector} from '@store/stories';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
