@@ -106,7 +106,9 @@ const HomeScreen: React.FC = () => {
         <ImageBackground
           style={styles.newsPost}
           source={{
-            uri: item.stories[0].url,
+            uri: item.stories[0].url.includes('/video/upload/')
+              ? item.stories[0].url.replace('.mp4', '.jpg')
+              : item.stories[0].url,
           }}
           imageStyle={{
             borderRadius: 10,

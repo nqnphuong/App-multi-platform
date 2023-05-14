@@ -74,14 +74,14 @@ const UploadStoryScreen: React.FC = () => {
   const navigation = useNavigation();
 
   const [formdata, setFormdata] = useState({
-    type: 'story',
+    type: '',
     userId: user?.userId,
   });
 
   const handlePostNew = async () => {
     setLoading(true);
     const form = new FormData();
-    form.append('type', formdata.type);
+
     const medias = files?.assets as Asset[];
     const file = medias.map(m => ({
       uri: m.uri,
