@@ -27,6 +27,7 @@ import {
 import {requestCameraPermission} from 'utils/RequestPermission';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LoadingIcon from '@components/LottieAnimation/LoadingIcon';
+import Avatar from '@components/Avatar';
 
 const RederItem = ({index, item, onDelete}: any) => {
   return (
@@ -127,6 +128,8 @@ const UploadScreen: React.FC = () => {
     });
   };
 
+  console.log(user);
+
   return (
     <SafeAreaView
       style={[
@@ -164,7 +167,7 @@ const UploadScreen: React.FC = () => {
         </View>
         {/* post container  */}
         <View style={styles.postContainer}>
-          <Image style={styles.avatar} source={images.Avatar} />
+          <Avatar uri={user.avatar} />
           <TextInput
             editable
             onChangeText={text =>
