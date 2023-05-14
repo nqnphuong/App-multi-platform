@@ -11,7 +11,7 @@ import {dateStringToFromNow} from 'utils/dateUtils';
 const Footer = ({userStories, story, progressIndex}: any) => <View></View>;
 
 const Header = ({userStories, onClose, position}: any) => {
-  const dateString = userStories.stories[position].dateCreate;
+  const dateString = userStories.stories[position]?.dateCreate;
 
   return (
     <View

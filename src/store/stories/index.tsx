@@ -53,7 +53,7 @@ const getStories = createAsyncThunk('stories/getStories', async () => {
             return {
               id: s.storyId,
               url: s.link,
-              type: s.type,
+              type: s.type.includes('video') ? 'video' : 'image',
               // duration: 15,
               isReadMore: true,
               storyId: d.userId,
