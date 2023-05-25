@@ -11,6 +11,8 @@ import FollowApi from '../../../api/follow/request';
 import {useAppDispatch, useAppSelector} from 'hooks/store';
 import {FollowAction, followsSelector} from '@store/follow';
 import useUser from 'hooks/useUser';
+import {Image} from 'react-native';
+import icons from '@constants/icons';
 
 interface Props {
   id: number;
@@ -33,8 +35,6 @@ const ProfileButtons: React.FC<Props> = ({
   const [follow, setFollow] = useState<any>(null);
 
   const {followers} = useAppSelector(followsSelector);
-
-  // console.log(followers);
 
   const dispatch = useAppDispatch();
 
@@ -60,27 +60,33 @@ const ProfileButtons: React.FC<Props> = ({
             alignItems: 'center',
             justifyContent: 'space-evenly',
           }}>
-          <TouchableOpacity
-            onPress={() => console.log('Hello')}
-            style={{
-              width: '100%',
-            }}>
+          <TouchableOpacity onPress={() => console.log('Hello')}>
             <View
               style={{
-                width: SIZES.width - 40,
-                height: 35,
+                width: SIZES.width - 20,
+                height: 40,
+                gap: 5,
                 borderRadius: 5,
+                flexDirection: 'row',
                 justifyContent: 'center',
                 alignItems: 'center',
                 backgroundColor: '#7268DC',
               }}>
+              <Image
+                source={icons.AddNoBorder}
+                style={{
+                  width: 20,
+                  height: 20,
+                  tintColor: COLORS.white,
+                }}
+              />
               <Text
                 style={{
-                  fontSize: 15,
+                  fontSize: 13,
                   letterSpacing: 1,
                   color: COLORS.white,
                 }}>
-                Edit Profile
+                Add News
               </Text>
             </View>
           </TouchableOpacity>

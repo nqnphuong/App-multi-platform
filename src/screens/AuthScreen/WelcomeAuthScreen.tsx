@@ -22,6 +22,10 @@ const WelcomeAuthScreen: React.FC = ({navigation}: any) => {
     navigation.navigate('SignIn');
   };
 
+  const changeToSignUpScreen = () => {
+    navigation.navigate('SignUp');
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -60,7 +64,7 @@ const WelcomeAuthScreen: React.FC = ({navigation}: any) => {
             buttonText="Login with Google"
           />
           <CustomButton
-            onPress={() => changeToMainScreen()}
+            onPress={() => changeToSignUpScreen()}
             colors={[COLORS.lightGray]}
             buttonContainerStyles={styles.buttonContainerStyles}
             buttonText="Sign up with email or phone number"

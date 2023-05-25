@@ -108,6 +108,7 @@ const SignInScreen: React.FC = ({navigation}: any) => {
                   onPress={handleSubmit}
                   iconColor={COLORS.white}
                   colors={['#6B65DE', '#E89DE7']}
+                  
                   buttonContainerStyles={{
                     display: 'flex',
                     flexDirection: 'row',
