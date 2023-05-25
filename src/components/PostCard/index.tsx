@@ -29,8 +29,6 @@ const PostCard = ({post, setpostsId, handleSnapPress}: IPostCardProps) => {
     });
   };
 
-  console.log(post);
-
   const handelOnClickComment = () => {
     setpostsId(post.postsId);
     handleSnapPress(0);
@@ -179,7 +177,7 @@ const PostCard = ({post, setpostsId, handleSnapPress}: IPostCardProps) => {
       </View>
       <TouchableOpacity onPress={imageDetail} activeOpacity={1}>
         <AutoHeightImage
-          width={SIZES.width}
+          width={SIZES.width - 20}
           source={{
             uri: post.postsImageList[0].image,
           }}

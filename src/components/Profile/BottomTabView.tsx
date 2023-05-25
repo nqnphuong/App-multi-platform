@@ -1,28 +1,28 @@
-import React, {useLayoutEffect} from 'react';
-import {
-  Image,
-  ScrollView,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import React, {useCallback, useLayoutEffect, useRef, useState} from 'react';
+import {Image, ScrollView, View, TouchableOpacity, Text} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
-import {PostAction, postSelector} from '@store/posts';
+import posts, {IPostState, PostAction, postSelector} from '@store/posts';
 import {useAppDispatch} from 'hooks/store';
 import IPost from 'models/Posts';
-import {COLORS} from '@constants/theme';
+import {COLORS, FONTS, SIZES} from '@constants/theme';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../App';
+import {FlatList} from 'react-native-gesture-handler';
+import {TabView, TabBar} from 'react-native-tab-view';
+import {styles} from './ProfileStyle';
+import PostCard from '@components/PostCard';
+import BottomSheet from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
 
-interface Props {}
+interface Props {
+  posts: IPost[];
+}
 
-const BottomTabView: React.FC<Props> = () => {
-  const Tab = createMaterialTopTabNavigator();
-
-  const {myPosts} = useSelector(postSelector);
+const BottomTabView: React.FC<Props> = ({posts}) => {
   const dispatch = useAppDispatch();
+  const [postsId, setpostsId] = useState<string>('');
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -41,93 +41,44 @@ const BottomTabView: React.FC<Props> = () => {
     getMyPost();
   }, []);
 
-  const Posts = () => {
-    return (
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={{
-          width: '100%',
-          height: '100%',
-          backgroundColor: COLORS.white,
-        }}>
-        <View
-          style={{
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'white',
-            flexWrap: 'wrap',
-            flexDirection: 'row',
-            paddingVertical: 5,
-            justifyContent: 'space-between',
-          }}>
-          {myPosts.map((post: IPost) => (
-            <View key={post.postsId}>
-              <TouchableOpacity onPress={() => imageDetail(post.postsId)}>
-                <Image
-                  source={{
-                    uri: post.postsImageList[0].image,
-                  }}
-                  style={{
-                    width: 130,
-                    height: 150,
-                    resizeMode: 'cover',
-                  }}
-                />
-              </TouchableOpacity>
-            </View>
-          ))}
-        </View>
-      </ScrollView>
-    );
-  };
-  const Video = () => {
-    return (
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={{
-          width: '100%',
-          height: '100%',
-        }}>
-        <View
-          style={{
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'white',
-            flexWrap: 'wrap',
-            flexDirection: 'row',
-            paddingVertical: 5,
-            justifyContent: 'space-between',
-          }}></View>
-      </ScrollView>
-    );
-  };
+  const bottomSheetRef = useRef<BottomSheet>(null);
+  const snapPoints = ['100%', '100%'];
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleSnapPress = useCallback((index: number) => {
+    bottomSheetRef.current?.snapToIndex(index);
+    setIsOpen(true);
+  }, []);
+
+  console.log(posts);
 
   return (
-    <Tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarShowLabel: false,
-        tabBarIndicatorStyle: {
-          backgroundColor: '#6B65DE',
-          height: 1.5,
-        },
-        tabBarIcon: ({focused, colour}: any) => {
-          let iconName: string = '';
-          if (route.name === 'Posts') {
-            iconName = focused ? 'ios-apps-sharp' : 'ios-apps-sharp';
-            colour = focused ? '#6B65DE' : 'gray';
-          } else if (route.name === 'Video') {
-            iconName = focused ? 'ios-play-circle' : 'ios-play-circle-outline';
-            colour = focused ? '#6B65DE' : 'gray';
-          } else if (route.name === 'Tags') {
-            iconName = focused ? 'ios-person' : 'ios-person-outline';
-            colour = focused ? '#6B65DE' : 'gray';
-          }
-          return <Ionicons name={iconName} color={colour} size={22} />;
-        },
-      })}>
-      <Tab.Screen name="Posts" component={Posts} />
-      <Tab.Screen name="Video" component={Video} />
-    </Tab.Navigator>
+    <View
+      style={{
+        gap: 10,
+      }}>
+      <Text
+        style={{
+          ...FONTS.h4,
+          fontSize: 15,
+          padding: 10,
+          borderRadius: 5,
+          backgroundColor: COLORS.white,
+        }}>
+        Posts
+      </Text>
+      <View>
+        {posts &&
+          posts.map(p => (
+            <PostCard
+              post={p}
+              key={p.postsId}
+              setpostsId={setpostsId}
+              handleSnapPress={handleSnapPress}
+            />
+          ))}
+      </View>
+    </View>
   );
 };
 

@@ -2,76 +2,76 @@
   "migIndex": 1,
   "data": [
     {
-      "path": "assets/fonts/Roboto-Black.ttf",
-      "sha1": "14701060227dbc4a4ec9901970e8a58bb136efd9"
+      "path": "src/assets/fonts/Poppins-Black.ttf",
+      "sha1": "4e91803235bc44c8db587b8e3d98105ecb611c9d"
     },
     {
-      "path": "assets/fonts/Roboto-BlackItalic.ttf",
-      "sha1": "3009f8bc7f3aa84fd483469422442cc3789e0579"
+      "path": "src/assets/fonts/Poppins-BlackItalic.ttf",
+      "sha1": "08cf7acceaad656fce2639802e492c0b2747fe41"
     },
     {
-      "path": "assets/fonts/Roboto-Bold.ttf",
-      "sha1": "6cbb57ba2355cf442e06899898ff5af55867103e"
+      "path": "src/assets/fonts/Poppins-Bold.ttf",
+      "sha1": "3bc8164396c3e6c1e4fae0cf2a51ea66381c1c2d"
     },
     {
-      "path": "assets/fonts/Roboto-BoldItalic.ttf",
-      "sha1": "cd6a28033099099036e2a2182c9c4475394deaad"
+      "path": "src/assets/fonts/Poppins-BoldItalic.ttf",
+      "sha1": "352b886f06803d5c77722dc91c0313b7d2338c82"
     },
     {
-      "path": "assets/fonts/Roboto-Italic.ttf",
-      "sha1": "4c4faf7a3fae4d0b1474561f0080995d358861ac"
+      "path": "src/assets/fonts/Poppins-ExtraBold.ttf",
+      "sha1": "6f007dac8dacf714ddcfaa3132a887e6a71cf792"
     },
     {
-      "path": "assets/fonts/Roboto-Light.ttf",
-      "sha1": "191dda7a5142990cd980727d43b27e4802f0b321"
+      "path": "src/assets/fonts/Poppins-ExtraBoldItalic.ttf",
+      "sha1": "cb7ca77911e100755dec21fcebd123d3914f0af7"
     },
     {
-      "path": "assets/fonts/Roboto-LightItalic.ttf",
-      "sha1": "693445f41eaa750b789a77568f9d6d995e85e0b2"
+      "path": "src/assets/fonts/Poppins-ExtraLight.ttf",
+      "sha1": "13c6360196875d19f488e709809701cb367296d6"
     },
     {
-      "path": "assets/fonts/Roboto-Medium.ttf",
-      "sha1": "adbc3bde424bcf7dbc38f148005c8319825891f2"
+      "path": "src/assets/fonts/Poppins-ExtraLightItalic.ttf",
+      "sha1": "06556ef3605138c71d24f1fe9d4e391fe751f5e7"
     },
     {
-      "path": "assets/fonts/Roboto-MediumItalic.ttf",
-      "sha1": "75feb92a7fc61d00e8ca610a700344738ef5ae32"
+      "path": "src/assets/fonts/Poppins-Italic.ttf",
+      "sha1": "8853c7193c21b71acb6054a2d8243147fb283360"
     },
     {
-      "path": "assets/fonts/Roboto-Regular.ttf",
-      "sha1": "1d1d41fcadc571decb6444211b7993b99ce926e2"
+      "path": "src/assets/fonts/Poppins-Light.ttf",
+      "sha1": "0eba831cb91221e799ba55fc1b7c1805a0799623"
     },
     {
-      "path": "assets/fonts/Roboto-Thin.ttf",
-      "sha1": "f71ccd563f95ccc187cf4fe81287445e91f7121b"
+      "path": "src/assets/fonts/Poppins-LightItalic.ttf",
+      "sha1": "a08a7780fe9593c031bdbb90772ab05b1444127c"
     },
     {
-      "path": "assets/fonts/Roboto-ThinItalic.ttf",
-      "sha1": "e3fb2b2a0dc2daf84d79cfff4b345a2afac132bc"
+      "path": "src/assets/fonts/Poppins-Medium.ttf",
+      "sha1": "cf83e7582e60ed83f67c7d68b4f7482ac9fc6958"
     },
     {
-      "path": "assets/fonts/RobotoCondensed-Bold.ttf",
-      "sha1": "c348d9f1b95e103ac2d14d56682867368f385b1a"
+      "path": "src/assets/fonts/Poppins-MediumItalic.ttf",
+      "sha1": "86f262a5dc3116a1f53ef76974802df2b6a8afc7"
     },
     {
-      "path": "assets/fonts/RobotoCondensed-BoldItalic.ttf",
-      "sha1": "3bd9f2b8c65c4dd80f535b9ddd937784e0d71ce6"
+      "path": "src/assets/fonts/Poppins-Regular.ttf",
+      "sha1": "52f9413b264e8ecefbbf12830e3dfadebbf72986"
     },
     {
-      "path": "assets/fonts/RobotoCondensed-Italic.ttf",
-      "sha1": "394439fa97f36bba80f061e32e46ead1650e798e"
+      "path": "src/assets/fonts/Poppins-SemiBold.ttf",
+      "sha1": "bb68fa19e20495d26a20308b90712bd2c6150642"
     },
     {
-      "path": "assets/fonts/RobotoCondensed-Light.ttf",
-      "sha1": "df222c27b5e41dc89ca76a4479c9dd3ae6c1acbc"
+      "path": "src/assets/fonts/Poppins-SemiBoldItalic.ttf",
+      "sha1": "4fe585c2f76c0638df95d9b26e753525d3912172"
     },
     {
-      "path": "assets/fonts/RobotoCondensed-LightItalic.ttf",
-      "sha1": "d974583f3217141e4fc04bf94c3c6f94d9f56f8f"
+      "path": "src/assets/fonts/Poppins-Thin.ttf",
+      "sha1": "9bebfeda7e983ad8d9d78059e44f937622c42dd7"
     },
     {
-      "path": "assets/fonts/RobotoCondensed-Regular.ttf",
-      "sha1": "c722696501a8663d64208d754e4db8165d3936f6"
+      "path": "src/assets/fonts/Poppins-ThinItalic.ttf",
+      "sha1": "193eb4a66d90b17d1c2c1d96e5f218aa018e59b6"
     }
   ]
 }
