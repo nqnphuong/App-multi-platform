@@ -18,9 +18,15 @@ interface IPostCardProps {
   post: IPost;
   setpostsId: (id: string) => void;
   handleSnapPress: (key: number) => void;
+  setLoading: (status: boolean) => void;
 }
 
-const PostCard = ({post, setpostsId, handleSnapPress}: IPostCardProps) => {
+const PostCard = ({
+  post,
+  setpostsId,
+  handleSnapPress,
+  setLoading,
+}: IPostCardProps) => {
   const dispatch = useAppDispatch();
   const {user} = useAppSelector(userSelector);
 
@@ -62,9 +68,11 @@ const PostCard = ({post, setpostsId, handleSnapPress}: IPostCardProps) => {
   };
 
   const handleReact = async () => {
+    setLoading(true);
     await PostApi.reactPostApi(post.postsId).then(async () => {
       await dispatch(PostAction.getPosts());
       await dispatch(PostAction.findPostsById(post.postsId));
+      setLoading(false);
     });
   };
 

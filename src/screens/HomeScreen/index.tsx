@@ -4,7 +4,7 @@ import PostCard from '@components/PostCard';
 import UploadPost from '@components/UploadPost';
 import {PostAction, postSelector} from '@store/posts';
 import {UserAction, userSelector} from '@store/user';
-import {COLORS, FONTS} from 'constants/theme';
+import {COLORS, FONTS, SIZES} from 'constants/theme';
 import {useAppDispatch, useAppSelector} from 'hooks/store';
 import useUser from 'hooks/useUser';
 
@@ -31,6 +31,7 @@ import {RootStackParams} from '../../../App';
 import {IStoryByUser} from 'models/Story';
 import icons from '@constants/icons';
 import images from '@constants/images';
+import Loading from '@components/LottieAnimation/Loading';
 
 const HomeScreen: React.FC = () => {
   const navigation =
@@ -43,6 +44,7 @@ const HomeScreen: React.FC = () => {
   const {stories} = useAppSelector(storiesSelector);
 
   const {setIsStoryViewShow, setPressedIndex} = StoryAction;
+
   const openStories = (index: number) => {
     dispatch(setIsStoryViewShow(true));
     dispatch(setPressedIndex(index));
@@ -60,6 +62,8 @@ const HomeScreen: React.FC = () => {
   }, [userId]);
 
   const {userCurrent} = useSelector(userSelector);
+
+  const [loading, setLoading] = useState(false);
 
   const renderNewsHeader = () => {
     return (
@@ -146,52 +150,75 @@ const HomeScreen: React.FC = () => {
   }, []);
 
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
-      <View style={styles.container}>
-        <Header />
-        <Animated.ScrollView
-          style={[styles.scrollView]}
-          scrollEnabled={!isOpen}
-          showsVerticalScrollIndicator={false}>
-          <FlatList
-            data={stories}
-            keyExtractor={item => `${item.id.toString()}-story`}
-            bounces={true}
-            horizontal={true}
-            renderItem={({item, index}) => renderNewsItem(item, index)}
-            ListHeaderComponent={renderNewsHeader()}
-            showsHorizontalScrollIndicator={false}
-          />
-          <UploadPost avatar={userCurrent.avatar} />
+    <>
+      <GestureHandlerRootView style={{flex: 1}}>
+        <View style={styles.container}>
+          <Header />
+          <Animated.ScrollView
+            style={[styles.scrollView]}
+            scrollEnabled={!isOpen}
+            showsVerticalScrollIndicator={false}>
+            <FlatList
+              data={stories}
+              keyExtractor={item => `${item.id.toString()}-story`}
+              bounces={true}
+              horizontal={true}
+              renderItem={({item, index}) => renderNewsItem(item, index)}
+              ListHeaderComponent={renderNewsHeader()}
+              showsHorizontalScrollIndicator={false}
+            />
+            <UploadPost avatar={userCurrent.avatar} />
+            <View
+              style={{
+                flex: 1,
+                gap: 5,
+              }}>
+              {posts.length > 0 &&
+                posts.map(p => (
+                  <PostCard
+                    post={p}
+                    key={p.postsId}
+                    setpostsId={setpostsId}
+                    setLoading={setLoading}
+                    handleSnapPress={handleSnapPress}
+                  />
+                ))}
+            </View>
+          </Animated.ScrollView>
+        </View>
+        {postsId && (
+          <BottomSheet
+            ref={bottomSheetRef}
+            snapPoints={snapPoints}
+            enablePanDownToClose={true}
+            onClose={() => setIsOpen(false)}>
+            <BottomSheetView>
+              <CommentBottomSheet postsId={postsId} />
+            </BottomSheetView>
+          </BottomSheet>
+        )}
+      </GestureHandlerRootView>
+      {loading && (
+        <View
+          style={{
+            top: 0,
+            position: 'absolute',
+            width: SIZES.width,
+            height: SIZES.height,
+          }}>
           <View
             style={{
-              flex: 1,
-              gap: 5,
-            }}>
-            {posts.length > 0 &&
-              posts.map(p => (
-                <PostCard
-                  post={p}
-                  key={p.postsId}
-                  setpostsId={setpostsId}
-                  handleSnapPress={handleSnapPress}
-                />
-              ))}
-          </View>
-        </Animated.ScrollView>
-      </View>
-      {postsId && (
-        <BottomSheet
-          ref={bottomSheetRef}
-          snapPoints={snapPoints}
-          enablePanDownToClose={true}
-          onClose={() => setIsOpen(false)}>
-          <BottomSheetView>
-            <CommentBottomSheet postsId={postsId} />
-          </BottomSheetView>
-        </BottomSheet>
+              position: 'absolute',
+              height: SIZES.height,
+              width: SIZES.width,
+              backgroundColor: COLORS.black,
+              opacity: 0.1,
+            }}
+          />
+          <Loading />
+        </View>
       )}
-    </GestureHandlerRootView>
+    </>
   );
 };
 
