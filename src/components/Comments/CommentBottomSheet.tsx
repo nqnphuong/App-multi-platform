@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
 import {useLayoutEffect, useState} from 'react';
 import tw from 'twrnc';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -31,9 +25,6 @@ const CommentBottomSheet: React.FC<Props> = ({postsId}) => {
 
   const {post, listCommentOfPost} = useSelector(postSelector);
 
-  const [isHeart, setHeart] = useState(post.feel);
-  const [isTotalFeel, setTotalFeel] = useState(post.totalFeel);
-
   const [isVisibleDeleteModal, setVisibleDeleteModal] = useState(false);
   const handleVisibleDeleteModal = () => {
     setVisibleDeleteModal(!isVisibleDeleteModal);
@@ -42,13 +33,14 @@ const CommentBottomSheet: React.FC<Props> = ({postsId}) => {
   const [isIdCommentSelected, setIdCommentSelected] = useState(null);
 
   const handleReact = async () => {
-    setHeart(!isHeart);
-    await PostApi.reactPostApi(post.postsId);
-    isHeart ? setTotalFeel(isTotalFeel - 1) : setTotalFeel(isTotalFeel + 1);
+    await PostApi.reactPostApi(post.postsId).then(async () => {
+      await dispatch(PostAction.getPosts());
+      await dispatch(PostAction.findPostsById(postsId));
+    });
   };
 
   return (
-    <View style={tw`h-[100%] w-full items-center`}>
+    <View style={tw`h-[95%] w-full items-center`}>
       <View style={tw`w-full h-[90%] px-5 mt-2`}>
         <View style={tw`flex flex-row items-center`}>
           <View style={tw`flex flex-row items-center justify-between w-full`}>
@@ -80,16 +72,16 @@ const CommentBottomSheet: React.FC<Props> = ({postsId}) => {
                 style={tw` items-center flex flex-row justify-center`}
                 onPress={handleReact}>
                 <Ionicons
-                  name={isHeart ? 'heart' : 'heart-outline'}
+                  name={post.feel ? 'heart' : 'heart-outline'}
                   style={
-                    isHeart
+                    post.feel
                       ? tw`text-2xl text-[#ED4366] mr-2`
                       : tw`text-2xl text-gray-300 mr-2`
                   }
                   size={24}
                 />
                 <Text style={tw`font-semibold text-gray-800 mr-3`}>
-                  {isTotalFeel ? isTotalFeel : 0}
+                  {post.totalFeel ? post.totalFeel : 0}
                 </Text>
               </TouchableOpacity>
 
@@ -124,7 +116,7 @@ const CommentBottomSheet: React.FC<Props> = ({postsId}) => {
 
           <ScrollView
             style={{
-              height: '78%',
+              height: '100%',
             }}
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}>

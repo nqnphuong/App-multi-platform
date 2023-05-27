@@ -50,8 +50,6 @@ const BottomTabView: React.FC<Props> = ({posts}) => {
     setIsOpen(true);
   }, []);
 
-  console.log(posts);
-
   return (
     <View
       style={{

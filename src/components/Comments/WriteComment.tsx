@@ -17,18 +17,21 @@ const WriteComment: React.FC<Props> = ({postId}) => {
 
   const {user} = useAppSelector(userSelector);
 
-  const handleComment = () => {
+  const handleComment = async () => {
     if (isComment) {
-      dispatch(
+      const res = await dispatch(
         PostAction.commentPost({
           comment: isComment,
           tusId: postId,
           userId: user.userId,
         }),
       );
-      dispatch(PostAction.getListCommentOfPost(postId));
-      dispatch(PostAction.getPosts());
-      setComment('');
+      if (PostAction.commentPost.fulfilled.match(res)) {
+        await dispatch(PostAction.getListCommentOfPost(postId));
+        await dispatch(PostAction.getPosts());
+        await dispatch(PostAction.findPostsById(postId));
+        setComment('');
+      }
     }
   };
 

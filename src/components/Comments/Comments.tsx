@@ -29,8 +29,6 @@ const Comments: React.FC<Props> = ({
     }
   };
 
-  // console.log(item);
-
   return (
     <TouchableOpacity
       style={tw`w-full flex flex-row my-1 mx-1 items-center`}

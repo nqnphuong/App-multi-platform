@@ -1,16 +1,18 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import AutoHeightImage from 'react-native-auto-height-image';
 import {COLORS, SIZES} from 'constants/theme';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParams} from '../../../App';
-import {useNavigation} from '@react-navigation/native';
 import IPost from 'models/Posts';
-import {useAppSelector} from 'hooks/store';
+import {useAppDispatch, useAppSelector} from 'hooks/store';
 import {userSelector} from '@store/user';
 import Share from 'react-native-share';
 import icons from '@constants/icons';
 import images from '@constants/images';
+import {ImageGallery, ImageObject} from '@georstat/react-native-image-gallery';
+import PostApi from '../../../api/post/request';
+import {PostAction} from '@store/posts';
+import tw from 'twrnc';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 interface IPostCardProps {
   post: IPost;
@@ -19,15 +21,25 @@ interface IPostCardProps {
 }
 
 const PostCard = ({post, setpostsId, handleSnapPress}: IPostCardProps) => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const dispatch = useAppDispatch();
   const {user} = useAppSelector(userSelector);
-  const imageDetail = () => {
-    navigation.navigate('ImageScreen', {
-      name: 'ImageScreen',
-      postsId: post.postsId,
+
+  const [listImage, setlistImage] = useState<ImageObject[]>([]);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const openGallery = () => setIsOpen(true);
+  const closeGallery = () => setIsOpen(false);
+
+  useEffect(() => {
+    const images: ImageObject[] = [];
+    post.postsImageList.map((item, index) => {
+      images.push({
+        id: index,
+        url: item.image,
+      });
     });
-  };
+    setlistImage(images);
+  }, []);
 
   const handelOnClickComment = () => {
     setpostsId(post.postsId);
@@ -36,9 +48,8 @@ const PostCard = ({post, setpostsId, handleSnapPress}: IPostCardProps) => {
 
   const sharePost = async () => {
     const options = {
-      message:
-        'Deserunt ea sint magna dolor incididunt sit culpa id laborum cupidatat commodo do sint.',
-      url: 'https://sgcodes.co.in',
+      message: post.caption,
+      url: post.postsImageList[0].image,
       email: 'codes.sg@gmail.com',
       subject: 'Eiusmod esse veniam esse.',
       recipient: '919988998899',
@@ -48,6 +59,13 @@ const PostCard = ({post, setpostsId, handleSnapPress}: IPostCardProps) => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleReact = async () => {
+    await PostApi.reactPostApi(post.postsId).then(async () => {
+      await dispatch(PostAction.getPosts());
+      await dispatch(PostAction.findPostsById(post.postsId));
+    });
   };
 
   const renderFooter = () => {
@@ -61,21 +79,19 @@ const PostCard = ({post, setpostsId, handleSnapPress}: IPostCardProps) => {
                 justifyContent: 'space-between',
               },
             ]}>
-            <TouchableOpacity style={[styles.rowCenter]}>
-              <Image
-                source={icons.Heart}
-                style={[
-                  {
-                    width: 20,
-                    height: 20,
-                    resizeMode: 'contain',
-                  },
-                ]}
+            <TouchableOpacity style={[styles.rowCenter]} onPress={handleReact}>
+              <Ionicons
+                name={post.feel ? 'heart' : 'heart-outline'}
+                style={
+                  post.feel
+                    ? tw`text-2xl text-[#7268DC]`
+                    : tw`text-2xl text-black`
+                }
+                size={24}
               />
-              <Text
-                style={[
-                  {color: COLORS.black},
-                ]}>{`${post.totalFeel} Like`}</Text>
+              <Text style={[{color: COLORS.black}]}>
+                {`${post.totalFeel ? post.totalFeel : 0} Like`}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.rowCenter]}
@@ -134,6 +150,7 @@ const PostCard = ({post, setpostsId, handleSnapPress}: IPostCardProps) => {
                 color: COLORS.black,
                 fontSize: 16,
                 fontWeight: '600',
+                textTransform: 'capitalize',
               }}>
               {post?.postsUserList?.length > 0
                 ? post?.postsUserList[0].name
@@ -175,7 +192,7 @@ const PostCard = ({post, setpostsId, handleSnapPress}: IPostCardProps) => {
       <View style={styles.textBody}>
         <Text style={{color: COLORS.black, fontSize: 14}}>{post.caption}</Text>
       </View>
-      <TouchableOpacity onPress={imageDetail} activeOpacity={1}>
+      <TouchableOpacity onPress={openGallery} activeOpacity={1}>
         <AutoHeightImage
           width={SIZES.width - 20}
           source={{
@@ -184,6 +201,7 @@ const PostCard = ({post, setpostsId, handleSnapPress}: IPostCardProps) => {
         />
       </TouchableOpacity>
       {renderFooter()}
+      <ImageGallery close={closeGallery} isOpen={isOpen} images={listImage} />
     </View>
   );
 };

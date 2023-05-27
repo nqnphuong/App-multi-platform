@@ -1,6 +1,6 @@
 import {useChatContextApp} from '@screens/ChatScreen/context/ChatContext';
 import React from 'react';
-import { Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import {Channel, MessageInput, MessageList} from 'stream-chat-react-native';
 
 const ChatRoomScreen: React.FC = () => {

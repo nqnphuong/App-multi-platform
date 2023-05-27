@@ -4,7 +4,7 @@ import PostCard from '@components/PostCard';
 import UploadPost from '@components/UploadPost';
 import {PostAction, postSelector} from '@store/posts';
 import {UserAction, userSelector} from '@store/user';
-import {COLORS, FONTS, SIZES} from 'constants/theme';
+import {COLORS, FONTS} from 'constants/theme';
 import {useAppDispatch, useAppSelector} from 'hooks/store';
 import useUser from 'hooks/useUser';
 
@@ -37,6 +37,7 @@ const HomeScreen: React.FC = () => {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const {posts} = useSelector(postSelector);
+
   const dispatch = useAppDispatch();
 
   const {stories} = useAppSelector(storiesSelector);
@@ -67,9 +68,13 @@ const HomeScreen: React.FC = () => {
           navigation.navigate('UploadStoryScreen' as never);
         }}>
         <ImageBackground
-          source={{
-            uri: 'https://scontent.fdad1-2.fna.fbcdn.net/v/t39.30808-6/275230582_1173189403508740_1249611582808657292_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=ZP09G27NIwEAX9PCHqx&_nc_ht=scontent.fdad1-2.fna&oh=00_AfBwMHyHu_HWbiajSZid7HxJIUHffo-FdH-Ik4-Ar79xeA&oe=6441F5D5',
-          }}
+          source={
+            userCurrent.avatar
+              ? {
+                  uri: userCurrent.avatar,
+                }
+              : images.Avatar
+          }
           style={styles.addNews}
           imageStyle={{
             width: 100,
@@ -163,7 +168,7 @@ const HomeScreen: React.FC = () => {
               flex: 1,
               gap: 5,
             }}>
-            {posts.length > 0 ? (
+            {posts.length > 0 &&
               posts.map(p => (
                 <PostCard
                   post={p}
@@ -171,30 +176,7 @@ const HomeScreen: React.FC = () => {
                   setpostsId={setpostsId}
                   handleSnapPress={handleSnapPress}
                 />
-              ))
-            ) : (
-              <View
-                style={{
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <Image
-                  source={images.AuthImage}
-                  style={{
-                    width: 300,
-                    height: 300,
-                    resizeMode: 'contain',
-                  }}
-                />
-                <Text
-                  style={{
-                    ...FONTS.h2,
-                  }}>
-                  No posts
-                </Text>
-              </View>
-            )}
+              ))}
           </View>
         </Animated.ScrollView>
       </View>

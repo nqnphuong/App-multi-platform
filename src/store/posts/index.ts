@@ -4,9 +4,9 @@ import PostApi from '../../../api/post/request';
 
 export interface IPostState {
   post: IPost;
-  listCommentOfPost: any[];
   posts: IPost[];
   myPosts: IPost[];
+  listCommentOfPost: any[];
 }
 
 const initialState: IPostState = {
