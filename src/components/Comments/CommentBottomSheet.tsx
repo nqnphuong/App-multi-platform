@@ -75,7 +75,7 @@ const CommentBottomSheet: React.FC<Props> = ({postsId}) => {
                   name={post.feel ? 'heart' : 'heart-outline'}
                   style={
                     post.feel
-                      ? tw`text-2xl text-[#ED4366] mr-2`
+                      ? tw`text-2xl text-[#7268DC] mr-2`
                       : tw`text-2xl text-gray-300 mr-2`
                   }
                   size={24}

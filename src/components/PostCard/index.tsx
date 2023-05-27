@@ -10,7 +10,7 @@ import icons from '@constants/icons';
 import images from '@constants/images';
 import {ImageGallery, ImageObject} from '@georstat/react-native-image-gallery';
 import PostApi from '../../../api/post/request';
-import {PostAction} from '@store/posts';
+import {PostAction, hidePost} from '@store/posts';
 import tw from 'twrnc';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -66,6 +66,10 @@ const PostCard = ({post, setpostsId, handleSnapPress}: IPostCardProps) => {
       await dispatch(PostAction.getPosts());
       await dispatch(PostAction.findPostsById(post.postsId));
     });
+  };
+
+  const handleHidePost = () => {
+    dispatch(hidePost(post.postsId));
   };
 
   const renderFooter = () => {
@@ -181,13 +185,33 @@ const PostCard = ({post, setpostsId, handleSnapPress}: IPostCardProps) => {
             </View>
           </View>
         </TouchableOpacity>
-        <Image
-          source={icons.More}
+        <View
           style={{
-            width: 20,
-            height: 20,
-          }}
-        />
+            gap: 15,
+            alignItems: 'center',
+            flexDirection: 'row',
+          }}>
+          <TouchableOpacity>
+            <Image
+              source={icons.More}
+              style={{
+                width: 20,
+                height: 20,
+                tintColor: COLORS.gray,
+              }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleHidePost}>
+            <Image
+              source={icons.CloseX}
+              style={{
+                width: 13,
+                height: 13,
+                tintColor: COLORS.gray,
+              }}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
       <View style={styles.textBody}>
         <Text style={{color: COLORS.black, fontSize: 14}}>{post.caption}</Text>

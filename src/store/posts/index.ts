@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import IPost from 'models/Posts';
 import PostApi from '../../../api/post/request';
+import _ from 'lodash';
 
 export interface IPostState {
   post: IPost;
@@ -44,7 +45,13 @@ const initialState: IPostState = {
 const slice = createSlice({
   name: 'posts',
   initialState,
-  reducers: {},
+  reducers: {
+    hidePost: (state, {payload}) => {
+      state.posts = _.remove(state.posts, item => {
+        return item.postsId != payload;
+      });
+    },
+  },
   extraReducers(builder) {
     builder.addCase(getPosts.fulfilled, (state, {payload}) => {
       state.posts = payload;
@@ -147,6 +154,8 @@ export const PostAction = {
   commentPost,
   getListCommentOfPost,
 };
+
+export const {hidePost} = slice.actions;
 
 export const postSelector = (state: {posts: IPostState}) => {
   return state.posts;
