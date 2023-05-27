@@ -1,46 +1,32 @@
 import React, {useEffect, useLayoutEffect, useState, useRef} from 'react';
 import {
-  StyleSheet,
   View,
   ScrollView,
   Text,
   TouchableOpacity,
-  ImageBackground,
   Image,
-  Animated,
   FlatList,
+  Modal,
 } from 'react-native';
-import Entypo from 'react-native-vector-icons/Entypo';
 import BottomTabView from '@components/Profile/BottomTabView';
 import ProfileButtons from '@components/Profile/ProfileButtons';
 import ProfileBody from '@components/Profile/ProfileBody';
-import {useAppDispatch, useAppSelector} from 'hooks/store';
-import {IUserState, userSelector} from '@store/user';
+import {useAppSelector} from 'hooks/store';
+import {userSelector} from '@store/user';
 import {useSelector} from 'react-redux';
-import {News} from 'models/News';
-import Avatar from '@components/Avatar';
 import {COLORS, FONTS, SIZES} from '@constants/theme';
-import {StoryAction, storiesSelector} from '@store/stories';
-import {useNavigation} from '@react-navigation/native';
-import {bottom_tabs, screens} from '@constants/constants';
+import {storiesSelector} from '@store/stories';
 import UploadPost from '@components/UploadPost';
 import {styles} from '@components/Profile/ProfileStyle';
 import icons from '@constants/icons';
-import IUser from 'models/User';
 import {followsSelector} from '@store/follow';
 import images from '@constants/images';
-import {Modal, Provider} from '@ant-design/react-native';
 import {postSelector} from '@store/posts';
 
 const ProfileScreen: React.FC = () => {
   const {stories} = useAppSelector(storiesSelector);
 
-  const dispatch = useAppDispatch();
-
-  const navigation = useNavigation();
-
   const {userCurrent} = useSelector(userSelector);
-  const {setIsStoryViewShow, setPressedIndex} = StoryAction;
   const {followers} = useAppSelector(followsSelector);
   const {myPosts} = useAppSelector(postSelector);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -218,40 +204,60 @@ const ProfileScreen: React.FC = () => {
           <BottomTabView posts={myPosts} />
         </View>
       </View>
-      <Provider>
-        <Modal
-          transparent
-          onClose={() => setIsOpen(!isOpen)}
-          maskClosable
-          visible={isOpen}
+      <Modal animationType="slide" visible={isOpen} transparent>
+        <View
           style={{
-            minWidth: SIZES.width - 30,
+            flex: 1,
+            backgroundColor: '#000000aa',
           }}>
           <View
             style={{
-              borderBottomColor: COLORS.lightGray,
-              borderBottomWidth: 1,
+              flex: 1,
+              marginHorizontal: 10,
+              marginVertical: 50,
+              padding: 10,
+              borderRadius: 10,
+              backgroundColor: COLORS.white,
             }}>
-            <View>
+            <View
+              style={{
+                paddingHorizontal: 5,
+                paddingBottom: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                borderBottomWidth: 1,
+                borderBottomColor: COLORS.gray,
+              }}>
               <Text
                 style={{
                   ...FONTS.h4,
                 }}>
                 List Following
               </Text>
+              <TouchableOpacity onPress={() => setIsOpen(false)}>
+                <Image
+                  source={icons.CloseX}
+                  style={{
+                    width: 15,
+                    height: 15,
+                    tintColor: COLORS.gray,
+                  }}
+                />
+              </TouchableOpacity>
             </View>
+            <FlatList
+              data={followers}
+              scrollEnabled={false}
+              keyExtractor={follower => `BrowseCategories-${follower.userId}`}
+              contentContainerStyle={{
+                marginTop: SIZES.radius,
+              }}
+              renderItem={({item, index}) => renderListFollowing(item, index)}
+            />
           </View>
-          <FlatList
-            data={followers}
-            scrollEnabled={false}
-            keyExtractor={follower => `BrowseCategories-${follower.userId}`}
-            contentContainerStyle={{
-              marginTop: SIZES.radius,
-            }}
-            renderItem={({item, index}) => renderListFollowing(item, index)}
-          />
-        </Modal>
-      </Provider>
+        </View>
+      </Modal>
     </ScrollView>
   );
 };

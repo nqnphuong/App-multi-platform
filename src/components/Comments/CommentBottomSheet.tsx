@@ -48,8 +48,12 @@ const CommentBottomSheet: React.FC<Props> = ({postsId}) => {
   return (
     <>
       <View style={tw`h-[100%] w-full items-center`}>
-        <View style={tw`w-full h-[90%] p-5`}>
-          <View style={tw`flex flex-row items-center`}>
+        <View
+          style={{
+            width: '100%',
+            height: '100%',
+          }}>
+          <View style={tw`flex flex-row items-center p-2`}>
             <View style={tw`flex flex-row items-center justify-between w-full`}>
               {post.postsUserList ? (
                 <View>
@@ -104,58 +108,55 @@ const CommentBottomSheet: React.FC<Props> = ({postsId}) => {
               </View>
             </View>
           </View>
-          <View>
-            <View
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              paddingHorizontal: 10,
+            }}>
+            <Text
               style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
+                maxWidth: '75%',
               }}>
-              <Text
-                style={{
-                  maxWidth: '75%',
-                }}>
-                {post.caption}
-              </Text>
-              <Text style={tw`text-gray-500 `}>
-                {post.totalComment} comments
-              </Text>
-            </View>
-            <View style={tw`w-full flex justify-center items-center`}>
-              <View
-                style={tw`bg-gray-200 rounded-full w-2/5 h-[1] items-center mt-4 mb-1`}
-              />
-            </View>
-
-            <ScrollView
-              style={{
-                height: '100%',
-              }}
-              showsHorizontalScrollIndicator={false}
-              showsVerticalScrollIndicator={false}>
-              {listCommentOfPost ? (
-                listCommentOfPost.map(item => {
-                  return (
-                    <Comments
-                      item={item}
-                      key={item.postsCommentId}
-                      setIdCommentSelected={setIdCommentSelected}
-                      handleVisibleDeleteModal={handleVisibleDeleteModal}
-                    />
-                  );
-                })
-              ) : (
-                <></>
-              )}
-            </ScrollView>
+              {post.caption}
+            </Text>
+            <Text style={tw`text-gray-500 `}>{post.totalComment} comments</Text>
           </View>
-        </View>
-        <View
-          style={{
-            width: '100%',
-            height: 50,
-          }}>
-          <WriteComment postId={postsId} />
+          <View style={tw`w-full flex justify-center items-center`}>
+            <View
+              style={tw`bg-gray-200 rounded-full w-2/5 h-[1] items-center mt-4 mb-1`}
+            />
+          </View>
+          <ScrollView
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            style={{
+              paddingHorizontal: 20,
+            }}>
+            {listCommentOfPost ? (
+              listCommentOfPost.map(item => {
+                return (
+                  <Comments
+                    item={item}
+                    key={item.postsCommentId}
+                    setIdCommentSelected={setIdCommentSelected}
+                    handleVisibleDeleteModal={handleVisibleDeleteModal}
+                  />
+                );
+              })
+            ) : (
+              <></>
+            )}
+          </ScrollView>
+          <View
+            style={{
+              width: '100%',
+              height: 50,
+              marginVertical: 10,
+            }}>
+            <WriteComment postId={postsId} />
+          </View>
         </View>
       </View>
       {loading && (
@@ -164,8 +165,6 @@ const CommentBottomSheet: React.FC<Props> = ({postsId}) => {
             position: 'absolute',
             width: SIZES.width,
             height: SIZES.height,
-            display: 'flex',
-            alignItems: 'center',
           }}>
           <View
             style={{
