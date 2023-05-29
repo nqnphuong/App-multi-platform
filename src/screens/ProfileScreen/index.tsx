@@ -22,6 +22,7 @@ import icons from '@constants/icons';
 import {followsSelector} from '@store/follow';
 import images from '@constants/images';
 import {postSelector} from '@store/posts';
+import HeaderProfile from '@components/Profile/Header';
 
 const ProfileScreen: React.FC = () => {
   const {stories} = useAppSelector(storiesSelector);
@@ -180,6 +181,7 @@ const ProfileScreen: React.FC = () => {
           backgroundColor: COLORS.lightGray,
           paddingHorizontal: 10,
         }}>
+        <HeaderProfile />
         <View style={{width: '100%', gap: 10}}>
           <ProfileBody
             name={userCurrent.name}
@@ -192,7 +194,6 @@ const ProfileScreen: React.FC = () => {
             isCurrentUser={true}
           />
           <ProfileButtons
-            id={0}
             name={userCurrent.name}
             accountName={userCurrent.email}
             profileImage={userCurrent.avatar}

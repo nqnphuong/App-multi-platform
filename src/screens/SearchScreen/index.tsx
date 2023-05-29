@@ -17,12 +17,15 @@ import {UserAction, userSelector} from '@store/user';
 import FindingAnimation from '@components/LottieAnimation/FindAnimation';
 import icons from '@constants/icons';
 import {SIZES} from '@constants/theme';
+import useUser from 'hooks/useUser';
 
 const SearchScreen: React.FC = () => {
   const {listResult, listHistorySearch, findUserLoading} =
     useAppSelector(userSelector);
   const dispatch = useAppDispatch();
   const [input, setInput] = useState<string>('');
+
+  const currentUser = useUser();
 
   useEffect(() => {
     dispatch(UserAction.findUserByName(input));
@@ -68,7 +71,12 @@ const SearchScreen: React.FC = () => {
               </Text>
               <FlatList
                 data={listResult}
-                renderItem={item => <SearchItem item={item} times={false} />}
+                renderItem={item=> {
+                  if (currentUser.userId != item.item.userId) {
+                    return <SearchItem item={item} times={false} />;
+                  }
+                  return null;
+                }}
                 keyExtractor={(item, index) => index.toString()}
                 showsVerticalScrollIndicator={false}
               />

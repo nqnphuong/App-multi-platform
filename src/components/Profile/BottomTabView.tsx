@@ -24,15 +24,10 @@ const BottomTabView: React.FC<Props> = ({posts}) => {
   const dispatch = useAppDispatch();
   const [postsId, setpostsId] = useState<string>('');
 
+  const [loading, setLoading] = useState(false);
+
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-
-  const imageDetail = (postId: string) => {
-    navigation.navigate('ImageScreen', {
-      name: 'ImageScreen',
-      postsId: postId,
-    });
-  };
 
   useLayoutEffect(() => {
     const getMyPost = async () => {
@@ -65,13 +60,17 @@ const BottomTabView: React.FC<Props> = ({posts}) => {
         }}>
         Posts
       </Text>
-      <View>
+      <View
+        style={{
+          gap: 10,
+        }}>
         {posts &&
           posts.map(p => (
             <PostCard
               post={p}
               key={p.postsId}
               setpostsId={setpostsId}
+              setLoading={setLoading}
               handleSnapPress={handleSnapPress}
             />
           ))}

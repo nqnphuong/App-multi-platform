@@ -1,18 +1,12 @@
 import {COLORS, FONTS} from '@constants/theme';
-import useAuthStore from '@store/useAuthStore';
 import React from 'react';
 import {
   Image,
-  StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   ImageBackground,
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
-import Entypo from 'react-native-vector-icons/Entypo';
-import images from '@constants/images';
-import icons from '@constants/icons';
 import UserApi from '../../../api/user/request';
 import useUser from 'hooks/useUser';
 import {useAppDispatch} from 'hooks/store';
@@ -31,18 +25,9 @@ interface Props {
   isCurrentUser?: boolean;
 }
 
-const ProfileBody: React.FC<Props> = ({
-  name,
-  accountName,
-  profileImage,
-  post,
-  followers,
-  following,
-  isCurrentUser,
-}) => {
+const ProfileBody: React.FC<Props> = ({name, accountName, profileImage}) => {
   const currentUser = useUser();
   const dispatch = useAppDispatch();
-  const {logout} = useAuthStore(state => state);
 
   const imageGallery = () => {
     ImagePicker.openPicker({
@@ -70,37 +55,6 @@ const ProfileBody: React.FC<Props> = ({
         margin: 0,
         padding: 0,
       }}>
-      <View
-        style={{
-          paddingVertical: 10,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-        <Image
-          source={icons.Camera}
-          style={{
-            width: 25,
-            height: 25,
-          }}
-        />
-        <Image
-          source={icons.Logo}
-          style={{
-            width: 30,
-            height: 30,
-          }}
-        />
-        <TouchableOpacity onPress={logout}>
-          <Image
-            source={icons.More}
-            style={{
-              width: 25,
-              height: 25,
-            }}
-          />
-        </TouchableOpacity>
-      </View>
       <View style={styles.headerContainer}>
         <View style={styles.coverContainer}>
           <ImageBackground

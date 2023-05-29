@@ -4,7 +4,7 @@ import PostCard from '@components/PostCard';
 import UploadPost from '@components/UploadPost';
 import {PostAction, postSelector} from '@store/posts';
 import {UserAction, userSelector} from '@store/user';
-import {COLORS, FONTS, SIZES} from 'constants/theme';
+import {COLORS} from 'constants/theme';
 import {useAppDispatch, useAppSelector} from 'hooks/store';
 import useUser from 'hooks/useUser';
 
@@ -198,26 +198,7 @@ const HomeScreen: React.FC = () => {
           </BottomSheet>
         )}
       </GestureHandlerRootView>
-      {loading && (
-        <View
-          style={{
-            top: 0,
-            position: 'absolute',
-            width: SIZES.width,
-            height: SIZES.height,
-          }}>
-          <View
-            style={{
-              position: 'absolute',
-              height: SIZES.height,
-              width: SIZES.width,
-              backgroundColor: COLORS.black,
-              opacity: 0.1,
-            }}
-          />
-          <Loading />
-        </View>
-      )}
+      {loading && <Loading />}
     </>
   );
 };

@@ -6,6 +6,7 @@ import _ from 'lodash';
 export interface IPostState {
   post: IPost;
   posts: IPost[];
+  userPost: IPost[];
   myPosts: IPost[];
   listCommentOfPost: any[];
 }
@@ -39,6 +40,7 @@ const initialState: IPostState = {
   },
   listCommentOfPost: [],
   posts: [],
+  userPost: [],
   myPosts: [],
 };
 
@@ -61,6 +63,9 @@ const slice = createSlice({
     });
     builder.addCase(getPostUserId.fulfilled, (state, {payload}) => {
       state.myPosts = payload;
+    });
+    builder.addCase(getPostUser.fulfilled, (state, {payload}) => {
+      state.userPost = payload;
     });
     builder.addCase(findPostsById.fulfilled, (state, {payload}) => {
       state.post = payload;
@@ -121,6 +126,15 @@ const getPostUserId = createAsyncThunk('post/getPostUserId', async () => {
   }
 });
 
+const getPostUser = createAsyncThunk('post/getPostUser', async (id: number) => {
+  try {
+    const res = await PostApi.getPostUserApi(id);
+    return res.data.data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+});
+
 const findPostsById = createAsyncThunk(
   'post/findPostsById',
   async (id: string) => {
@@ -153,6 +167,7 @@ export const PostAction = {
   findPostsById,
   commentPost,
   getListCommentOfPost,
+  getPostUser,
 };
 
 export const {hidePost} = slice.actions;
