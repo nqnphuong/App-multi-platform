@@ -13,6 +13,7 @@ import PostApi from '../../../api/post/request';
 import {PostAction, hidePost} from '@store/posts';
 import tw from 'twrnc';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Video from 'react-native-video-player';
 
 interface IPostCardProps {
   post: IPost;
@@ -80,6 +81,8 @@ const PostCard = ({
     dispatch(hidePost(post.postsId));
   };
 
+  console.log(post.postsImageList[0].image);
+
   const renderFooter = () => {
     return (
       <View style={styles.footer}>
@@ -144,7 +147,7 @@ const PostCard = ({
         <TouchableOpacity style={styles.rowCenter}>
           <Image
             source={
-              post.postsUserList[0].image
+              post?.postsUserList?.length > 0 && post?.postsUserList[0]?.image
                 ? {
                     uri: post.postsUserList[0].image,
                   }
@@ -224,14 +227,36 @@ const PostCard = ({
       <View style={styles.textBody}>
         <Text style={{color: COLORS.black, fontSize: 14}}>{post.caption}</Text>
       </View>
-      <TouchableOpacity onPress={openGallery} activeOpacity={1}>
-        <AutoHeightImage
-          width={SIZES.width - 20}
-          source={{
+      {post.postsImageList.length > 0 &&
+      post.postsImageList[0].image.includes('/video/upload/') ? (
+        <Video
+          video={{
             uri: post.postsImageList[0].image,
           }}
+          resizeMode="contain"
+          disableControlsAutoHide
+          style={{
+            width: '100%',
+            height: 400,
+          }}
+          thumbnail={{
+            uri: post.postsImageList[0].image.replace('.mp4', '.jpg'),
+          }}
         />
-      </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          onPress={() => {
+            openGallery();
+          }}
+          activeOpacity={1}>
+          <AutoHeightImage
+            width={SIZES.width - 20}
+            source={{
+              uri: post.postsImageList[0].image,
+            }}
+          />
+        </TouchableOpacity>
+      )}
       {renderFooter()}
       <ImageGallery close={closeGallery} isOpen={isOpen} images={listImage} />
     </View>

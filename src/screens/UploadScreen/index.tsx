@@ -27,23 +27,40 @@ import {
 import {requestCameraPermission} from 'utils/RequestPermission';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LoadingIcon from '@components/LottieAnimation/LoadingIcon';
+import Video from 'react-native-video';
 
 const RederItem = ({index, item, onDelete}: any) => {
   return (
     <View
       style={[
         styles.item,
-        index % 3 !== 3 - 1 && {
-          marginRight: 25,
-          marginBottom: 15,
-        },
+
+        index % 2 === 0
+          ? {
+              marginRight: '3%',
+            }
+          : {
+              marginLeft: '3%',
+            },
       ]}>
-      <Image
-        source={{
-          uri: item.uri,
-        }}
-        style={styles.itemBackground}
-      />
+      {item.type.includes('video') ? (
+        <Video
+          source={{
+            uri: item.uri,
+          }}
+          resizeMode="contain"
+          style={styles.itemBackground}
+          controls={true}
+        />
+      ) : (
+        <Image
+          source={{
+            uri: item.uri,
+          }}
+          resizeMode="contain"
+          style={styles.itemBackground}
+        />
+      )}
       <TouchableOpacity onPress={() => onDelete(item.uri?.toString()!)}>
         <Image source={icons.Close} style={styles.itemDelete} />
       </TouchableOpacity>
@@ -70,15 +87,13 @@ const UploadScreen: React.FC = () => {
     form.append('caption', formdata.caption);
     form.append('type', formdata.type);
     const images = files?.assets as Asset[];
+    const image = images[0];
 
-    form.append(
-      'files',
-      images.map(image => ({
-        uri: image.uri,
-        name: image.fileName,
-        type: image.type,
-      }))[0],
-    );
+    form.append('files', {
+      uri: image.uri,
+      name: image.fileName,
+      type: image.type,
+    });
     form.append('userId', formdata.userId);
 
     await dispatch(PostAction.createPost(form));
@@ -94,7 +109,7 @@ const UploadScreen: React.FC = () => {
   const pickerMedia = async () => {
     try {
       const result = await launchImageLibrary({
-        mediaType: 'photo',
+        mediaType: 'mixed',
         selectionLimit: 6,
       });
 
@@ -108,7 +123,7 @@ const UploadScreen: React.FC = () => {
     try {
       await requestCameraPermission();
       const result = await launchCamera({
-        mediaType: 'photo',
+        mediaType: 'mixed',
       });
 
       setFiles({
@@ -137,7 +152,10 @@ const UploadScreen: React.FC = () => {
           justifyContent: 'space-between',
         },
       ]}>
-      <View>
+      <View
+        style={{
+          flex: 1,
+        }}>
         <View style={styles.topContainer}>
           <Image style={styles.backIcon} source={icons.Back} />
           <Text
@@ -184,6 +202,9 @@ const UploadScreen: React.FC = () => {
         </View>
         <View style={styles.previewContainer}>
           <FlatList
+            style={{
+              flex: 1,
+            }}
             data={files?.assets || []}
             renderItem={({item, index}) => {
               return (
@@ -191,7 +212,7 @@ const UploadScreen: React.FC = () => {
               );
             }}
             keyExtractor={item => item.uri?.toString()!}
-            numColumns={3}
+            numColumns={2}
           />
         </View>
       </View>
@@ -274,6 +295,7 @@ const styles = StyleSheet.create({
   },
   previewContainer: {
     marginTop: 30,
+    flex: 1,
   },
 
   devideLine: {
@@ -301,11 +323,14 @@ const styles = StyleSheet.create({
   },
 
   item: {
-    height: 90,
-    width: (SIZES.width - 90) / 3,
+    height: 150,
+    aspectRatio: 1,
+    // flexGrow: 1,
+    width: '47%',
     backgroundColor: '#fff',
     borderRadius: 8,
     position: 'relative',
+    marginBottom: 10,
   },
 
   itemBackground: {
