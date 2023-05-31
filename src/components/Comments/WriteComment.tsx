@@ -15,7 +15,7 @@ const WriteComment: React.FC<Props> = ({postId}) => {
   const dispatch = useAppDispatch();
   const [isComment, setComment] = useState<string>('');
 
-  const {user} = useAppSelector(userSelector);
+  const {userCurrent} = useAppSelector(userSelector);
 
   const handleComment = async () => {
     if (isComment) {
@@ -23,7 +23,7 @@ const WriteComment: React.FC<Props> = ({postId}) => {
         PostAction.commentPost({
           comment: isComment,
           tusId: postId,
-          userId: user.userId,
+          userId: userCurrent.userId,
         }),
       );
       if (PostAction.commentPost.fulfilled.match(res)) {
@@ -49,9 +49,9 @@ const WriteComment: React.FC<Props> = ({postId}) => {
         }}>
         <Image
           source={
-            user.avatar
+            userCurrent.avatar
               ? {
-                  uri: user.avatar,
+                  uri: userCurrent.avatar,
                 }
               : images.Avatar
           }
