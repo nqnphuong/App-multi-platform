@@ -13,6 +13,7 @@ import SearchStack from './searchStack';
 import icons from '@constants/icons';
 import {useSelector} from 'react-redux';
 import {userSelector} from '@store/user';
+import MusicPlayer from '@screens/PlayerMusicScreen';
 
 const MainScreen: React.FC = () => {
   const Tab = createBottomTabNavigator();
@@ -95,7 +96,7 @@ const MainScreen: React.FC = () => {
       />
       <Tab.Screen
         name="LikeScreen"
-        component={LikeScreen}
+        component={MusicPlayer}
         options={{
           tabBarIcon: ({focused}) => renderIcons(focused, icons.Heart),
         }}
