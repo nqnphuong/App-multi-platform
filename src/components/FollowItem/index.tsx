@@ -1,17 +1,27 @@
-import React from 'react';
-import tw from 'twrnc';
-import {useNavigation} from '@react-navigation/native';
-import {View, Text, Image, TouchableOpacity, Alert} from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Feather from 'react-native-vector-icons/Feather';
 import images from '@constants/images';
+import {COLORS} from '@constants/theme';
+import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {SearchStackParams} from 'navigation/searchStack';
+import {FollowAction} from '@store/follow';
 import {useAppDispatch} from 'hooks/store';
 import IFollow from 'models/Follow';
-import {FollowAction} from '@store/follow';
+import {SearchStackParams} from 'navigation/searchStack';
+import React from 'react';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
+import Toast from 'react-native-toast-message';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import I from 'react-native-vector-icons/Ionicons';
+import tw from 'twrnc';
 
-const FollowItem = ({item}: {item: IFollow}) => {
+const FollowItem = ({
+  item,
+  setDeletes,
+  deletes,
+}: {
+  item: IFollow;
+  setDeletes: any;
+  deletes: any;
+}) => {
   const dispatch = useAppDispatch();
   const navigation =
     useNavigation<NativeStackNavigationProp<SearchStackParams>>();
@@ -23,12 +33,16 @@ const FollowItem = ({item}: {item: IFollow}) => {
     });
   };
 
-  const handleDelete = () => {
-    dispatch(FollowAction.deleteFollow(item.followId));
+  const handleDelete = async () => {
+    setDeletes([...deletes, item as never]);
   };
 
   const sendFollow = () => {
-    dispatch(FollowAction.deleteFollow(item.followId));
+    dispatch(FollowAction.sendFollow(item.userId));
+    handleDelete();
+    Toast.show({
+      text1: 'Send follow request successfully !',
+    });
   };
 
   return (
@@ -37,24 +51,24 @@ const FollowItem = ({item}: {item: IFollow}) => {
         style={tw`flex flex-row items-center flex-1`}
         onPress={handleSelect}>
         <Image
-          source={item.userImage ? {uri: item.userImage} : images.Avatar}
+          source={item.avatar ? {uri: item.avatar} : images.Avatar}
           style={tw`w-14 h-14 rounded-full border border-[#6B65DE] mr-2`}
         />
         <View>
-          <Text style={tw`text-base font-semibold`}>{item.userName}</Text>
+          <Text style={tw`text-base font-semibold`}>{item.name}</Text>
           <Text style={tw`text-xs font-light`}>{item.email}</Text>
         </View>
       </TouchableOpacity>
       <View style={tw`flex flex-row items-center  py-2`}>
         <TouchableOpacity
-          onPress={sendFollow}
-          style={tw`rounded pl-5 pr-5 pt-3 pb-3 bg-red-500 font-bold `}>
+          onPress={handleDelete}
+          style={tw`rounded pl-5 pr-5 pt-3 pb-3 bg-gray-400 font-bold `}>
           <AntDesign style={tw`text-white`} name="close" />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={handleDelete}
-          style={tw`rounded pl-5 pr-5 pt-3 pb-3 bg-green-500 font-bold ml-2`}>
-          <Feather style={tw`text-white`} name="check" />
+          onPress={sendFollow}
+          style={tw`rounded pl-5 pr-5 pt-3 pb-3 bg-[${COLORS.primary}] font-bold ml-2`}>
+          <I style={tw`text-white`} name="person-add" />
         </TouchableOpacity>
       </View>
     </View>

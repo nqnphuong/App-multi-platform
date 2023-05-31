@@ -6,6 +6,8 @@ interface IFollow {
   userImage: string;
   email: string;
   dateCreate: string;
+  avatar: string;
+  name: string;
 }
 
 export default IFollow;

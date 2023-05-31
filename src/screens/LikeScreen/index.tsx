@@ -1,5 +1,6 @@
 import FollowRequest from '@components/Follow/FollowRequest';
 import {FollowAction} from '@store/follow';
+import {UserAction} from '@store/user';
 import {useAppDispatch} from 'hooks/store';
 import React, {useEffect} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
@@ -9,6 +10,11 @@ const LikeScreen: React.FC = () => {
   useEffect(() => {
     dispatch(FollowAction.getRequestFollow());
   }, []);
+
+  useEffect(() => {
+    dispatch(UserAction.findUserByName(''));
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <FollowRequest />

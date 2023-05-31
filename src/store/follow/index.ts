@@ -34,10 +34,10 @@ const sendFollow = createAsyncThunk(
   async (id: number, {dispatch}) => {
     try {
       const res = await FollowApi.sendFollow(id);
-
       dispatch(getFollowers());
       return res.data.data;
     } catch (error: any) {
+      console.log(error.response);
       throw new Error(error);
     }
   },

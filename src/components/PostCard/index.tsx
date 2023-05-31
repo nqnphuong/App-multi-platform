@@ -81,8 +81,6 @@ const PostCard = ({
     dispatch(hidePost(post.postsId));
   };
 
-  console.log(post.postsImageList[0].image);
-
   const renderFooter = () => {
     return (
       <View style={styles.footer}>
