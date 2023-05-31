@@ -5,6 +5,7 @@ import {
   Text,
   View,
   ImageBackground,
+  TouchableOpacity,
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import UserApi from '../../../api/user/request';
@@ -66,9 +67,9 @@ const ProfileBody: React.FC<Props> = ({name, accountName, profileImage}) => {
           </ImageBackground>
         </View>
         <View style={styles.profileImageContainer}>
-          <View>
+          <TouchableOpacity onPress={imageGallery}>
             <Image source={{uri: profileImage}} style={styles.profileImage} />
-          </View>
+          </TouchableOpacity>
           <View>
             <Text
               style={{
