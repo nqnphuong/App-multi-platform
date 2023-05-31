@@ -8,10 +8,7 @@ import {
   FlatList,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {
-  ChannelList,
-  useChatContext,
-} from 'stream-chat-react-native';
+import {ChannelList, useChatContext} from 'stream-chat-react-native';
 import {StreamChatGenerics} from './types';
 import Header from '@components/Header';
 import tw from 'twrnc';

@@ -25,6 +25,10 @@ import {useAppDispatch} from 'hooks/store';
 import useUser from 'hooks/useUser';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
+import {LogBox} from 'react-native';
+LogBox.ignoreLogs([]); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
+
 export type RootStackParams = {
   Main: {
     name: 'Main';
