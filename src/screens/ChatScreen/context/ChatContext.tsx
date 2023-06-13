@@ -16,7 +16,7 @@ export const ChatContext = createContext<ChatContextType>(
 );
 
 const ChatContextProvider = ({children}: {children: React.ReactNode}) => {
-  const apiKey = 'v2xkx2avad6h';
+  const apiKey = 'xbgnwb6c8r7n';
   const [currentChannel, setCurrentChannel] = useState<Channel>();
   const [unreadCount, setUnreadCount] = useState<number | undefined>(undefined);
   const user = useUser();
